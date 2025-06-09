@@ -1,0 +1,28 @@
+Git BASICS
+
+Steps to apply a repo to github
+
+1-git init
+2-git add .
+3-git commit -m "test"
+4-connect remote repo to git. (git remote add origin https://github.com/yourusername/your-repo.git)
+5-Git remote -v (check remote connection data like above.)
+6-git branch (check branch name)
+7-git push --set-upstream main main (it will set main as upstream branch and push it to git.)
+8-
+
+
+
+
+
+Git checkout  -b developer
+Git merge tester-Recep
+
+
+Git push --set-upstream origin tester
+git push -u origin developer
+
+git push origin --delete tester
+git branch -D tester
+
+git remote rename main origin
