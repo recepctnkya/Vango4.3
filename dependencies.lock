@@ -1,0 +1,27 @@
+dependencies:
+  espressif/esp_lcd_touch:
+    component_hash: null
+    source:
+      path: C:\Users\nakau\Downloads\4.3Esp32\ESP-IDF\08_lvgl_Porting\components\espressif__esp_lcd_touch
+      type: local
+    version: 1.1.2
+  espressif/esp_lcd_touch_gt911:
+    component_hash: null
+    source:
+      path: C:\Users\nakau\Downloads\4.3Esp32\ESP-IDF\08_lvgl_Porting\components\espressif__esp_lcd_touch_gt911
+      type: local
+    version: 1.1.1~1
+  idf:
+    component_hash: null
+    source:
+      type: idf
+    version: 5.3.0
+  lvgl/lvgl:
+    component_hash: null
+    source:
+      path: C:\Users\nakau\Downloads\4.3Esp32\ESP-IDF\08_lvgl_Porting\components\lvgl__lvgl
+      type: local
+    version: 8.4.0
+manifest_hash: a0cafc487293c9f14e950ea0e5ee14b1c5d0e094757a531c6a23a4c43d7c2330
+target: esp32s3
+version: 1.0.0
