@@ -212,7 +212,7 @@ void ui_scrMain_screen_init(void)
     lv_obj_set_x(ui_lblLock, 1);
     lv_obj_set_y(ui_lblLock, 0);
     lv_obj_set_align(ui_lblLock, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_lblLock, "Rules");
+    lv_label_set_text(ui_lblLock, "Pages");
     lv_obj_set_style_text_color(ui_lblLock, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_lblLock, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_lblLock, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -493,7 +493,7 @@ void ui_scrMain_screen_init(void)
 
     ui_btnRGBColor = lv_btn_create(ui_scrMain);
     lv_obj_set_width(ui_btnRGBColor, 100);
-    lv_obj_set_height(ui_btnRGBColor, 72);
+    lv_obj_set_height(ui_btnRGBColor, 76);
     lv_obj_set_x(ui_btnRGBColor, -100);
     lv_obj_set_y(ui_btnRGBColor, 150);
     lv_obj_set_align(ui_btnRGBColor, LV_ALIGN_CENTER);

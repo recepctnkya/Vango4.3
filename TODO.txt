@@ -1,3 +1,4 @@
+
 Git BASICS
 
 Steps to apply a repo to github
@@ -11,7 +12,7 @@ Steps to apply a repo to github
 7-git push --set-upstream main main (it will set main as upstream branch and push it to git.)
 8-
 
-
+    
 
 
 
@@ -26,3 +27,20 @@ git push origin --delete tester
 git branch -D tester
 
 git remote rename main origin
+
+
+
+Yapilacaklar
+    Can i saglam bir seviyeye getirmek
+    Sicaklik ve seviye sensorlerini devreye al
+    Inputlari devreye al.
+    Genel market calismasi yaparak eksikleri biraz daha belirle
+    4.3 inc ekrani ayaga kaldirma
+    5 inc ekrani ayaga kaldirma
+    Ekran prototip tasarimlari da yaparak linkedin de paylasma
+
+Prototip Ekran tasarimlari
+-Wall charger
+-Portable PowerBank
+-Wall PowerBank
+https://www.instagram.com/reel/DO39LhUiHgR/?utm_source=ig_web_button_share_sheet&igsh=ODdmZWVhMTFiMw==

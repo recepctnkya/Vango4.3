@@ -17,6 +17,8 @@ void save_panel_settings();
 void save_theme_settings();
 void apply_theme_settings();
 void color_wheel_event_cb();
-
-
+void save_panel_configuration_to_nvs(int totalOutps, int buffer1[16], int totalSensors, int buffer2[5], int totalDims, int buffer3[4]);
+void apply_rgb_data_to_wheel(uint8_t r, uint8_t g, uint8_t b);
+void set_rgb_to_white();
+void set_RGBTurnONOFF(int val);
 #endif // DISPLAY_MANAGER_H

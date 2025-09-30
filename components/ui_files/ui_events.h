@@ -15,11 +15,11 @@ void savePanelSettings(lv_event_t * e);
 void btnThemeWhiteFunc(lv_event_t * e);
 void btnBlackThemeFunc(lv_event_t * e);
 void btnSaveThemeFunc(lv_event_t * e);
-void changeColorWheel(lv_event_t * e);
-void applyRGBColor(lv_event_t * e);
 void enRGBSetWhiteFunc(lv_event_t * e);
 void enRGBTurnONFunc(lv_event_t * e);
 void enRGBTurnOFFFunc(lv_event_t * e);
+void applyRGBColor(lv_event_t * e);
+void changeColorWheel(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/

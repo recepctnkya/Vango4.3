@@ -12,515 +12,6 @@ void ui_scrPanelSettings_screen_init(void)
     lv_obj_set_style_bg_color(ui_scrPanelSettings, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_scrPanelSettings, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_lblPanelSettings = lv_label_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_lblPanelSettings, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_lblPanelSettings, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblPanelSettings, -16);
-    lv_obj_set_y(ui_lblPanelSettings, -216);
-    lv_obj_set_align(ui_lblPanelSettings, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_lblPanelSettings, "PANEL SETTINGS");
-    lv_obj_set_style_text_font(ui_lblPanelSettings, &lv_font_montserrat_26, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_swO1 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO1, 73);
-    lv_obj_set_height(ui_swO1, 44);
-    lv_obj_set_x(ui_swO1, -330);
-    lv_obj_set_y(ui_swO1, -165);
-    lv_obj_set_align(ui_swO1, LV_ALIGN_CENTER);
-    lv_obj_set_style_radius(ui_swO1, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO1, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO1, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO1, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO1, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_cbxO1 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO1,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO1, 140);
-    lv_obj_set_height(ui_cbxO1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO1, -220);
-    lv_obj_set_y(ui_cbxO1, -165);
-    lv_obj_set_align(ui_cbxO1, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO1, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO1, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-    lv_obj_set_style_opa(lv_dropdown_get_list(ui_cbxO1), 255,  LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_cbxO2 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO2,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO2, 140);
-    lv_obj_set_height(ui_cbxO2, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO2, -219);
-    lv_obj_set_y(ui_cbxO2, -117);
-    lv_obj_set_align(ui_cbxO2, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO2, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO2, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-
-
-    ui_swO2 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO2, 73);
-    lv_obj_set_height(ui_swO2, 44);
-    lv_obj_set_x(ui_swO2, -332);
-    lv_obj_set_y(ui_swO2, -117);
-    lv_obj_set_align(ui_swO2, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swO2, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swO2, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO2, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO2, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO2, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO2, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_swO3 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO3, 73);
-    lv_obj_set_height(ui_swO3, 44);
-    lv_obj_set_x(ui_swO3, -331);
-    lv_obj_set_y(ui_swO3, -70);
-    lv_obj_set_align(ui_swO3, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swO3, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swO3, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO3, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO3, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO3, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO3, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_cbxO3 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO3,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO3, 140);
-    lv_obj_set_height(ui_cbxO3, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO3, -222);
-    lv_obj_set_y(ui_cbxO3, -70);
-    lv_obj_set_align(ui_cbxO3, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO3, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO3, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-
-
-    ui_swO4 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO4, 73);
-    lv_obj_set_height(ui_swO4, 44);
-    lv_obj_set_x(ui_swO4, -332);
-    lv_obj_set_y(ui_swO4, -22);
-    lv_obj_set_align(ui_swO4, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swO4, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swO4, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO4, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO4, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO4, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO4, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_cbxO4 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO4,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO4, 140);
-    lv_obj_set_height(ui_cbxO4, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO4, -220);
-    lv_obj_set_y(ui_cbxO4, -21);
-    lv_obj_set_align(ui_cbxO4, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO4, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO4, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-
-
-    ui_swO5 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO5, 73);
-    lv_obj_set_height(ui_swO5, 44);
-    lv_obj_set_x(ui_swO5, -334);
-    lv_obj_set_y(ui_swO5, 25);
-    lv_obj_set_align(ui_swO5, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swO5, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swO5, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO5, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO5, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO5, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO5, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_cbxO5 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO5,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO5, 140);
-    lv_obj_set_height(ui_cbxO5, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO5, -222);
-    lv_obj_set_y(ui_cbxO5, 24);
-    lv_obj_set_align(ui_cbxO5, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO5, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO5, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-
-
-    ui_swO6 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO6, 73);
-    lv_obj_set_height(ui_swO6, 44);
-    lv_obj_set_x(ui_swO6, -334);
-    lv_obj_set_y(ui_swO6, 71);
-    lv_obj_set_align(ui_swO6, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swO6, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swO6, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO6, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO6, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO6, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO6, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_cbxO6 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO6,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO6, 140);
-    lv_obj_set_height(ui_cbxO6, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO6, -221);
-    lv_obj_set_y(ui_cbxO6, 73);
-    lv_obj_set_align(ui_cbxO6, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO6, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO6, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-
-
-    ui_swO7 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO7, 73);
-    lv_obj_set_height(ui_swO7, 44);
-    lv_obj_set_x(ui_swO7, -334);
-    lv_obj_set_y(ui_swO7, 120);
-    lv_obj_set_align(ui_swO7, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swO7, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swO7, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO7, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO7, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO7, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO7, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_cbxO7 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO7,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO7, 140);
-    lv_obj_set_height(ui_cbxO7, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO7, -220);
-    lv_obj_set_y(ui_cbxO7, 122);
-    lv_obj_set_align(ui_cbxO7, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO7, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO7, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-
-
-    ui_swO8 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO8, 73);
-    lv_obj_set_height(ui_swO8, 44);
-    lv_obj_set_x(ui_swO8, -334);
-    lv_obj_set_y(ui_swO8, 166);
-    lv_obj_set_align(ui_swO8, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swO8, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swO8, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO8, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO8, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO8, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO8, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_cbxO8 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO8,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO8, 140);
-    lv_obj_set_height(ui_cbxO8, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO8, -219);
-    lv_obj_set_y(ui_cbxO8, 166);
-    lv_obj_set_align(ui_cbxO8, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO8, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO8, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-
-
-    ui_swO9 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO9, 73);
-    lv_obj_set_height(ui_swO9, 44);
-    lv_obj_set_x(ui_swO9, -75);
-    lv_obj_set_y(ui_swO9, -162);
-    lv_obj_set_align(ui_swO9, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swO9, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swO9, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO9, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO9, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO9, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO9, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_cbxO9 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO9,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO9, 140);
-    lv_obj_set_height(ui_cbxO9, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO9, 38);
-    lv_obj_set_y(ui_cbxO9, -162);
-    lv_obj_set_align(ui_cbxO9, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO9, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO9, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-
-
-    ui_cbxO10 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO10,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO10, 140);
-    lv_obj_set_height(ui_cbxO10, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO10, 39);
-    lv_obj_set_y(ui_cbxO10, -116);
-    lv_obj_set_align(ui_cbxO10, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO10, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO10, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-
-
-    ui_swO10 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO10, 73);
-    lv_obj_set_height(ui_swO10, 44);
-    lv_obj_set_x(ui_swO10, -76);
-    lv_obj_set_y(ui_swO10, -114);
-    lv_obj_set_align(ui_swO10, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swO10, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swO10, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO10, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO10, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO10, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO10, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_swO11 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO11, 73);
-    lv_obj_set_height(ui_swO11, 44);
-    lv_obj_set_x(ui_swO11, -77);
-    lv_obj_set_y(ui_swO11, -66);
-    lv_obj_set_align(ui_swO11, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swO11, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swO11, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO11, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO11, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO11, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO11, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_cbxO11 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO11,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO11, 140);
-    lv_obj_set_height(ui_cbxO11, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO11, 37);
-    lv_obj_set_y(ui_cbxO11, -69);
-    lv_obj_set_align(ui_cbxO11, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO11, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO11, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-
-
-    ui_swO12 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO12, 73);
-    lv_obj_set_height(ui_swO12, 44);
-    lv_obj_set_x(ui_swO12, -76);
-    lv_obj_set_y(ui_swO12, -19);
-    lv_obj_set_align(ui_swO12, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swO12, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swO12, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO12, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO12, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO12, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO12, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_cbxO12 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO12,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO12, 140);
-    lv_obj_set_height(ui_cbxO12, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO12, 37);
-    lv_obj_set_y(ui_cbxO12, -22);
-    lv_obj_set_align(ui_cbxO12, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO12, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO12, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-
-
-    ui_swO14 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO14, 73);
-    lv_obj_set_height(ui_swO14, 44);
-    lv_obj_set_x(ui_swO14, -75);
-    lv_obj_set_y(ui_swO14, 76);
-    lv_obj_set_align(ui_swO14, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swO14, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swO14, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO14, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO14, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO14, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO14, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_cbxO13 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO13,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO13, 140);
-    lv_obj_set_height(ui_cbxO13, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO13, 36);
-    lv_obj_set_y(ui_cbxO13, 28);
-    lv_obj_set_align(ui_cbxO13, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO13, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO13, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-
-
-    ui_cbxO14 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO14,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO14, 140);
-    lv_obj_set_height(ui_cbxO14, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO14, 37);
-    lv_obj_set_y(ui_cbxO14, 76);
-    lv_obj_set_align(ui_cbxO14, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO14, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO14, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-
-
-    ui_swO15 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO15, 73);
-    lv_obj_set_height(ui_swO15, 44);
-    lv_obj_set_x(ui_swO15, -74);
-    lv_obj_set_y(ui_swO15, 124);
-    lv_obj_set_align(ui_swO15, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swO15, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swO15, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO15, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO15, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO15, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO15, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_cbxO15 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO15,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO15, 140);
-    lv_obj_set_height(ui_cbxO15, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO15, 38);
-    lv_obj_set_y(ui_cbxO15, 122);
-    lv_obj_set_align(ui_cbxO15, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO15, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO15, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-
-
-    ui_swO16 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO16, 73);
-    lv_obj_set_height(ui_swO16, 44);
-    lv_obj_set_x(ui_swO16, -74);
-    lv_obj_set_y(ui_swO16, 171);
-    lv_obj_set_align(ui_swO16, LV_ALIGN_CENTER);
-    lv_obj_set_style_radius(ui_swO16, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO16, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO16, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO16, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO16, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_cbxO16 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxO16,
-                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
-    lv_obj_set_width(ui_cbxO16, 140);
-    lv_obj_set_height(ui_cbxO16, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxO16, 37);
-    lv_obj_set_y(ui_cbxO16, 169);
-    lv_obj_set_align(ui_cbxO16, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxO16, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxO16, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-
-
-
-    ui_swO13 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swO13, 73);
-    lv_obj_set_height(ui_swO13, 44);
-    lv_obj_set_x(ui_swO13, -75);
-    lv_obj_set_y(ui_swO13, 26);
-    lv_obj_set_align(ui_swO13, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swO13, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swO13, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO13, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swO13, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swO13, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swO13, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_Checkbox1 = lv_checkbox_create(ui_scrPanelSettings);
-    lv_checkbox_set_text(ui_Checkbox1, "An1-Internal Temperature");
-    lv_obj_set_width(ui_Checkbox1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Checkbox1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Checkbox1, 249);
-    lv_obj_set_y(ui_Checkbox1, -172);
-    lv_obj_set_align(ui_Checkbox1, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Checkbox1, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-
-    ui_Checkbox2 = lv_checkbox_create(ui_scrPanelSettings);
-    lv_checkbox_set_text(ui_Checkbox2, "An2-External Temperature");
-    lv_obj_set_width(ui_Checkbox2, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Checkbox2, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Checkbox2, 252);
-    lv_obj_set_y(ui_Checkbox2, -149);
-    lv_obj_set_align(ui_Checkbox2, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Checkbox2, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-
-    ui_Checkbox3 = lv_checkbox_create(ui_scrPanelSettings);
-    lv_checkbox_set_text(ui_Checkbox3, "An3-Clean Water");
-    lv_obj_set_width(ui_Checkbox3, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Checkbox3, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Checkbox3, 216);
-    lv_obj_set_y(ui_Checkbox3, -125);
-    lv_obj_set_align(ui_Checkbox3, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Checkbox3, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-
-    ui_Checkbox4 = lv_checkbox_create(ui_scrPanelSettings);
-    lv_checkbox_set_text(ui_Checkbox4, "An4-Gray Water");
-    lv_obj_set_width(ui_Checkbox4, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Checkbox4, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Checkbox4, 214);
-    lv_obj_set_y(ui_Checkbox4, -101);
-    lv_obj_set_align(ui_Checkbox4, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Checkbox4, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-
-    ui_Checkbox5 = lv_checkbox_create(ui_scrPanelSettings);
-    lv_checkbox_set_text(ui_Checkbox5, "An5-Dirty Water");
-    lv_obj_set_width(ui_Checkbox5, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Checkbox5, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Checkbox5, 214);
-    lv_obj_set_y(ui_Checkbox5, -76);
-    lv_obj_set_align(ui_Checkbox5, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Checkbox5, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-
-    ui_Checkbox6 = lv_checkbox_create(ui_scrPanelSettings);
-    lv_checkbox_set_text(ui_Checkbox6, "RGB Control");
-    lv_obj_set_width(ui_Checkbox6, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Checkbox6, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Checkbox6, 201);
-    lv_obj_set_y(ui_Checkbox6, -50);
-    lv_obj_set_align(ui_Checkbox6, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Checkbox6, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-
     ui_Panel10 = lv_obj_create(ui_scrPanelSettings);
     lv_obj_set_width(ui_Panel10, 797);
     lv_obj_set_height(ui_Panel10, 42);
@@ -586,152 +77,175 @@ void ui_scrPanelSettings_screen_init(void)
     lv_obj_set_style_text_opa(ui_lblSettings2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_lblSettings2, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_lblSensors = lv_label_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_lblSensors, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_lblSensors, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblSensors, 233);
-    lv_obj_set_y(ui_lblSensors, -202);
-    lv_obj_set_align(ui_lblSensors, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_lblSensors, "Sensors");
-    lv_obj_set_style_text_font(ui_lblSensors, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_pnlSaveConfigs = lv_obj_create(ui_scrPanelSettings);
+    lv_obj_set_width(ui_pnlSaveConfigs, 545);
+    lv_obj_set_height(ui_pnlSaveConfigs, 125);
+    lv_obj_set_x(ui_pnlSaveConfigs, -14);
+    lv_obj_set_y(ui_pnlSaveConfigs, -29);
+    lv_obj_set_align(ui_pnlSaveConfigs, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_pnlSaveConfigs, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_clear_flag(ui_pnlSaveConfigs, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_bg_color(ui_pnlSaveConfigs, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_pnlSaveConfigs, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(ui_pnlSaveConfigs, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_pnlSaveConfigs, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_color(ui_pnlSaveConfigs, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_opa(ui_pnlSaveConfigs, 50, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_width(ui_pnlSaveConfigs, 1, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_spread(ui_pnlSaveConfigs, 1, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_ofs_x(ui_pnlSaveConfigs, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_ofs_y(ui_pnlSaveConfigs, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_lblDimmableOutputs = lv_label_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_lblDimmableOutputs, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_lblDimmableOutputs, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblDimmableOutputs, 241);
-    lv_obj_set_y(ui_lblDimmableOutputs, -20);
-    lv_obj_set_align(ui_lblDimmableOutputs, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_lblDimmableOutputs, "Dimmable Outputs");
-    lv_obj_set_style_text_font(ui_lblDimmableOutputs, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_Label12 = lv_label_create(ui_pnlSaveConfigs);
+    lv_obj_set_width(ui_Label12, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Label12, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Label12, -2);
+    lv_obj_set_y(ui_Label12, -12);
+    lv_obj_set_align(ui_Label12, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Label12, "SAVING CONFIGURATIONS...\n   DEVICE WILL RESTART");
+    lv_obj_set_style_text_color(ui_Label12, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Label12, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Label12, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_swDim1 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swDim1, 73);
-    lv_obj_set_height(ui_swDim1, 44);
-    lv_obj_set_x(ui_swDim1, 163);
-    lv_obj_set_y(ui_swDim1, 19);
-    lv_obj_set_align(ui_swDim1, LV_ALIGN_CENTER);
-    lv_obj_set_style_radius(ui_swDim1, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_Label9 = lv_label_create(ui_pnlSaveConfigs);
+    lv_obj_set_width(ui_Label9, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Label9, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Label9, -2);
+    lv_obj_set_y(ui_Label9, 25);
+    lv_obj_set_align(ui_Label9, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Label9, "CLOSE");
+    lv_obj_set_style_text_color(ui_Label9, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Label9, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Label9, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    lv_obj_set_style_radius(ui_swDim1, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swDim1, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swDim1, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
+    ui_pbSaveConfigs = lv_bar_create(ui_pnlSaveConfigs);
+    lv_obj_set_width(ui_pbSaveConfigs, 173);
+    lv_obj_set_height(ui_pbSaveConfigs, 10);
+    lv_obj_set_x(ui_pbSaveConfigs, -2);
+    lv_obj_set_y(ui_pbSaveConfigs, 39);
+    lv_obj_set_align(ui_pbSaveConfigs, LV_ALIGN_CENTER);
 
-    lv_obj_set_style_radius(ui_swDim1, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
+    ui_Arc1 = lv_arc_create(ui_scrPanelSettings);
+    lv_obj_set_width(ui_Arc1, 206);
+    lv_obj_set_height(ui_Arc1, 206);
+    lv_obj_set_x(ui_Arc1, -256);
+    lv_obj_set_y(ui_Arc1, -47);
+    lv_obj_set_align(ui_Arc1, LV_ALIGN_CENTER);
+    lv_arc_set_value(ui_Arc1, 50);
+    lv_arc_set_bg_angles(ui_Arc1, 280, 270);
+    lv_obj_set_style_radius(ui_Arc1, 100, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(ui_Arc1, lv_color_hex(0x4AB9CB), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_Arc1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_width(ui_Arc1, 24, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_color(ui_Arc1, lv_color_hex(0xEAEAEA), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_opa(ui_Arc1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_width(ui_Arc1, 22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_cbxDim1 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxDim1, "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nEX. LIGHT\nSPOT");
-    lv_obj_set_width(ui_cbxDim1, 140);
-    lv_obj_set_height(ui_cbxDim1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxDim1, 279);
-    lv_obj_set_y(ui_cbxDim1, 20);
-    lv_obj_set_align(ui_cbxDim1, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxDim1, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxDim1, LV_OBJ_FLAG_CLICKABLE);      /// Flags
+    lv_obj_set_style_bg_color(ui_Arc1, lv_color_hex(0x00FF5D), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Arc1, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_width(ui_Arc1, 22, LV_PART_INDICATOR | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_img_src(ui_Arc1, &ui_img_arc1_png, LV_PART_INDICATOR | LV_STATE_DEFAULT);
 
+    lv_obj_set_style_bg_color(ui_Arc1, lv_color_hex(0x006594), LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Arc1, 255, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(ui_Arc1, lv_color_hex(0xFFFFFF), LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_Arc1, 255, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_width(ui_Arc1, 4, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_left(ui_Arc1, 2, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_right(ui_Arc1, 2, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_top(ui_Arc1, 2, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_bottom(ui_Arc1, 2, LV_PART_KNOB | LV_STATE_DEFAULT);
 
+    ui_Label2 = lv_label_create(ui_scrPanelSettings);
+    lv_obj_set_width(ui_Label2, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Label2, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Label2, -256);
+    lv_obj_set_y(ui_Label2, -51);
+    lv_obj_set_align(ui_Label2, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Label2, "%75");
+    lv_obj_set_style_text_font(ui_Label2, &lv_font_montserrat_42, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_cbxDim2 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxDim2, "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nEX. LIGHT\nSPOT");
-    lv_obj_set_width(ui_cbxDim2, 140);
-    lv_obj_set_height(ui_cbxDim2, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxDim2, 279);
-    lv_obj_set_y(ui_cbxDim2, 67);
-    lv_obj_set_align(ui_cbxDim2, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxDim2, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxDim2, LV_OBJ_FLAG_CLICKABLE);      /// Flags
+    ui_Arc3 = lv_arc_create(ui_scrPanelSettings);
+    lv_obj_set_width(ui_Arc3, 206);
+    lv_obj_set_height(ui_Arc3, 206);
+    lv_obj_set_x(ui_Arc3, 1);
+    lv_obj_set_y(ui_Arc3, -44);
+    lv_obj_set_align(ui_Arc3, LV_ALIGN_CENTER);
+    lv_arc_set_value(ui_Arc3, 50);
+    lv_arc_set_bg_angles(ui_Arc3, 280, 270);
+    lv_obj_set_style_radius(ui_Arc3, 100, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(ui_Arc3, lv_color_hex(0x4AB9CB), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_Arc3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_width(ui_Arc3, 24, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_color(ui_Arc3, lv_color_hex(0xEAEAEA), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_opa(ui_Arc3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_width(ui_Arc3, 22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    lv_obj_set_style_bg_color(ui_Arc3, lv_color_hex(0x00FF5D), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Arc3, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_width(ui_Arc3, 22, LV_PART_INDICATOR | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_img_src(ui_Arc3, &ui_img_arc1_png, LV_PART_INDICATOR | LV_STATE_DEFAULT);
 
+    lv_obj_set_style_bg_color(ui_Arc3, lv_color_hex(0x006594), LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Arc3, 255, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(ui_Arc3, lv_color_hex(0xFFFFFF), LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_Arc3, 255, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_width(ui_Arc3, 4, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_left(ui_Arc3, 2, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_right(ui_Arc3, 2, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_top(ui_Arc3, 2, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_bottom(ui_Arc3, 2, LV_PART_KNOB | LV_STATE_DEFAULT);
 
-    ui_cbxDim3 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxDim3, "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nEX. LIGHT\nSPOT");
-    lv_obj_set_width(ui_cbxDim3, 140);
-    lv_obj_set_height(ui_cbxDim3, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxDim3, 279);
-    lv_obj_set_y(ui_cbxDim3, 115);
-    lv_obj_set_align(ui_cbxDim3, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxDim3, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxDim3, LV_OBJ_FLAG_CLICKABLE);      /// Flags
+    ui_Arc4 = lv_arc_create(ui_scrPanelSettings);
+    lv_obj_set_width(ui_Arc4, 206);
+    lv_obj_set_height(ui_Arc4, 206);
+    lv_obj_set_x(ui_Arc4, 253);
+    lv_obj_set_y(ui_Arc4, -41);
+    lv_obj_set_align(ui_Arc4, LV_ALIGN_CENTER);
+    lv_arc_set_value(ui_Arc4, 50);
+    lv_arc_set_bg_angles(ui_Arc4, 280, 270);
+    lv_obj_set_style_radius(ui_Arc4, 100, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(ui_Arc4, lv_color_hex(0x4AB9CB), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_Arc4, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_width(ui_Arc4, 24, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_color(ui_Arc4, lv_color_hex(0xEAEAEA), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_opa(ui_Arc4, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_width(ui_Arc4, 22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    lv_obj_set_style_bg_color(ui_Arc4, lv_color_hex(0x00FF5D), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Arc4, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_width(ui_Arc4, 22, LV_PART_INDICATOR | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_img_src(ui_Arc4, &ui_img_arc1_png, LV_PART_INDICATOR | LV_STATE_DEFAULT);
 
+    lv_obj_set_style_bg_color(ui_Arc4, lv_color_hex(0x006594), LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Arc4, 255, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(ui_Arc4, lv_color_hex(0xFFFFFF), LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_Arc4, 255, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_width(ui_Arc4, 4, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_left(ui_Arc4, 2, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_right(ui_Arc4, 2, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_top(ui_Arc4, 2, LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_bottom(ui_Arc4, 2, LV_PART_KNOB | LV_STATE_DEFAULT);
 
-    ui_cbxDim4 = lv_dropdown_create(ui_scrPanelSettings);
-    lv_dropdown_set_options(ui_cbxDim4, "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nEX. LIGHT\nSPOT");
-    lv_obj_set_width(ui_cbxDim4, 140);
-    lv_obj_set_height(ui_cbxDim4, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_cbxDim4, 280);
-    lv_obj_set_y(ui_cbxDim4, 164);
-    lv_obj_set_align(ui_cbxDim4, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_cbxDim4, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_cbxDim4, LV_OBJ_FLAG_CLICKABLE);      /// Flags
+    ui_Label10 = lv_label_create(ui_scrPanelSettings);
+    lv_obj_set_width(ui_Label10, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Label10, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Label10, 0);
+    lv_obj_set_y(ui_Label10, -47);
+    lv_obj_set_align(ui_Label10, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Label10, "%75");
+    lv_obj_set_style_text_font(ui_Label10, &lv_font_montserrat_42, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    ui_Label11 = lv_label_create(ui_scrPanelSettings);
+    lv_obj_set_width(ui_Label11, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Label11, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Label11, 253);
+    lv_obj_set_y(ui_Label11, -43);
+    lv_obj_set_align(ui_Label11, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Label11, "%75");
+    lv_obj_set_style_text_font(ui_Label11, &lv_font_montserrat_42, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-
-    ui_swDim2 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swDim2, 73);
-    lv_obj_set_height(ui_swDim2, 44);
-    lv_obj_set_x(ui_swDim2, 165);
-    lv_obj_set_y(ui_swDim2, 69);
-    lv_obj_set_align(ui_swDim2, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swDim2, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swDim2, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swDim2, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swDim2, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swDim2, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swDim2, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_swDim3 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swDim3, 73);
-    lv_obj_set_height(ui_swDim3, 44);
-    lv_obj_set_x(ui_swDim3, 165);
-    lv_obj_set_y(ui_swDim3, 119);
-    lv_obj_set_align(ui_swDim3, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swDim3, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swDim3, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swDim3, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swDim3, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swDim3, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swDim3, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_swDim4 = lv_switch_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_swDim4, 73);
-    lv_obj_set_height(ui_swDim4, 44);
-    lv_obj_set_x(ui_swDim4, 165);
-    lv_obj_set_y(ui_swDim4, 167);
-    lv_obj_set_align(ui_swDim4, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_swDim4, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_obj_set_style_radius(ui_swDim4, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swDim4, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_swDim4, lv_color_hex(0xE6E2E6), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_swDim4, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_radius(ui_swDim4, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    lv_obj_add_event_cb(ui_swO1, ui_event_swO1, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swO2, ui_event_swO2, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swO3, ui_event_swO3, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swO4, ui_event_swO4, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swO5, ui_event_swO5, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swO6, ui_event_swO6, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swO7, ui_event_swO7, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swO8, ui_event_swO8, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swO9, ui_event_swO9, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swO10, ui_event_swO10, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swO11, ui_event_swO11, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swO12, ui_event_swO12, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swO14, ui_event_swO14, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swO15, ui_event_swO15, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swO16, ui_event_swO16, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swO13, ui_event_swO13, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button5, ui_event_Button5, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button3, ui_event_Button3, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swDim1, ui_event_swDim1, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swDim2, ui_event_swDim2, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swDim3, ui_event_swDim3, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_swDim4, ui_event_swDim4, LV_EVENT_ALL, NULL);
 
 }

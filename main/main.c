@@ -32,6 +32,7 @@
  #include "hexnet_bluetooth.h"
  #include "hexnet_wifi.h"
  #include "hexnet_nvs.h"
+ #include "hexnet_canbus.h"
  #include "display_manager.h"
  #include "data_manager.h"
 
@@ -41,7 +42,7 @@
 void app_main()
 {
     //data_manager_init();
-
+    twai_ini();
     // Initialize NVS
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {

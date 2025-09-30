@@ -6,6 +6,8 @@
 #include "ui_files/ui.h"
 #include "hexnet_bluetooth.h"
 #include "hexnet_nvs.h"
+#include "hexnet_canbus.h"
+#include "settings_page.h"
 
 #include <stdio.h>
 #include "string.h"
@@ -35,6 +37,8 @@ static const char *TAG = "DISPLAY_MANAGER";
 
 extern lv_obj_t * ui_scrTheme;
 extern lv_obj_t * ui_scrWallpaper;
+
+
 
 extern lv_obj_t * ui_lblVangoText;
 extern lv_obj_t *ui_imgDevice;
@@ -116,7 +120,6 @@ extern lv_obj_t *ui_swEnableWallpaper;
 extern lv_obj_t *ui_rlrTime;
 
 extern lv_obj_t * ui_scrInit;
-extern lv_obj_t *ui_scrRules;
 extern lv_obj_t *ui_scrPanelSettings;
 extern lv_obj_t *ui_lblPanelSettings;
 extern lv_obj_t *ui_lblSensors;
@@ -128,6 +131,25 @@ extern lv_obj_t *ui_lblSettingsB;
 extern lv_obj_t *ui_Colorwheel1;
 extern lv_obj_t *ui_btnRGBColor;
 extern lv_obj_t *ui_brInit;
+extern lv_obj_t *ui_Label1;
+
+extern lv_obj_t * ui_pbSaveConfigs;
+extern lv_obj_t * ui_pnlSaveConfigs;
+
+
+
+extern const lv_img_dsc_t ui_img_lamp_png;
+extern const lv_img_dsc_t ui_img_water_png;
+extern const lv_img_dsc_t ui_img_outlet_png;
+extern const lv_img_dsc_t ui_img_oven_png;
+extern const lv_img_dsc_t ui_img_tv_png;
+extern const lv_img_dsc_t ui_img_refrigerator_png;
+extern const lv_img_dsc_t ui_img_toilet_png;
+extern const lv_img_dsc_t ui_img_usb_png;
+extern const lv_img_dsc_t ui_img_ac_png;
+extern const lv_img_dsc_t ui_img_readinglamp_png;
+extern const lv_img_dsc_t ui_img_heater_png;
+
 
 // Slave ID 
 #define SLAVE_ID 50
@@ -186,15 +208,18 @@ extern lv_obj_t *ui_brInit;
 #define ANALOG_INPUT_2_INDIS 38
 #define ANALOG_INPUT_3_INDIS 39
 #define ANALOG_INPUT_4_INDIS 40
+#define ANALOG_INPUT_5_INDIS 41
 
 // Dimmable Outputs
-#define DIMMABLE_OUTPUT_1_INDIS 41
-#define DIMMABLE_OUTPUT_2_INDIS 42
+#define DIMMABLE_OUTPUT_1_INDIS 42
+#define DIMMABLE_OUTPUT_2_INDIS 43
+#define DIMMABLE_OUTPUT_3_INDIS 44
+#define DIMMABLE_OUTPUT_4_INDIS 45
 
 // RGB Outputs
-#define RGB_R_INDIS 42
-#define RGB_G_INDIS 43
-#define RGB_B_INDIS 44
+#define RGB_R_INDIS 46
+#define RGB_G_INDIS 47
+#define RGB_B_INDIS 48
 
 
 
@@ -250,7 +275,7 @@ extern lv_obj_t *ui_brInit;
 #endif // CONFIG_EXAMPLE_DOUBLE_FB
 
 #define EXAMPLE_LVGL_TICK_PERIOD_MS    2
-#define EXAMPLE_LVGL_TASK_MAX_DELAY_MS 500
+#define EXAMPLE_LVGL_TASK_MAX_DELAY_MS 1000
 #define EXAMPLE_LVGL_TASK_MIN_DELAY_MS 1
 #define EXAMPLE_LVGL_TASK_STACK_SIZE   (8 * 1024)
 #define EXAMPLE_LVGL_TASK_PRIORITY     2
@@ -265,17 +290,6 @@ SemaphoreHandle_t sem_gui_ready;
 
 // Define the maximum number of outputs
 #define MAX_OUTPUTS 16
-// extern lv_obj_t* ui_img_lamp_png;
-// extern lv_obj_t* ui_img_water_png;
-// extern lv_obj_t* ui_img_outlet_png;
-// extern lv_obj_t* ui_img_oven_png;
-// extern lv_obj_t* ui_img_tv_png;
-// extern lv_obj_t* ui_img_refrigerator_png;
-// extern lv_obj_t* ui_img_toilet_png;
-// extern lv_obj_t* ui_img_usb_png;
-// extern lv_obj_t* ui_img_ac_png;
-// extern lv_obj_t* ui_img_readinglamp_png;
-// extern lv_obj_t* ui_img_heater_png;
 
 // Declare button, label, and image objects
 lv_obj_t* btnIO[MAX_OUTPUTS] = {NULL};
@@ -294,6 +308,7 @@ const char* lblBtnNames[18] = {
 int numOfOutputs = 16;
 int numOfDims = 4;
 int numOfSensors = 5;
+float batarya_volt = 0;
 bool slaveConnectionStatus = true;
 int panelThemeType = 0;
 int panelWallpaperEnable = false;
@@ -304,12 +319,18 @@ cJSON* notifications = NULL;
 int outputsBuffer[16] = {0};
 int sensorsBuffer[5] = {0};
 int dimsBuffer[4] = {0};
+int rgbBuffer[3] = {0};
 int btn_index = 0;
-
+uint8_t rgbEna = 0; // RGB LED enable variable
 int panelWallpaperEnableCounter = 1;
 
 
-
+void parse_read_data(cJSON* json);
+void parse_write_data(cJSON* json);
+void parse_configuration_data(cJSON* json);
+void parse_rules_data(cJSON* json);
+char* create_json_data_packet(const uint16_t* regs_data, int numOfOutputs, int numOfDims, int numOfSensors, bool slaveConnectionStatus, int themeType, int numberOfNotifications, cJSON* notifications);
+void parse_ble_data(const char* json_data);
 
 
 
@@ -337,16 +358,15 @@ static void example_lvgl_touch_cb(lv_indev_drv_t * drv, lv_indev_data_t * data)
 }
 
 
-
-
+//###############################   DISPLAY MANAGER FUNCTIONS   ##########################################
 void my_btnThemeWhiteFunc(void)
 {
     panelThemeType = 0;
     lv_obj_set_style_bg_color(ui_scrMain, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_scrTheme, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_scrSettings, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_scrRules, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_scrPanelSettings, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_scrRGB, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     
     lv_obj_set_style_text_color(ui_lblPanelSettings, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -405,6 +425,68 @@ void my_btnThemeWhiteFunc(void)
 
 }
 
+
+
+
+void my_btnBlackThemeFunc(void)
+{
+    panelThemeType = 1;
+    lv_obj_set_style_bg_color(ui_scrMain, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_scrTheme, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_scrSettings, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_scrPanelSettings, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_scrRGB, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    
+    lv_obj_set_style_text_color(ui_lblPanelSettings, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblSensors, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblDimmableOutputs, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Checkbox1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Checkbox2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Checkbox3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Checkbox4, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Checkbox5, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Checkbox6, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+
+    lv_obj_set_style_text_color(ui_lblPnlGrup1Sicaklik1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblPnlGrup1Sicaklik2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_pnlGrupSicaklik1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_pnlGrupSicaklik2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+
+    lv_obj_set_style_bg_color(ui_pnlGrup1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblGrup1Oran1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblGrup1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    lv_obj_set_style_bg_color(ui_pnlGrup2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblGrup1Oran2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblGrup2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    lv_obj_set_style_bg_color(ui_pnlGrup3, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblGrup1Oran3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblGrup3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+
+    lv_obj_set_style_bg_color(ui_pnlSensors, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_pnlOutputs, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    lv_obj_set_style_text_color(ui_lblVangoText, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    lv_obj_set_style_text_color(ui_lblSelectTheme, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblWallpaper, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblRolllerTime, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    lv_obj_set_style_text_color(ui_lblWeather, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblDateAndTime, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblSettingsB, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    for (int i = 0; i < numOfDims; i++) {
+        lv_obj_set_style_text_color(lblDims[i], lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    }
+}
 
 
 
@@ -489,17 +571,49 @@ void set_sensor_panels_coordinates(int numOfSensors, int sensorsBuffer[5]) {
 
 // Function to toggle button color based on regs_data
 void button_events(lv_event_t* e) {
+
+    int8_t val = 0;
+    uint8_t can_data[8] = {0}; // CAN verisi için buffer
     lv_obj_t* btn = lv_event_get_target(e);
     btn_index = (int)lv_event_get_user_data(e);
-    toggle_regs_data(btn_index + OUTPUT_1_INDIS);
-    ESP_LOGI(TAG, "Button index: %d", btn_index);
+    int16_t outpts = get_outputs();
+
+    // Check the bit at btn_index
+    if (((outpts >> btn_index) & 0x01) == 1) {
+        val = 0; // If bit is 1, set val to 0
+    } else {
+        val = 1; // If bit is 0, set val to 1
+    }
+    
+    can_data[0] = btn_index;  // İlk byte veri
+    can_data[1] = val;  // İlk byte veri
+    send_can_frame(0x720, can_data);  // Output için CAN ID: 0x720
+    ESP_LOGI(TAG, "Button index: %d val: %d", btn_index, val);
 }
 
+// Function to toggle dimmer value based on current value
+void dim_events(lv_event_t* e) {
+    uint8_t can_data[8] = {0}; // CAN data buffer
+    lv_obj_t* slider = lv_event_get_target(e);
+    int dim_index = (int)lv_event_get_user_data(e);
+
+    // Get the new value from the slider
+    int16_t dim_value = lv_slider_get_value(slider);
+
+    // Prepare CAN data: [index, value]
+    can_data[0] = dim_index;
+    can_data[1] = dim_value;
+
+    // Send CAN frame for dimmer (example CAN ID: 0x730)
+    send_can_frame(0x730, can_data);
+
+    ESP_LOGI(TAG, "Dimmer index: %d, value: %d", dim_index, dim_value);
+}
 // Function to create the UI dynamically based on numOfOutputs
 void create_dynamic_ui(lv_obj_t* parent) {
 
-    int btn_width = 105;
-    int btn_height = 190;
+    int btn_width = 100;
+    int btn_height = 150;
     int btn_x_offset = 106; // btn_width + 1 for spacing
     int btn_y_offset = 191; // btn_height + 1 for spacing
     int x_start = 14;
@@ -515,8 +629,8 @@ void create_dynamic_ui(lv_obj_t* parent) {
 
     // Adjust button size and spacing if numOfOutputs is greater than 8
     if (numOfOutputs > 8) {
-        btn_width = 105;
-        btn_height = 95;
+        btn_width = 100;
+        btn_height = 90;
         btn_x_offset = 106; // btn_width + 1 for spacing
         btn_y_offset = 96; // btn_height + 1 for spacing
         y_start = -150;
@@ -535,7 +649,7 @@ void create_dynamic_ui(lv_obj_t* parent) {
         lv_obj_set_align(btnIO[i], LV_ALIGN_CENTER);
         lv_obj_add_flag(btnIO[i], LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
         lv_obj_clear_flag(btnIO[i], LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-        lv_obj_set_style_radius(btnIO[i], 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_radius(btnIO[i], 10, LV_PART_MAIN | LV_STATE_DEFAULT);
         lv_obj_set_style_bg_color(btnIO[i], lv_color_hex(0x5A5A5A), LV_PART_MAIN | LV_STATE_DEFAULT);
         lv_obj_set_style_bg_opa(btnIO[i], 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -596,6 +710,8 @@ void create_dynamic_ui(lv_obj_t* parent) {
         lv_obj_set_style_pad_right(sldDims[i], 15, LV_PART_KNOB | LV_STATE_PRESSED);
         lv_obj_set_style_pad_top(sldDims[i], 15, LV_PART_KNOB | LV_STATE_PRESSED);
         lv_obj_set_style_pad_bottom(sldDims[i], 15, LV_PART_KNOB | LV_STATE_PRESSED);
+
+        lv_obj_add_event_cb(sldDims[i], dim_events, LV_EVENT_RELEASED, (void*)i);
 
         // Create the label
         lblDims[i] = lv_label_create(ui_pnlSensors);
@@ -689,147 +805,317 @@ void create_dynamic_ui(lv_obj_t* parent) {
     apply_theme_settings();
 
 }
-void my_btnBlackThemeFunc(void)
+
+
+// Function to set the image source based on connection status
+void set_device_image(bool connected) {
+    static bool condition = false;
+    if (connected) {
+        lv_obj_clear_flag(ui_imgsconnected, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(ui_imgsnotconnected, LV_OBJ_FLAG_HIDDEN);
+        condition = true;
+    } else {
+        lv_obj_clear_flag(ui_imgsnotconnected, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(ui_imgsconnected, LV_OBJ_FLAG_HIDDEN);
+        if (condition && !connected)
+        {
+            condition = false;
+            lv_obj_clear_flag(ui_pnlConnectionLost, LV_OBJ_FLAG_HIDDEN);     /// Flags
+            lv_obj_move_foreground(ui_pnlConnectionLost);
+            lv_label_set_text(ui_Label1, "IO Module Connection Lost!");
+        }
+        
+    }  
+}
+
+
+// Function to set the image source based on connection status
+void set_bluetooth_icon(bool connected) {
+    static bool bcondition = false;
+    if (connected) {
+        lv_obj_add_flag(ui_imgBluetoothNotConnected, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_clear_flag(ui_imgBluetoothConnected, LV_OBJ_FLAG_HIDDEN);  
+        bcondition = true;
+    } else {
+        lv_obj_clear_flag(ui_imgBluetoothNotConnected, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(ui_imgBluetoothConnected, LV_OBJ_FLAG_HIDDEN);
+        if (bcondition && !connected)
+        {
+            bcondition = false;
+            lv_obj_clear_flag(ui_pnlConnectionLost, LV_OBJ_FLAG_HIDDEN);     /// Flags
+            lv_obj_move_foreground(ui_pnlConnectionLost);
+            lv_label_set_text(ui_Label1, "Bluetooth Connection Lost!");
+        }
+    }
+}
+
+
+void set_RGBTurnONOFF(int val)
 {
-    panelThemeType = 1;
-    lv_obj_set_style_bg_color(ui_scrMain, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_scrTheme, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_scrSettings, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_scrRules, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_scrPanelSettings, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_color_t new_color = lv_color_make(0x5A, 0x5A, 0x5A);
+    if(val == 1) {
+        rgbEna = 1;
+    }
+    else if(val == 0) {
+        lv_obj_set_style_bg_color(ui_btnRGBColor, new_color, LV_PART_MAIN | LV_STATE_DEFAULT);
+        rgbEna = 0;
+    }
+}
+
+
+int initBarCounter = 0;
+int initCounter = 0;
+int scrMode = 0;
+static void init_timer(lv_timer_t * timer) {
+    // Check if ui_brInit is valid before using it
+    if (ui_brInit != NULL && initBarCounter < 21) {
+        lv_bar_set_value(ui_brInit, initBarCounter * 5, LV_ANIM_OFF);   
+    }
+    initBarCounter++;
+}
+
+// Timer callback function
+static void timer_updateTimer_callback(lv_timer_t * timer) {
+    if (initCounter < 10) {
+        if (scrMode == 0) {
+            scrMode = 1;
+        }
+    }
+    else {
+        if (scrMode == 1) {
+            // Check if ui_scrMain is valid before loading it
+            if (ui_scrMain != NULL) {
+                lv_scr_load(ui_scrMain);
+            }
+            scrMode = 0;
+        }
+        initCounter = 11;
+        // Your code here, e.g., update display with new data
+        const uint16_t* regs_data = getSlavesRegsData();
+        if (regs_data != NULL) {
+            update_display_with_data((const uint8_t*)regs_data, 70);
+        }
+    }
+    initCounter++;
+
+}
+
+
+static void wallpaper_update_timer_callback(lv_timer_t * timer) {
+    if (panelWallpaperEnable) {
+        if (panelWallpaperEnableCounter == panelWallpaperTime) {
+            // Check if ui_scrWallpaper is valid before loading it
+            if (ui_scrWallpaper != NULL) {
+                lv_scr_load(ui_scrWallpaper);
+            }
+        }
+        panelWallpaperEnableCounter++;
+    }
+    else {
+        panelWallpaperEnableCounter = 0;
+    }
+    
+}
+
+// Function to set the button color based on the value
+void set_button_color(lv_obj_t *btn, uint16_t value, int connected) {
+    if (connected == 0) {
+        lv_obj_set_style_bg_color(btn, lv_color_hex(0x5F5F5F), LV_PART_MAIN | LV_STATE_DEFAULT); // Gray
+        return;
+    }
+    if (value == 1) {
+        lv_obj_set_style_bg_color(btn, lv_color_hex(0x37C600), LV_PART_MAIN | LV_STATE_DEFAULT); // Green
+    } else if (value == 0) {
+        lv_obj_set_style_bg_color(btn, lv_color_hex(0x5A5A5A), LV_PART_MAIN | LV_STATE_DEFAULT); // Gray
+    } else if (value == 2) {
+        lv_obj_set_style_bg_color(btn, lv_color_hex(0xC60000), LV_PART_MAIN | LV_STATE_DEFAULT); // Red
+    }
+}
+
+void get_data_json_format(const uint16_t* regs_data, int txPacketType, char** json_str)  {
+
+    // Call create_json_data_packet function
+    *json_str = create_json_data_packet(regs_data, numOfOutputs, numOfDims, numOfSensors, slaveConnectionStatus, panelThemeType, numberOfNotifications, notifications);
+    // Check if notifications is not NULL before deleting
+    if (notifications != NULL) {
+        cJSON_Delete(notifications);
+        notifications = NULL; // Set to NULL after deletion to avoid dangling pointer
+    }
+} 
+
+
+
+
+
+// Function to update display with new data
+void update_display_with_data(const uint8_t *data, int length) {
+    const uint16_t* regs_data = (const uint16_t*)data;
+
+    // Fetch data from registers
+    uint16_t analog_input_1 = get_analog_input(0);
+    uint16_t analog_input_2 = get_analog_input(1);
+    uint16_t analog_input_3 = get_analog_input(2);
+    uint16_t analog_input_4 = get_analog_input(3);
+    uint16_t analog_input_5 = get_analog_input(4);
+    batarya_volt = get_voltage() / 100.0;
+    float amper = regs_data[CURRENT_INDIS] / 100.0;
+
+    // Convert voltage to string with comma
+    char batarya_volt_str[20];
+    if (batarya_volt < 7.0 || batarya_volt > 16.0) {
+        //ESP_LOGW(TAG, "Voltage out of range: %.2fV", batarya_volt);
+        snprintf(batarya_volt_str, sizeof(batarya_volt_str), "Fail");
+    } else {
+        int before_comma_volt = (int)batarya_volt;
+        int after_comma_volt = (int)((batarya_volt - before_comma_volt) * 100);
+        snprintf(batarya_volt_str, sizeof(batarya_volt_str), "Battery: %d,%02dV", before_comma_volt, after_comma_volt);
+    }
+
+    // Convert current to string with comma
+    char amper_str[10];
+    if (amper < 0 || amper > 100.0) {
+        //ESP_LOGW(TAG, "Current out of range: %.2fA", amper);
+        snprintf(amper_str, sizeof(amper_str), "Fail");
+    } else {
+        int before_comma_amper = (int)amper;
+        int after_comma_amper = (int)((amper - before_comma_amper) * 100);
+        snprintf(amper_str, sizeof(amper_str), "%d,%02dA", before_comma_amper, after_comma_amper);
+    }
+
+
+    // Update the display labels with the fetched data
+    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger1, "%d°C", analog_input_4);
+    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger2, "%d°C", analog_input_5);
+    lv_label_set_text_fmt(ui_lblGrup1Oran1, "%d%%", analog_input_1);
+    lv_label_set_text_fmt(ui_lblGrup1Oran2, "%d%%", analog_input_2);
+    lv_label_set_text_fmt(ui_lblGrup1Oran3, "%d%%", analog_input_3);
+
+
+    // Update the arcs with the fetched data
+    lv_arc_set_value(ui_arcGrup1, analog_input_1);
+    lv_arc_set_value(ui_arcGrup2, analog_input_2);
+    lv_arc_set_value(ui_arcGrup3, analog_input_3);
 
     
-    lv_obj_set_style_text_color(ui_lblPanelSettings, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblSensors, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblDimmableOutputs, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_Checkbox1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_Checkbox2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_Checkbox3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_Checkbox4, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_Checkbox5, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    // Check Modbus connection status and update device image
+    //bool Deviceconnected = get_modbus_connection_status();
+    bool Deviceconnected = get_canbus_connection_status();
+    set_device_image(Deviceconnected);
+    //if (Deviceconnected) apply_rgb_data_to_wheel(get_rgb_value(0), get_rgb_value(1), get_rgb_value(2));
 
-    lv_obj_set_style_text_color(ui_lblPnlGrup1Sicaklik1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblPnlGrup1Sicaklik2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_pnlGrupSicaklik1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_pnlGrupSicaklik2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    bool btConnected = get_connection_status();
+    set_bluetooth_icon(btConnected);
 
-
-    lv_obj_set_style_bg_color(ui_pnlGrup1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblGrup1Oran1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblGrup1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_bg_color(ui_pnlGrup2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblGrup1Oran2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblGrup2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_bg_color(ui_pnlGrup3, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblGrup1Oran3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblGrup3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-
-
-    lv_obj_set_style_bg_color(ui_pnlSensors, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_pnlOutputs, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_text_color(ui_lblVangoText, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_text_color(ui_lblSelectTheme, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblWallpaper, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblRolllerTime, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_text_color(ui_lblWeather, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblDateAndTime, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblSettingsB, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    for (int i = 0; i < numOfDims; i++) {
-        lv_obj_set_style_text_color(lblDims[i], lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    if(!btConnected){
+        //If there is no connection, the time and date will not be updated. Only Battery voltage will be updated.
+        lv_label_set_text(ui_lblDateAndTime, batarya_volt_str);
+        lv_obj_add_flag(ui_imgWForecast, LV_OBJ_FLAG_HIDDEN);     /// Flags
     }
-}
-
-
-
-// Helper function to create a notification
-cJSON* create_notification(const char* type, const char* time, const char* date) {
-    cJSON *notification = cJSON_CreateObject();
-    cJSON_AddStringToObject(notification, "NotificationType", type);
-    cJSON_AddStringToObject(notification, "NotificationTime", time);
-    cJSON_AddStringToObject(notification, "NotificationDate", date);
-    return notification;
-}
-
-// Function to create example notifications and add them to the JSON object
-void add_example_notifications(cJSON *json, int numberOfNotifications) {
-    cJSON *notifications = cJSON_CreateArray();
-
-    for (int i = 0; i < numberOfNotifications && i < 10; i++) {
-        char type[16];
-        char time[6];
-        char date[11];
-
-        // Example data for notifications
-        snprintf(type, sizeof(type), "Type%d", i + 1);
-        snprintf(time, sizeof(time), "%02d:00", i + 8); // Example times from 08:00 to 17:00
-        snprintf(date, sizeof(date), "2023-10-%02d", i + 1); // Example dates from 2023-10-01 to 2023-10-10
-
-        cJSON_AddItemToArray(notifications, create_notification(type, time, date));
+    else{
+        char* converted_json_data;
+        get_data_json_format(regs_data, 0, &converted_json_data);
+        set_converted_json_data(converted_json_data);
     }
 
-    cJSON_AddItemToObject(json, "notifications", notifications);
+
+
+    parse_ble_data((const char*)get_spp_cmd_buff());
+    reset_spp_cmd_buff();
+
+
+    // Ensure create_dynamic_ui is called only once
+    static int ui_initialized = 0;
+    if (ui_initialized==2) {
+        create_dynamic_ui(ui_scrMain);
+        ui_initialized = 3;
+    }
+    if (ui_initialized > 3 && Deviceconnected) {
+        for (int i = 0; i < numOfOutputs; i++) {
+            set_button_color(btnIO[i], (get_outputs() >> i)&0x01, Deviceconnected);
+        }
+        for (int i = 0; i < numOfDims; i++) {
+            //lv_slider_set_value(sldDims[i], get_dimmable_output(i), LV_ANIM_OFF);
+        }
+    }
+    ui_initialized++;
 }
 
+
+//######################################################################################################################
+
+
+
+
+//###################################### JSON DATA PACKET FUNCTIONS ####################################################
 
 // Example function to create JSON data packet as a C string
-char* create_json_data_packet(const uint16_t* regs_data, int numOfOutputs, int numOfDims, int numOfSensors, bool slaveConnectionStatus, const char* themeType, int numberOfNotifications, cJSON* notifications) {
+char* create_json_data_packet(const uint16_t* regs_data, int numOfOutputs, int numOfDims, int numOfSensors, bool slaveConnectionStatus, int themeType, int numberOfNotifications, cJSON* notifications) {
     // Create a JSON object
     cJSON *json = cJSON_CreateObject();
 
     // Add number of outputs, dims, sensors, slave connection status, and theme type to the JSON object
+    cJSON_AddStringToObject(json, "slvConn", slaveConnectionStatus ? "Yes" : "No");
     cJSON_AddNumberToObject(json, "numOfOutputs", numOfOutputs);
     cJSON_AddNumberToObject(json, "numOfDims", numOfDims);
     cJSON_AddNumberToObject(json, "numOfSensors", numOfSensors);
-    cJSON_AddBoolToObject(json, "slaveConnectionStatus", slaveConnectionStatus);
-    cJSON_AddStringToObject(json, "themeType", "Hello");
-
-    // Add outputs to the JSON object
-    cJSON *outputs = cJSON_CreateObject();
-    cJSON_AddItemToObject(json, "outputs", outputs);
-    cJSON_AddNumberToObject(outputs, "output_1", regs_data[OUTPUT_1_INDIS]);
-    cJSON_AddNumberToObject(outputs, "output_2", regs_data[OUTPUT_2_INDIS]);
-    cJSON_AddNumberToObject(outputs, "output_3", regs_data[OUTPUT_3_INDIS]);
-    cJSON_AddNumberToObject(outputs, "output_4", regs_data[OUTPUT_4_INDIS]);
-    cJSON_AddNumberToObject(outputs, "output_5", regs_data[OUTPUT_5_INDIS]);
-    cJSON_AddNumberToObject(outputs, "output_6", regs_data[OUTPUT_6_INDIS]);
-    cJSON_AddNumberToObject(outputs, "output_7", regs_data[OUTPUT_7_INDIS]);
-    cJSON_AddNumberToObject(outputs, "output_8", regs_data[OUTPUT_8_INDIS]);
-
-    // Add analog sensors to the JSON object
-    cJSON *analog_sensors = cJSON_CreateObject();
-    cJSON_AddItemToObject(json, "analog_sensors", analog_sensors);
-    cJSON_AddNumberToObject(analog_sensors, "analog_input_1", regs_data[ANALOG_INPUT_1_INDIS]);
-    cJSON_AddNumberToObject(analog_sensors, "analog_input_2", regs_data[ANALOG_INPUT_2_INDIS]);
-    cJSON_AddNumberToObject(analog_sensors, "analog_input_3", regs_data[ANALOG_INPUT_3_INDIS]);
-    cJSON_AddNumberToObject(analog_sensors, "analog_input_4", regs_data[ANALOG_INPUT_4_INDIS]);
+    cJSON_AddStringToObject(json, "RGBEnabled", "yes");
+    cJSON_AddNumberToObject(json, "Theme", themeType);
+    cJSON_AddNumberToObject(json, "volt", batarya_volt);
 
 
-    // Add dims to the JSON object
-    cJSON *dims = cJSON_CreateObject();
-    cJSON_AddItemToObject(json, "dims", dims);
-    cJSON_AddNumberToObject(dims, "dim_1", regs_data[DIMMABLE_OUTPUT_1_INDIS]);
-    cJSON_AddNumberToObject(dims, "dim_2", regs_data[DIMMABLE_OUTPUT_1_INDIS]);
+    // Add outputsBuffer to the JSON object
+    cJSON *outputnames = cJSON_CreateIntArray(outputsBuffer, numOfOutputs);
+    cJSON_AddItemToObject(json, "outputsNameBuffer", outputnames);
 
-    // Add voltage and current to the JSON object
-    cJSON_AddNumberToObject(json, "voltage", regs_data[VOLTAGE_INDIS] / 100.0);
-    cJSON_AddNumberToObject(json, "current", regs_data[CURRENT_INDIS] / 100.0);
+    // Add dimsBuffer to the JSON object
+    cJSON *dimnames = cJSON_CreateIntArray(dimsBuffer, numOfDims);
+    cJSON_AddItemToObject(json, "DimsNameBuffer", dimnames);
 
-    // Add notifications to the JSON object
-    cJSON_AddNumberToObject(json, "numberOfNotifications", numberOfNotifications);
-    add_example_notifications(json, numberOfNotifications);
+    // Add sensorsBuffer to the JSON object
+    cJSON *sensornames = cJSON_CreateIntArray(sensorsBuffer, 5);
+    cJSON_AddItemToObject(json, "SensorsEnabledBuffer", sensornames);
+
+
+    // Fetch outputsBuffer from regs_data
+    int buf[16];
+    for (int i = 0; i < numOfOutputs; i++) {
+        buf[i] = get_outputs() >> i & 0x01; // Get the output state from the bitmask
+    }
+    cJSON *outputs = cJSON_CreateIntArray(buf, numOfOutputs);
+    cJSON_AddItemToObject(json, "outputsDataBuffer", outputs);
+
+    // Fetch dimsBuffer from regs_data
+    for (int i = 0; i < numOfDims; i++) {
+        buf[i] = get_dimmable_output(i);
+    }
+    cJSON *dims = cJSON_CreateIntArray(buf, numOfDims);
+    cJSON_AddItemToObject(json, "DimsDataBuffer", dims);
+
+
+    // Fetch sensorsBuffer from regs_data
+    for (int i = 0; i < numOfSensors; i++) {
+        buf[i] = get_analog_input(i);
+    }
+    cJSON *sensors = cJSON_CreateIntArray(buf, numOfSensors);
+    cJSON_AddItemToObject(json, "SensorsDataBuffer", sensors);
+
+
+    rgbBuffer[0] = get_rgb_value(0);
+    rgbBuffer[1] = get_rgb_value(1);
+    rgbBuffer[2] = get_rgb_value(2);
+    ESP_LOGI(TAG, "RGB Values: %d, %d, %d", get_rgb_value(0), get_rgb_value(1), get_rgb_value(2));
+    // Add rgbBuffer to the JSON object
+    cJSON *rgb = cJSON_CreateIntArray(rgbBuffer, 3);
+    cJSON_AddItemToObject(json, "RGBDataBuffer", rgb);
+    
+
+
 
 
     // Convert JSON object to string
     char *json_str = cJSON_PrintUnformatted(json);
+    ESP_LOGI("JSON_DATA_PACKET", "%s", json_str);
 
     // Free the JSON object
     cJSON_Delete(json);
@@ -840,6 +1126,7 @@ char* create_json_data_packet(const uint16_t* regs_data, int numOfOutputs, int n
 
 
 void show_weather_icon(int index) {
+    lv_obj_clear_flag(ui_imgWForecast, LV_OBJ_FLAG_HIDDEN);     /// Flags
     lv_img_set_offset_x(ui_imgWForecast, index );
 }
 
@@ -871,72 +1158,77 @@ void set_weather_icon(int weather) {
 }
 
 
-
-typedef struct {
-    uint16_t output_buffer[16];
-    char time[10];
-    char date[11];
-    char weather[20];
-    int number_of_notifications;
-    char notifications_buffer[10][50];
-} mobile_app_stream_t;
-mobile_app_stream_t stream;
-
-
-
-void parse_json_data(const char* json_data, mobile_app_stream_t* stream) {
-    cJSON *json = cJSON_Parse(json_data);
+// Function to parse BLE data and call the appropriate parsing function
+void parse_ble_data(const char* json_data) {
+    cJSON* json = cJSON_Parse(json_data);
     if (json == NULL) {
-        //ESP_LOGI(TAG, "Error parsing JSON data");
+        //ESP_LOGE("PARSE_BLE_DATA", "Invalid JSON data");
         return;
     }
 
-    cJSON *stream_data = cJSON_GetObjectItem(json, "stream_data");
-    if (stream_data == NULL) {
-        ESP_LOGI(TAG, "Error getting stream_data");
+    cJSON* messageType = cJSON_GetObjectItem(json, "MessageType");
+    if (messageType == NULL || !cJSON_IsString(messageType)) {
+        ESP_LOGE("PARSE_BLE_DATA", "MessageType not found or invalid");
         cJSON_Delete(json);
         return;
     }
 
-    // Parse outputs
-    cJSON *outputs = cJSON_GetObjectItem(stream_data, "outputs");
-    if (outputs != NULL) {
-        for (int i = 0; i < 16; i++) {
-            char output_name[10];
-            snprintf(output_name, sizeof(output_name), "output_%d", i + 1);
-            cJSON *output = cJSON_GetObjectItem(outputs, output_name);
-            if (output != NULL) {
-                stream->output_buffer[i] = (uint16_t)output->valueint;
-            }
-        }
+    if (strcmp(messageType->valuestring, "Read") == 0) {
+        parse_read_data(json);
+    } else if (strcmp(messageType->valuestring, "Write") == 0) {
+        parse_write_data(json);
+    } else if (strcmp(messageType->valuestring, "Configuration") == 0) {
+        parse_configuration_data(json);
+    } else if (strcmp(messageType->valuestring, "Rules") == 0) {
+        parse_rules_data(json);
+    } else {
+        ESP_LOGE("PARSE_BLE_DATA", "Unknown MessageType: %s", messageType->valuestring);
     }
 
+    cJSON_Delete(json);
+}
 
-    // Parse time and date
-    cJSON *time_data = cJSON_GetObjectItem(stream_data, "time_data");
-    if (time_data != NULL) {
-        cJSON *time = cJSON_GetObjectItem(time_data, "time");
-        cJSON *date = cJSON_GetObjectItem(time_data, "date");
-        if (time != NULL && date != NULL) {
-            strncpy(stream->time, time->valuestring, sizeof(stream->time) - 1);
-            strncpy(stream->date, date->valuestring, sizeof(stream->date) - 1);
 
-            // Merge time and date
-            char date_and_time[22]; // Adjust size as needed
-            snprintf(date_and_time, sizeof(date_and_time), "%s %s", stream->date, stream->time);
+// Function to parse Read data
+void parse_read_data(cJSON* json) {
+    cJSON* time = cJSON_GetObjectItem(json, "Time");
+    cJSON* date = cJSON_GetObjectItem(json, "Date");
+    cJSON* weather = cJSON_GetObjectItem(json, "Weather");
+    cJSON* location = cJSON_GetObjectItem(json, "Location");
+    cJSON* temper = cJSON_GetObjectItem(json, "Temperature");
 
-            // Set the merged time and date to the label
-            lv_label_set_text(ui_lblDateAndTime, date_and_time);
-        }
+    if (time && cJSON_IsString(time)) {
+        ESP_LOGI("PARSE_READ_DATA", "Time: %s", time->valuestring);
+    }
+    if (date && cJSON_IsString(date)) {
+        ESP_LOGI("PARSE_READ_DATA", "Date: %s", date->valuestring);
+    }
+    if (weather && cJSON_IsString(weather)) {
+        ESP_LOGI("PARSE_READ_DATA", "Weather: %s", weather->valuestring);
+    }
+    if (location && cJSON_IsString(location)) {
+        ESP_LOGI("PARSE_READ_DATA", "Location: %s", location->valuestring);
     }
 
-    // Parse weather
-    cJSON *weather = cJSON_GetObjectItem(stream_data, "weather");
-    if (weather != NULL) {
-        strncpy(stream->weather, weather->valuestring, sizeof(stream->weather) - 1);
+    if (temper && cJSON_IsString(temper)) {
+        ESP_LOGI("PARSE_READ_DATA", "Temperature: %s", temper->valuestring);
+    }
+
+    // Merge time, date, and batarya_volt
+    char merged_str[64];
+    snprintf(merged_str, sizeof(merged_str), "Date: %s  Time: %s  Battery: %.2fV", date->valuestring, time->valuestring, batarya_volt);
+
+    // Set the combined value to ui_lblDateAndTime
+    lv_label_set_text(ui_lblDateAndTime, merged_str);
+
+    snprintf(merged_str, sizeof(merged_str), "%s %s°C", location->valuestring, temper->valuestring);
+    lv_label_set_text(ui_lblWeather, merged_str);
+
+    // Set the weather icon based on the weather condition
+    if (weather && cJSON_IsString(weather)) {
         if (strcmp(weather->valuestring, "Sunny") == 0) {
             set_weather_icon(WEATHER_SUNNY);
-        } else if (strcmp(weather->valuestring, "Partly Sunny") == 0) {
+        } else if (strcmp(weather->valuestring, "P. Cloudy") == 0) {
             set_weather_icon(WEATHER_PARTLY_SUNNY);
         } else if (strcmp(weather->valuestring, "Thunder") == 0) {
             set_weather_icon(WEATHER_THUNDER);
@@ -947,256 +1239,174 @@ void parse_json_data(const char* json_data, mobile_app_stream_t* stream) {
         } else if (strcmp(weather->valuestring, "Cloudy") == 0) {
             set_weather_icon(WEATHER_CLOUDY);
         } else {
-            ESP_LOGI(TAG, "Unknown weather condition: %s", weather->valuestring);
+            ESP_LOGI("PARSE_READ_DATA", "Unknown weather condition: %s", weather->valuestring);
         }
     }
+}
 
-    // Parse notifications
-    cJSON *notifications = cJSON_GetObjectItem(stream_data, "notifications");
-    if (notifications != NULL) {
-        cJSON *number_of_notifications = cJSON_GetObjectItem(notifications, "number_of_notifications");
-        if (number_of_notifications != NULL) {
-            stream->number_of_notifications = number_of_notifications->valueint;
+
+
+// Function to parse Write data
+void parse_write_data(cJSON* json) {
+    cJSON* writeDataType = cJSON_GetObjectItem(json, "writeDataType");
+    cJSON* writeNo = cJSON_GetObjectItem(json, "writeNo");
+    cJSON* writeData = cJSON_GetObjectItem(json, "writeData");
+    uint8_t can_data[8] = {0}; // CAN verisi için buffer
+
+    if (writeDataType && cJSON_IsString(writeDataType)) {
+        ESP_LOGI("PARSE_WRITE_DATA", "writeDataType: %s", writeDataType->valuestring);
+    }
+    if (writeNo && cJSON_IsNumber(writeNo)) {
+        ESP_LOGI("PARSE_WRITE_DATA", "writeNo: %d", writeNo->valueint);
+    }
+
+    if (writeDataType && cJSON_IsString(writeDataType) && writeNo && cJSON_IsNumber(writeNo)) {
+        if (strcmp(writeDataType->valuestring, "Output") == 0) {
+            if (writeData && cJSON_IsNumber(writeData)) {
+                ESP_LOGI("PARSE_WRITE_DATA", "Output Value: %d", writeData->valueint);
+                can_data[0] = (uint8_t)writeNo->valueint;  // İlk byte veri
+                can_data[1] = (uint8_t)writeData->valueint;  // İlk byte veri
+                send_can_frame(0x720, can_data);  // Output için CAN ID: 0x720
+            }
+        } else if (strcmp(writeDataType->valuestring, "Dim") == 0) {
+            if (writeData && cJSON_IsNumber(writeData)) {
+                ESP_LOGI("PARSE_WRITE_DATA", "Dim Value: %d", writeData->valueint);
+                can_data[0] = (uint8_t)writeNo->valueint;  // İlk byte veri
+                can_data[1] = (uint8_t)writeData->valueint;  // İlk byte veri
+                send_can_frame(0x730, can_data);  // Dim için CAN ID: 0x730
+            }
+        } else if (strcmp(writeDataType->valuestring, "RGB") == 0) {
+            cJSON* rgbArray = cJSON_GetObjectItem(json, "writeData");
+            if (rgbArray && cJSON_IsArray(rgbArray) && cJSON_GetArraySize(rgbArray) == 3) {
+                can_data[0] = (uint8_t)cJSON_GetArrayItem(rgbArray, 0)->valueint; // Red
+                can_data[1] = (uint8_t)cJSON_GetArrayItem(rgbArray, 1)->valueint; // Green
+                can_data[2] = (uint8_t)cJSON_GetArrayItem(rgbArray, 2)->valueint; // Blue
+                ESP_LOGI("PARSE_WRITE_DATA", "RGB Values: R=%d, G=%d, B=%d", can_data[0], can_data[1], can_data[2]);
+                send_can_frame(0x740, can_data);  // RGB için CAN ID: 0x740
+            } else {
+                ESP_LOGE("PARSE_WRITE_DATA", "RGB writeData must be an array of 3 values.");
+            }
+        } else {
+            ESP_LOGI("PARSE_WRITE_DATA", "Unknown writeDataType: %s", writeDataType->valuestring);
         }
+    }
+}
 
-        for (int i = 0; i < stream->number_of_notifications && i < 10; i++) {
-            char notification_name[20];
-            snprintf(notification_name, sizeof(notification_name), "notification_%d", i + 1);
-            cJSON *notification = cJSON_GetObjectItem(notifications, notification_name);
-            if (notification != NULL) {
-                strncpy(stream->notifications_buffer[i], notification->valuestring, sizeof(stream->notifications_buffer[i]) - 1);
+void set_rgb_to_white() {
+    uint8_t can_data[8] = {0}; // CAN verisi için buffer
+    // Set RGB values to white
+    can_data[0] = 255; // Red
+    can_data[1] = 255; // Green
+    can_data[2] = 255; // Blue
+    can_data[3] = rgbEna;   // Unused byte
+    send_can_frame(0x740, can_data);  // RGB için CAN ID: 0x740
+}
+
+
+// Function to parse Configuration data
+void parse_configuration_data(cJSON* json) {
+    cJSON* numOfOutputs = cJSON_GetObjectItem(json, "numOfOutputs");
+    cJSON* outputsNameBuffer = cJSON_GetObjectItem(json, "OutputsNameBuffer");
+    cJSON* numOfDims = cJSON_GetObjectItem(json, "numOfDims");
+    cJSON* dimsNameBuffer = cJSON_GetObjectItem(json, "DimsNameBuffer");
+    cJSON* numOfSensors = cJSON_GetObjectItem(json, "numOfSensors");
+    cJSON* sensorsNameBuffer = cJSON_GetObjectItem(json, "SensorsNameBuffer");
+    cJSON* rgbEnabled = cJSON_GetObjectItem(json, "RGBEnabled");
+    cJSON* theme = cJSON_GetObjectItem(json, "Theme");
+
+    int outputsBuf[16] = {0};
+    int dimsBuf[4] = {0};
+    int sensorsBuf[5] = {0};
+
+    if (numOfOutputs && cJSON_IsNumber(numOfOutputs)) {
+        ESP_LOGI("PARSE_CONFIGURATION_DATA", "numOfOutputs: %d", numOfOutputs->valueint);
+    }
+    if (outputsNameBuffer && cJSON_IsArray(outputsNameBuffer)) {
+        int size = cJSON_GetArraySize(outputsNameBuffer);
+        ESP_LOGI("PARSE_CONFIGURATION_DATA", "OutputsNameBuffer:");
+        for (int i = 0; i < size && i < 16; i++) {
+            cJSON* item = cJSON_GetArrayItem(outputsNameBuffer, i);
+            if (cJSON_IsNumber(item)) {
+                outputsBuf[i] = item->valueint;
+                ESP_LOGI("PARSE_CONFIGURATION_DATA", "  %d", item->valueint);
             }
         }
     }
-
-    cJSON_Delete(json);
-
-    // Log parsed data
-    ESP_LOGI(TAG, "Outputs:");
-    for (int i = 0; i < 16; i++) {
-        ESP_LOGI(TAG, "output_%d: %d", i + 1, stream->output_buffer[i]);
+    if (numOfDims && cJSON_IsNumber(numOfDims)) {
+        ESP_LOGI("PARSE_CONFIGURATION_DATA", "numOfDims: %d", numOfDims->valueint);
     }
-    ESP_LOGI(TAG, "Time: %s", stream->time);
-    ESP_LOGI(TAG, "Date: %s", stream->date);
-    ESP_LOGI(TAG, "Weather: %s", stream->weather);
-    ESP_LOGI(TAG, "Number of Notifications: %d", stream->number_of_notifications);
-    for (int i = 0; i < stream->number_of_notifications; i++) {
-        ESP_LOGI(TAG, "Notification %d: %s", i + 1, stream->notifications_buffer[i]);
-    }
-}
-
-//-------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------
-//COOOOOOOOOOOOOOOOOOOOOK Onemli bilgi. Mutlaka Bu Videoyu izlemen lazim.
-//https://www.youtube.com/watch?v=gCxBAK9EByA
-
-//https://www.youtube.com/@usefulelectronics/videos
-//-------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------
-
-
-// Function to set the image source based on connection status
-void set_device_image(bool connected) {
-    static bool condition = false;
-    if (connected) {
-        lv_obj_clear_flag(ui_imgsconnected, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_add_flag(ui_imgsnotconnected, LV_OBJ_FLAG_HIDDEN);
-        condition = true;
-    } else {
-        lv_obj_clear_flag(ui_imgsnotconnected, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_add_flag(ui_imgsconnected, LV_OBJ_FLAG_HIDDEN);
-        if (condition && !connected)
-        {
-            condition = false;
-            lv_obj_clear_flag(ui_pnlConnectionLost, LV_OBJ_FLAG_HIDDEN);     /// Flags
-            lv_obj_move_foreground(ui_pnlConnectionLost);
-        }
-        
-    }  
-}
-
-
-// Function to set the image source based on connection status
-void set_bluetooth_icon(bool connected) {
-    if (!connected) {
-        lv_obj_clear_flag(ui_imgBluetoothNotConnected, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_add_flag(ui_imgBluetoothConnected, LV_OBJ_FLAG_HIDDEN);
-    } else {
-        lv_obj_add_flag(ui_imgBluetoothNotConnected, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_clear_flag(ui_imgBluetoothConnected, LV_OBJ_FLAG_HIDDEN);
-    }
-}
-
-
-int initBarCounter = 0;
-int initCounter = 0;
-int scrMode = 0;
-static void init_timer(lv_timer_t * timer) {
-    if (initBarCounter < 10) {
-        lv_bar_set_value(ui_brInit, initBarCounter * 10, LV_ANIM_OFF);   
-        
-    }
-    initBarCounter++;
-
-
-    
-    if (panelThemeType == 0) {
-        lv_obj_set_style_bg_color(ui_scrMain, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    } else {
-        lv_obj_set_style_bg_color(ui_scrMain, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    } 
-
-
-}
-
-// Timer callback function
-static void timer_updateTimer_callback(lv_timer_t * timer) {
-    if (initCounter < 3) {
-        if (scrMode == 0) {
-            scrMode = 1;
+    if (dimsNameBuffer && cJSON_IsArray(dimsNameBuffer)) {
+        int size = cJSON_GetArraySize(dimsNameBuffer);
+        ESP_LOGI("PARSE_CONFIGURATION_DATA", "DimsNameBuffer:");
+        for (int i = 0; i < size && i < 4; i++) {
+            cJSON* item = cJSON_GetArrayItem(dimsNameBuffer, i);
+            if (cJSON_IsNumber(item)) {
+                dimsBuf[i] = item->valueint;
+                ESP_LOGI("PARSE_CONFIGURATION_DATA", "  %d", item->valueint);
+            }
         }
     }
-    else {
-        if (scrMode == 1) {
-            lv_scr_load(ui_scrMain);
-            scrMode = 0;
-        }
-        initCounter = 11;
-        // Your code here, e.g., update display with new data
-        const uint16_t* regs_data = getSlavesRegsData();
-        update_display_with_data((const uint8_t*)regs_data, 70);
+    if (numOfSensors && cJSON_IsNumber(numOfSensors)) {
+        ESP_LOGI("PARSE_CONFIGURATION_DATA", "numOfSensors: %d", numOfSensors->valueint);
     }
-    initCounter++;
-
-}
-
-
-static void wallpaper_update_timer_callback(lv_timer_t * timer) {
-    if (panelWallpaperEnable) {
-        if (panelWallpaperEnableCounter == panelWallpaperTime) {
-            lv_scr_load(ui_scrWallpaper);
-
-        }
-        panelWallpaperEnableCounter++;
-    }
-    else {
-        panelWallpaperEnableCounter = 0;
-    }
-    
-}
-
-// Function to set the button color based on the value
-void set_button_color(lv_obj_t *btn, uint16_t value, int connected) {
-    if (connected == 0) {
-        lv_obj_set_style_bg_color(btn, lv_color_hex(0x5F5F5F), LV_PART_MAIN | LV_STATE_DEFAULT); // Gray
-        return;
-    }
-    if (value == 1) {
-        lv_obj_set_style_bg_color(btn, lv_color_hex(0x37C600), LV_PART_MAIN | LV_STATE_DEFAULT); // Green
-    } else if (value == 0) {
-        lv_obj_set_style_bg_color(btn, lv_color_hex(0x5A5A5A), LV_PART_MAIN | LV_STATE_DEFAULT); // Gray
-    } else if (value == 2) {
-        lv_obj_set_style_bg_color(btn, lv_color_hex(0xC60000), LV_PART_MAIN | LV_STATE_DEFAULT); // Red
-    }
-}
-
-void get_data_json_format(const uint16_t* regs_data, int txPacketType, char** json_str)  {
-
-    // Call create_json_data_packet function
-    *json_str = create_json_data_packet(regs_data, numOfOutputs, numOfDims, numOfSensors, slaveConnectionStatus, panelThemeType, numberOfNotifications, notifications);
-    cJSON_Delete(notifications);
-} 
-
-
-
-
-
-// Function to update display with new data
-void update_display_with_data(const uint8_t *data, int length) {
-    const uint16_t* regs_data = (const uint16_t*)data;
-
-    // Fetch data from registers
-    uint16_t analog_input_1 = regs_data[ANALOG_INPUT_1_INDIS];
-    uint16_t analog_input_2 = regs_data[ANALOG_INPUT_2_INDIS];
-    uint16_t analog_input_3 = regs_data[ANALOG_INPUT_3_INDIS];
-    uint16_t analog_input_4 = regs_data[ANALOG_INPUT_4_INDIS];
-    float batarya_volt = regs_data[VOLTAGE_INDIS] / 100.0;
-    float amper = regs_data[CURRENT_INDIS] / 100.0;
-
-    // Convert voltage to string with comma
-    char batarya_volt_str[10];
-    if (batarya_volt < 7.0 || batarya_volt > 16.0) {
-        ESP_LOGW(TAG, "Voltage out of range: %.2fV", batarya_volt);
-        snprintf(batarya_volt_str, sizeof(batarya_volt_str), "Fail");
-    } else {
-        int before_comma_volt = (int)batarya_volt;
-        int after_comma_volt = (int)((batarya_volt - before_comma_volt) * 100);
-        snprintf(batarya_volt_str, sizeof(batarya_volt_str), "%d,%02dV", before_comma_volt, after_comma_volt);
-    }
-
-    // Convert current to string with comma
-    char amper_str[10];
-    if (amper < 0 || amper > 100.0) {
-        ESP_LOGW(TAG, "Current out of range: %.2fA", amper);
-        snprintf(amper_str, sizeof(amper_str), "Fail");
-    } else {
-        int before_comma_amper = (int)amper;
-        int after_comma_amper = (int)((amper - before_comma_amper) * 100);
-        snprintf(amper_str, sizeof(amper_str), "%d,%02dA", before_comma_amper, after_comma_amper);
-    }
-
-
-    // Update the display labels with the fetched data
-    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger1, "%d°C", analog_input_1);
-    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger2, "%d°C", analog_input_2);
-    lv_label_set_text_fmt(ui_lblGrup1Oran1, "%d%%", analog_input_3);
-    lv_label_set_text_fmt(ui_lblGrup1Oran2, "%d%%", analog_input_4);
-    //lv_label_set_text(ui_lblBataryaVolt, batarya_volt_str);
-    //lv_label_set_text(ui_lblAmper, amper_str);
-
-    // Update the arcs with the fetched data
-    lv_arc_set_value(ui_arcGrup1, analog_input_3);
-    lv_arc_set_value(ui_arcGrup2, analog_input_4);
-
-
-    // Check Modbus connection status and update device image
-    bool Deviceconnected = get_modbus_connection_status();
-    set_device_image(Deviceconnected);
-
-    bool btConnected = get_connection_status();
-    set_bluetooth_icon(btConnected);
-
-
-    char* converted_json_data;
-    get_data_json_format(regs_data, 0, &converted_json_data);
-    set_converted_json_data(converted_json_data);
-
-
-
-    parse_json_data((const char*)get_spp_cmd_buff(), &stream);
-    reset_spp_cmd_buff();
-
-
-    // Ensure create_dynamic_ui is called only once
-    static int ui_initialized = 0;
-    if (ui_initialized==2) {
-        create_dynamic_ui(ui_scrMain);
-        ui_initialized = 3;
-    }
-    if (ui_initialized > 3 && Deviceconnected) {
-        for (int i = 0; i < numOfOutputs; i++) {
-            set_button_color(btnIO[i], regs_data[OUTPUT_1_INDIS + i], Deviceconnected);
+    if (sensorsNameBuffer && cJSON_IsArray(sensorsNameBuffer)) {
+        int size = cJSON_GetArraySize(sensorsNameBuffer);
+        ESP_LOGI("PARSE_CONFIGURATION_DATA", "SensorsNameBuffer:");
+        for (int i = 0; i < size && i < 5; i++) {
+            cJSON* item = cJSON_GetArrayItem(sensorsNameBuffer, i);
+            if (cJSON_IsNumber(item)) {
+                sensorsBuf[i] = item->valueint;
+                ESP_LOGI("PARSE_CONFIGURATION_DATA", "  %d", item->valueint);
+            }
         }
     }
-    ui_initialized++;
+    if (rgbEnabled && cJSON_IsString(rgbEnabled)) {
+        ESP_LOGI("PARSE_CONFIGURATION_DATA", "RGBEnables: %s", rgbEnabled->valuestring);
+    }
+    if (theme && cJSON_IsString(theme)) {
+        ESP_LOGI("PARSE_CONFIGURATION_DATA", "Theme: %s", theme->valuestring);
+    }
+
+    save_panel_configuration_to_nvs(numOfOutputs->valueint, outputsBuf, numOfSensors->valueint, sensorsBuf, numOfDims->valueint, dimsBuf);
 }
+// Function to parse Rules data
+void parse_rules_data(cJSON* json) {
+    cJSON* numOfRules = cJSON_GetObjectItem(json, "NumOfRules");
+    cJSON* rules = cJSON_GetObjectItem(json, "Rules");
+    cJSON* numOfNotifications = cJSON_GetObjectItem(json, "NumOfNotifications");
+    cJSON* notifications = cJSON_GetObjectItem(json, "Notifications");
+
+    if (numOfRules && cJSON_IsNumber(numOfRules)) {
+        ESP_LOGI("PARSE_RULES_DATA", "NumOfRules: %d", numOfRules->valueint);
+    }
+    if (rules && cJSON_IsObject(rules)) {
+        ESP_LOGI("PARSE_RULES_DATA", "Rules:");
+        cJSON* rule;
+        cJSON_ArrayForEach(rule, rules) {
+            if (cJSON_IsString(rule)) {
+                ESP_LOGI("PARSE_RULES_DATA", "  %s: %s", rule->string, rule->valuestring);
+            }
+        }
+    }
+    if (numOfNotifications && cJSON_IsNumber(numOfNotifications)) {
+        ESP_LOGI("PARSE_RULES_DATA", "NumOfNotifications: %d", numOfNotifications->valueint);
+    }
+    if (notifications && cJSON_IsObject(notifications)) {
+        ESP_LOGI("PARSE_RULES_DATA", "Notifications:");
+        cJSON* notification;
+        cJSON_ArrayForEach(notification, notifications) {
+            if (cJSON_IsString(notification)) {
+                ESP_LOGI("PARSE_RULES_DATA", "  %s: %s", notification->string, notification->valuestring);
+            }
+        }
+    }
+}
+
+//######################################################################################################################
+
 
   
-
+//############################ NVS FUNCTIONS #########################################################################
 // Function to save configuration data to NVS
 void save_panel_configuration_to_nvs(int totalOutps, int buffer1[16], int totalSensors, int buffer2[5], int totalDims, int buffer3[4]) {
     // Ensure the values do not exceed the maximum allowed sizes
@@ -1427,14 +1637,28 @@ void check_sensors_and_update_buffer() {
     ESP_LOGI("SWITCH_CHECK", "Total number of checked switches: %d", numOfSensors);
 }
 
+int SaveConfigsCounter = 0; // Counter for save configs bar
+static void save_configsbar_timer(lv_timer_t * timer)
+{
+    lv_bar_set_value(ui_pbSaveConfigs, SaveConfigsCounter, LV_ANIM_OFF);  // 0 → 100 in steps of 10
+    SaveConfigsCounter += 10; // Increment the counter by 10
+    if(SaveConfigsCounter >= 100) {
+        check_switches_and_get_dropdown_values();
+        check_sensors_and_update_buffer();
+        check_switches_and_get_dropdown_values_for_dims();
+        save_panel_configuration_to_nvs(numOfOutputs, outputsBuffer, numOfSensors, sensorsBuffer, numOfDims, dimsBuffer);
+        // Save the panel settings to NVS
+        ESP_LOGI(TAG, "##### Panel Settings Saved Successfully! #####");
+        esp_restart();
+    }
+}
+
 void save_panel_settings()
 {
-    check_switches_and_get_dropdown_values();
-    check_sensors_and_update_buffer();
-    check_switches_and_get_dropdown_values_for_dims();
-    save_panel_configuration_to_nvs(numOfOutputs, outputsBuffer, numOfSensors, sensorsBuffer, numOfDims, dimsBuffer);
-    // Save the panel settings to NVS
-    ESP_LOGI(TAG, "##### Panel Settings Saved Successfully! #####");
+    lv_obj_clear_flag(ui_pnlSaveConfigs, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_move_foreground(ui_pnlSaveConfigs);
+    lv_timer_t * initTim = lv_timer_create(save_configsbar_timer, 100, NULL);
+
 }
 
 void save_theme_settings()
@@ -1515,14 +1739,46 @@ void apply_theme_settings()
 
 // Callback function for color changes
  void color_wheel_event_cb() {
+    uint8_t can_data[8] = {0}; // CAN verisi için buffer
     lv_color_t selected_color = lv_colorwheel_get_rgb(ui_Colorwheel1); // Get selected color
     // Apply selected color to the panel background
     lv_obj_set_style_bg_color(ui_btnRGBColor, selected_color, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_btnRGBApply, selected_color, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    lv_color32_t color32;
+    
+    color32.full = lv_color_to32(selected_color);
+
+    uint8_t r = color32.ch.red;
+    uint8_t g = color32.ch.green;
+    uint8_t b = color32.ch.blue;
+
+    can_data[0] = r;  // İlk byte veri
+    can_data[1] = g;  // İlk byte veri
+    can_data[2] = b;  // İlk byte veri
+    can_data[3] = rgbEna;
+    send_can_frame(0x740, can_data);  // RGB için CAN ID: 0x740
+    
 }
 
+// Callback function for color changes
+ void apply_rgb_data_to_wheel(uint8_t r, uint8_t g, uint8_t b) {
+
+    lv_color_t new_color = lv_color_make(r, g, b);
+    // Apply selected color to the panel background
+    lv_obj_set_style_bg_color(ui_btnRGBColor, new_color, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_btnRGBApply, new_color, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_colorwheel_set_rgb(ui_Colorwheel1, new_color);
+
+    //lv_colorwheel_set_rgb(ui_Colorwheel1, lv_color_make(255, 0, 0)); // Set to red
+
+    
+}
+//######################################################################################################################
 
 
 
+//###################################### Display Manager ################################################################
 
 void display_manager_init() {
   
@@ -1530,11 +1786,10 @@ void display_manager_init() {
      wavesahre_rgb_lcd_bl_on();  //Turn on the screen backlight 
     // wavesahre_rgb_lcd_bl_off(); //Turn off the screen backlight 
     
-    lv_timer_t * updateScreentimer = lv_timer_create(timer_updateTimer_callback, 1000, NULL);
+    lv_timer_t * updateScreentimer = lv_timer_create(timer_updateTimer_callback, 150, NULL);
     lv_timer_t * wallpaperTimer = lv_timer_create(wallpaper_update_timer_callback, 1000, NULL);
-    lv_timer_t * initTim = lv_timer_create(init_timer, 200, NULL);
+    lv_timer_t * initTim = lv_timer_create(init_timer, 100, NULL);
     
-
 
      load_panel_configuration_from_nvs(&numOfOutputs, outputsBuffer, &numOfSensors, sensorsBuffer, &numOfDims, dimsBuffer);
      load_theme_configuration_from_nvs(&panelThemeType, &panelWallpaperEnable, &panelWallpaperTime);
@@ -1571,6 +1826,7 @@ void display_manager_init() {
         // Release the mutex
         ui_init();
         lv_scr_load(ui_scrInit);
+        ui_scrPanelSettings_IO_Dim_init();
         lvgl_port_unlock();
     }
 }
