@@ -1,0 +1,32 @@
+Arduino yu indirdikten sonra
+esp32 kutuphaneleri icin bu linki Preferences a yapistir
+
+-https://espressif.github.io/arduino-esp32/package_esp32_dev_index.json
+
+sonra boards kismindan esp32 icin asagidaki versiyonu indir
+
+-esp32 3.0.0 Alpha
+
+
+Sonra lvgl ve esp32 display panel ve io expander dosyalarini ve kutuphanelerini manuel olarak asagidaki konuma yapistir
+
+-C:\Users\nakau\Documents\Arduino\libraries
+
+Squareline da proje derlemeden once project settingste 800x480 16 bit ve lvgl v8.3.11 versiyonlarinin secili oldugundan emin ol.
+
+Derleme aldiktan sonra ui_files i ana projeye yapistir
+
+Projeyi ac.
+
+Projeyi derlemeden once 
+-ESP32S3 Dev Module boardini sec
+-Flash size 8MB sec
+-OPI PSRAM secenegini sec
+
+Sonra ana kodda 
+include demos/demos.h sil yerine ui.h yaz
+setup kismina 
+ui_init() cagirip digger widget vs demolari kapat
+
+Sonra derleme islemini yapip projeyi ekrana yukle
+

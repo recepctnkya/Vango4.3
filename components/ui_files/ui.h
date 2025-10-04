@@ -68,27 +68,8 @@ extern lv_obj_t * ui_Label1;
 void ui_event_Button10(lv_event_t * e);
 extern lv_obj_t * ui_Button10;
 extern lv_obj_t * ui_Label6;
-void ui_event_btnRGBColor(lv_event_t * e);
 extern lv_obj_t * ui_btnRGBColor;
 extern lv_obj_t * ui_Label7;
-// CUSTOM VARIABLES
-
-// SCREEN: ui_scrSettings
-void ui_scrSettings_screen_init(void);
-extern lv_obj_t * ui_scrSettings;
-extern lv_obj_t * ui_lblSettingsB;
-extern lv_obj_t * ui_Panel5;
-void ui_event_Button8(lv_event_t * e);
-extern lv_obj_t * ui_Button8;
-extern lv_obj_t * ui_lblLock3;
-extern lv_obj_t * ui_Button7;
-void ui_event_Button4(lv_event_t * e);
-extern lv_obj_t * ui_Button4;
-void ui_event_Button6(lv_event_t * e);
-extern lv_obj_t * ui_Button6;
-extern lv_obj_t * ui_Button9;
-void ui_event_Button14(lv_event_t * e);
-extern lv_obj_t * ui_Button14;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_scrPanelSettings
@@ -105,12 +86,6 @@ extern lv_obj_t * ui_pnlSaveConfigs;
 extern lv_obj_t * ui_Label12;
 extern lv_obj_t * ui_Label9;
 extern lv_obj_t * ui_pbSaveConfigs;
-extern lv_obj_t * ui_Arc1;
-extern lv_obj_t * ui_Label2;
-extern lv_obj_t * ui_Arc3;
-extern lv_obj_t * ui_Arc4;
-extern lv_obj_t * ui_Label10;
-extern lv_obj_t * ui_Label11;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_scrWallpaper
@@ -133,42 +108,6 @@ extern lv_obj_t * ui_Image12;
 extern lv_obj_t * ui_Image13;
 // CUSTOM VARIABLES
 
-// SCREEN: ui_scrTheme
-void ui_scrTheme_screen_init(void);
-extern lv_obj_t * ui_scrTheme;
-void ui_event_btnWhiteTheme(lv_event_t * e);
-extern lv_obj_t * ui_btnWhiteTheme;
-extern lv_obj_t * ui_lblSelectTheme;
-void ui_event_btnBlackTheme(lv_event_t * e);
-extern lv_obj_t * ui_btnBlackTheme;
-extern lv_obj_t * ui_Panel4;
-void ui_event_btnSaveTheme(lv_event_t * e);
-extern lv_obj_t * ui_btnSaveTheme;
-extern lv_obj_t * ui_lblLock2;
-extern lv_obj_t * ui_lblWallpaper;
-void ui_event_swEnableWallpaper(lv_event_t * e);
-extern lv_obj_t * ui_swEnableWallpaper;
-extern lv_obj_t * ui_rlrTime;
-extern lv_obj_t * ui_lblRolllerTime;
-// CUSTOM VARIABLES
-
-// SCREEN: ui_scrRGB
-void ui_scrRGB_screen_init(void);
-extern lv_obj_t * ui_scrRGB;
-extern lv_obj_t * ui_Panel3;
-void ui_event_Button11(lv_event_t * e);
-extern lv_obj_t * ui_Button11;
-extern lv_obj_t * ui_lblLock6;
-extern lv_obj_t * ui_Label5;
-void ui_event_swRGBTurnON(lv_event_t * e);
-extern lv_obj_t * ui_swRGBTurnON;
-extern lv_obj_t * ui_Container1;
-void ui_event_btnRGBApply(lv_event_t * e);
-extern lv_obj_t * ui_btnRGBApply;
-void ui_event_Colorwheel1(lv_event_t * e);
-extern lv_obj_t * ui_Colorwheel1;
-// CUSTOM VARIABLES
-
 // SCREEN: ui_scrInit
 void ui_scrInit_screen_init(void);
 extern lv_obj_t * ui_scrInit;
@@ -184,25 +123,10 @@ extern lv_obj_t * ui_Panel6;
 void ui_event_Button13(lv_event_t * e);
 extern lv_obj_t * ui_Button13;
 extern lv_obj_t * ui_lblLock7;
-// CUSTOM VARIABLES
-
-// SCREEN: ui_scrPages
-void ui_scrPages_screen_init(void);
-extern lv_obj_t * ui_scrPages;
-extern lv_obj_t * ui_Panel7;
-extern lv_obj_t * ui_lblHexnetTechnology2;
-extern lv_obj_t * ui_Button16;
-extern lv_obj_t * ui_lblLock5;
-extern lv_obj_t * ui_lblSettingsB2;
-void ui_event_Button15(lv_event_t * e);
-extern lv_obj_t * ui_Button15;
-extern lv_obj_t * ui_Button17;
-void ui_event_Button18(lv_event_t * e);
-extern lv_obj_t * ui_Button18;
-void ui_event_Button19(lv_event_t * e);
-extern lv_obj_t * ui_Button19;
-void ui_event_Button20(lv_event_t * e);
-extern lv_obj_t * ui_Button20;
+extern lv_obj_t * ui_arcSensorLevel4;
+extern lv_obj_t * ui_lblSensorLevel4;
+extern lv_obj_t * ui_arcSensorLevel5;
+extern lv_obj_t * ui_lblSensorLevel5;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_scrDims
@@ -218,6 +142,65 @@ extern lv_obj_t * ui_Slider2;
 extern lv_obj_t * ui_Slider3;
 // CUSTOM VARIABLES
 
+// SCREEN: ui_scrSettings
+void ui_scrSettings_screen_init(void);
+extern lv_obj_t * ui_scrSettings;
+void ui_event_Button4(lv_event_t * e);
+extern lv_obj_t * ui_Button4;
+void ui_event_Button6(lv_event_t * e);
+extern lv_obj_t * ui_Button6;
+void ui_event_Button8(lv_event_t * e);
+extern lv_obj_t * ui_Button8;
+void ui_event_Button9(lv_event_t * e);
+extern lv_obj_t * ui_Button9;
+extern lv_obj_t * ui_Button11;
+// CUSTOM VARIABLES
+
+// SCREEN: ui_scrRGB
+void ui_scrRGB_screen_init(void);
+extern lv_obj_t * ui_scrRGB;
+extern lv_obj_t * ui_swRGBTurnON;
+extern lv_obj_t * ui_Colorwheel1;
+extern lv_obj_t * ui_btnRGBApply;
+extern lv_obj_t * ui_Panel3;
+extern lv_obj_t * ui_lblHexnetTechnology2;
+extern lv_obj_t * ui_Button7;
+extern lv_obj_t * ui_lblLock2;
+extern lv_obj_t * ui_Label2;
+// CUSTOM VARIABLES
+
+// SCREEN: ui_scrTheme
+void ui_scrTheme_screen_init(void);
+extern lv_obj_t * ui_scrTheme;
+extern lv_obj_t * ui_Panel4;
+extern lv_obj_t * ui_lblHexnetTechnology4;
+void ui_event_Button14(lv_event_t * e);
+extern lv_obj_t * ui_Button14;
+extern lv_obj_t * ui_lblLock3;
+extern lv_obj_t * ui_btnWhiteTheme;
+extern lv_obj_t * ui_btnBlackTheme;
+extern lv_obj_t * ui_swEnableWallpaper;
+extern lv_obj_t * ui_lblSelectTheme;
+extern lv_obj_t * ui_lblWallpaper;
+extern lv_obj_t * ui_rlrTime;
+extern lv_obj_t * ui_lblRolllerTime;
+extern lv_obj_t * ui_lblSettingsB;
+// CUSTOM VARIABLES
+
+// SCREEN: ui_scrPages
+void ui_scrPages_screen_init(void);
+extern lv_obj_t * ui_scrPages;
+void ui_event_Button20(lv_event_t * e);
+extern lv_obj_t * ui_Button20;
+extern lv_obj_t * ui_Button12;
+void ui_event_Button15(lv_event_t * e);
+extern lv_obj_t * ui_Button15;
+void ui_event_Button16(lv_event_t * e);
+extern lv_obj_t * ui_Button16;
+void ui_event_Button17(lv_event_t * e);
+extern lv_obj_t * ui_Button17;
+// CUSTOM VARIABLES
+
 // EVENTS
 
 extern lv_obj_t * ui____initial_actions0;
@@ -230,12 +213,6 @@ LV_IMG_DECLARE(ui_img_sconnected_png);    // assets/sconnected.png
 LV_IMG_DECLARE(ui_img_snotconnected_png);    // assets/snotconnected.png
 LV_IMG_DECLARE(ui_img_btnotconnected_png);    // assets/btnotconnected.png
 LV_IMG_DECLARE(ui_img_weatherforecast2_png);    // assets/weatherforecast2.png
-LV_IMG_DECLARE(ui_img_birghtnescontrol_png);    // assets/birghtnescontrol.png
-LV_IMG_DECLARE(ui_img_outcontrols_png);    // assets/outcontrols.png
-LV_IMG_DECLARE(ui_img_theme_png);    // assets/theme.png
-LV_IMG_DECLARE(ui_img_calibration_png);    // assets/calibration.png
-LV_IMG_DECLARE(ui_img_connectioncontrol_png);    // assets/connectioncontrol.png
-LV_IMG_DECLARE(ui_img_arc1_png);    // assets/arc1.png
 LV_IMG_DECLARE(ui_img_caravan_logo_png);    // assets/caravan logo.png
 LV_IMG_DECLARE(ui_img_ac_png);    // assets/AC.png
 LV_IMG_DECLARE(ui_img_heater_png);    // assets/heater.png
@@ -249,12 +226,20 @@ LV_IMG_DECLARE(ui_img_tv_png);    // assets/tv.png
 LV_IMG_DECLARE(ui_img_usb_png);    // assets/usb.png
 LV_IMG_DECLARE(ui_img_water_png);    // assets/water.png
 LV_IMG_DECLARE(ui_img_initlogo_png);    // assets/initlogo.png
-LV_IMG_DECLARE(ui_img_btnsettings_png);    // assets/btnSettings.png
+LV_IMG_DECLARE(ui_img_arcdesign_png);    // assets/arcdesign.png
+LV_IMG_DECLARE(ui_img_sliderpassive_png);    // assets/sliderpassive.png
+LV_IMG_DECLARE(ui_img_slideractivee_png);    // assets/slideractivee.png
+LV_IMG_DECLARE(ui_img_outcontrols_png);    // assets/outcontrols.png
+LV_IMG_DECLARE(ui_img_birghtnescontrol_png);    // assets/birghtnescontrol.png
+LV_IMG_DECLARE(ui_img_theme_png);    // assets/theme.png
+LV_IMG_DECLARE(ui_img_connectioncontrol_png);    // assets/connectioncontrol.png
+LV_IMG_DECLARE(ui_img_calibration_png);    // assets/calibration.png
+LV_IMG_DECLARE(ui_img_btnsettings2_png);    // assets/btnSettings2.png
 LV_IMG_DECLARE(ui_img_sensors_png);    // assets/sensors.png
 LV_IMG_DECLARE(ui_img_waterlevel_png);    // assets/waterlevel.png
 LV_IMG_DECLARE(ui_img_rgbcontrol_png);    // assets/rgbcontrol.png
-LV_IMG_DECLARE(ui_img_sliderpassive_png);    // assets/sliderpassive.png
-LV_IMG_DECLARE(ui_img_slideractivee_png);    // assets/slideractivee.png
+LV_IMG_DECLARE(ui_img_arc1_png);    // assets/arc1.png
+LV_IMG_DECLARE(ui_img_outcontrols2_png);    // assets/outcontrols2.png
 LV_IMG_DECLARE(ui_img_wifi3_png);    // assets/wifi3.png
 
 // UI INIT

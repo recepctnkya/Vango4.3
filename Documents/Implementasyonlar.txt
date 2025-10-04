@@ -1,0 +1,13 @@
+-Modbus ekle
+-write ve read fonksiyonlari ekle
+-Eeprom parametreleri ekle
+-Display parlaklik olayini ekle
+-Bluetooth olayini ekle
+-uygulama olayina bak
+-isimlendirme
+-ekleme cikarma
+-sensor kalibrasyonu
+
+
+
+

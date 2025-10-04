@@ -1,0 +1,59 @@
+1. Aydınlatmalar (Lighting)
+    Ön Dolap (Front Cabinet)
+    Mutfak (Kitchen)
+    Zemin (Floor)
+    Arka Dolap (Rear Cabinet)
+    Dış Aydınlatma (Exterior Lighting)
+    Pop-up
+    Dimmer
+    RGB
+2. Buton (Buttons)
+    Sun and Cloud Icon
+    Toilet Icon
+    Water Drop Icon
+    Coffee Cup Icon
+    Fridge Icon
+    Stove Icon
+    Fish Icon
+3. Enstrüman (Instruments)
+    Temiz su/dış (Clean Water/Exterior)
+    Gri su/dış (Grey Water/Exterior)
+    Sıcaklık (Temperature)
+    Nem (Humidity)
+    Basınç (Pressure)
+4. Motor Kontrol (Motor Control)
+    Masa (Table)
+    Yatak (Bed)
+    TV
+    Tente (Awning)
+    Pop-up
+5. Okuma Lambası (Reading Lamp)
+    Lütfen Yazınız (Please Write)
+    Ayarla (Adjust/Settings)
+6. Additional Functionalities
+    Settings Icon (Bottom Left)
+    Home Icon
+    Wi-Fi/Signal Icon
+
+
+
+Kabaca yukaridaki basliklar ana menude bulunacak
+Android ve IOS arayuzu asagidaki linktekine benzer olacak
+https://www.fmkkaravanmalzemesi.com/urun/labobin-x-smart-akilli-karavan-kontrol-paneli
+
+
+
+
+App Ozellikleri
+-Tum data paketleri bluetooth uzerinden Telefona gonderilecek ve alinacak
+
+AnaSayfa
+-App anasayfa da veriler kontrol panelindeki gibi gosterilip outputlar kontrol edilebilecek.(Neredeyse ayni tasarim)
+-Sarj olma veya Akim harcama efektleri eklenecek(Buna henuz karar verilmedi. Batarya bilgileri gosterilecekse animasyon olmali.)
+Ayarlar 1.Sayfa
+-Yukaridaki Aydinlatma, Buton, enstruman, motor, okuma lambasi gibi basliklarda alt basliklar cikarilip eklenebilecek
+-Alt basliklarin isimleri degistirilebilcek
+Ayarlar 2.Sayfa 
+ Bluetooth baglanti ayarlari ve ekran parlaklik
+-Sensor kalibrasyonlari icin basit bir arayuz olacak (Sicaklik, Akim, Su seviye) Buna net bir karar verilmedi. Tartisilacak
+

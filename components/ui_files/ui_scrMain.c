@@ -520,6 +520,5 @@ void ui_scrMain_screen_init(void)
     lv_obj_add_event_cb(ui_Button1, ui_event_Button1, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button2, ui_event_Button2, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button10, ui_event_Button10, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_btnRGBColor, ui_event_btnRGBColor, LV_EVENT_ALL, NULL);
 
 }

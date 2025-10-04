@@ -1,0 +1,3 @@
+lvgl lock unlock isimlerininn birebir oldugundan emin ol
+ayarlardan Bluetooth 4.2 sec 5 calismiyor
+ayarlardan modbus slave timeout 250ms sec
