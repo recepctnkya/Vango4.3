@@ -85,25 +85,25 @@ extern lv_obj_t * ui_Image3;
 extern lv_obj_t * ui_Label3;
 void ui_event_btnUnlockScreen(lv_event_t * e);
 extern lv_obj_t * ui_btnUnlockScreen;
-extern lv_obj_t * ui_Image1;
-extern lv_obj_t * ui_Image4;
-extern lv_obj_t * ui_Image5;
-extern lv_obj_t * ui_Image6;
-extern lv_obj_t * ui_Image7;
-extern lv_obj_t * ui_Image8;
-extern lv_obj_t * ui_Image9;
-extern lv_obj_t * ui_Image10;
-extern lv_obj_t * ui_Image11;
-extern lv_obj_t * ui_Image12;
-extern lv_obj_t * ui_Image13;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_scrInit
 void ui_scrInit_screen_init(void);
 extern lv_obj_t * ui_scrInit;
 extern lv_obj_t * ui_Label8;
-extern lv_obj_t * ui_Image14;
 extern lv_obj_t * ui_brInit;
+extern lv_obj_t * ui_Image15;
+extern lv_obj_t * ui_Image16;
+extern lv_obj_t * ui_Image17;
+extern lv_obj_t * ui_Image18;
+extern lv_obj_t * ui_Image19;
+extern lv_obj_t * ui_Image20;
+extern lv_obj_t * ui_Image21;
+extern lv_obj_t * ui_Image22;
+extern lv_obj_t * ui_Image23;
+extern lv_obj_t * ui_Image24;
+extern lv_obj_t * ui_Image25;
+extern lv_obj_t * ui_Label5;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_scrCalibration
@@ -191,14 +191,10 @@ void ui_event_btnWhiteTheme(lv_event_t * e);
 extern lv_obj_t * ui_btnWhiteTheme;
 void ui_event_btnBlackTheme(lv_event_t * e);
 extern lv_obj_t * ui_btnBlackTheme;
-void ui_event_swEnableWallpaper(lv_event_t * e);
-extern lv_obj_t * ui_swEnableWallpaper;
 extern lv_obj_t * ui_lblSelectTheme;
-extern lv_obj_t * ui_lblWallpaper;
-extern lv_obj_t * ui_rlrTime;
-extern lv_obj_t * ui_lblRolllerTime;
 extern lv_obj_t * ui_lblSettingsB;
-extern lv_obj_t * ui_Slider5;
+void ui_event_sldBrightness(lv_event_t * e);
+extern lv_obj_t * ui_sldBrightness;
 extern lv_obj_t * ui_Label4;
 // CUSTOM VARIABLES
 
@@ -248,7 +244,6 @@ LV_IMG_DECLARE(ui_img_toilet_png);    // assets/toilet.png
 LV_IMG_DECLARE(ui_img_tv_png);    // assets/tv.png
 LV_IMG_DECLARE(ui_img_usb_png);    // assets/usb.png
 LV_IMG_DECLARE(ui_img_water_png);    // assets/water.png
-LV_IMG_DECLARE(ui_img_initlogo_png);    // assets/initlogo.png
 LV_IMG_DECLARE(ui_img_sliderpassive_png);    // assets/sliderpassive.png
 LV_IMG_DECLARE(ui_img_slideractivee_png);    // assets/slideractivee.png
 LV_IMG_DECLARE(ui_img_arcdesign2_png);    // assets/arcdesign2.png

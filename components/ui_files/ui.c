@@ -80,17 +80,6 @@ lv_obj_t * ui_Image3;
 lv_obj_t * ui_Label3;
 void ui_event_btnUnlockScreen(lv_event_t * e);
 lv_obj_t * ui_btnUnlockScreen;
-lv_obj_t * ui_Image1;
-lv_obj_t * ui_Image4;
-lv_obj_t * ui_Image5;
-lv_obj_t * ui_Image6;
-lv_obj_t * ui_Image7;
-lv_obj_t * ui_Image8;
-lv_obj_t * ui_Image9;
-lv_obj_t * ui_Image10;
-lv_obj_t * ui_Image11;
-lv_obj_t * ui_Image12;
-lv_obj_t * ui_Image13;
 // CUSTOM VARIABLES
 
 
@@ -98,8 +87,19 @@ lv_obj_t * ui_Image13;
 void ui_scrInit_screen_init(void);
 lv_obj_t * ui_scrInit;
 lv_obj_t * ui_Label8;
-lv_obj_t * ui_Image14;
 lv_obj_t * ui_brInit;
+lv_obj_t * ui_Image15;
+lv_obj_t * ui_Image16;
+lv_obj_t * ui_Image17;
+lv_obj_t * ui_Image18;
+lv_obj_t * ui_Image19;
+lv_obj_t * ui_Image20;
+lv_obj_t * ui_Image21;
+lv_obj_t * ui_Image22;
+lv_obj_t * ui_Image23;
+lv_obj_t * ui_Image24;
+lv_obj_t * ui_Image25;
+lv_obj_t * ui_Label5;
 // CUSTOM VARIABLES
 
 
@@ -192,14 +192,10 @@ void ui_event_btnWhiteTheme(lv_event_t * e);
 lv_obj_t * ui_btnWhiteTheme;
 void ui_event_btnBlackTheme(lv_event_t * e);
 lv_obj_t * ui_btnBlackTheme;
-void ui_event_swEnableWallpaper(lv_event_t * e);
-lv_obj_t * ui_swEnableWallpaper;
 lv_obj_t * ui_lblSelectTheme;
-lv_obj_t * ui_lblWallpaper;
-lv_obj_t * ui_rlrTime;
-lv_obj_t * ui_lblRolllerTime;
 lv_obj_t * ui_lblSettingsB;
-lv_obj_t * ui_Slider5;
+void ui_event_sldBrightness(lv_event_t * e);
+lv_obj_t * ui_sldBrightness;
 lv_obj_t * ui_Label4;
 // CUSTOM VARIABLES
 
@@ -441,18 +437,12 @@ void ui_event_btnBlackTheme(lv_event_t * e)
     }
 }
 
-void ui_event_swEnableWallpaper(lv_event_t * e)
+void ui_event_sldBrightness(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
 
-    if(event_code == LV_EVENT_VALUE_CHANGED &&  lv_obj_has_state(target, LV_STATE_CHECKED)) {
-        _ui_flag_modify(ui_rlrTime, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
-        _ui_flag_modify(ui_lblRolllerTime, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
-    }
-    if(event_code == LV_EVENT_VALUE_CHANGED &&  !lv_obj_has_state(target, LV_STATE_CHECKED)) {
-        _ui_flag_modify(ui_rlrTime, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
-        _ui_flag_modify(ui_lblWallpaper, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+    if(event_code == LV_EVENT_RELEASED) {
+        sldBrightnessAdjustCallback(e);
     }
 }
 

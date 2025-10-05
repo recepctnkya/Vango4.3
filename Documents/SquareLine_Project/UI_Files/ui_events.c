@@ -144,3 +144,8 @@ void btnReturnfromscrDimsandSensorstoscrMainCallback(lv_event_t * e)
 {
 	// Your code here
 }
+
+void sldBrightnessAdjustCallback(lv_event_t * e)
+{
+	// Your code here
+}

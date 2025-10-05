@@ -96,7 +96,7 @@ void ui_scrMain_screen_init(void)
     lv_obj_set_x(ui_lblGrup2, -259);
     lv_obj_set_y(ui_lblGrup2, 86);
     lv_obj_set_align(ui_lblGrup2, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_lblGrup2, "Filty Water");
+    lv_label_set_text(ui_lblGrup2, "Dirty Water");
 
     ui_Panel2 = lv_obj_create(ui_scrMain);
     lv_obj_set_width(ui_Panel2, 797);

@@ -7,6 +7,9 @@
 #include "display_manager.h"
 #include "definitions.h"
 
+// External function declarations
+extern void dim_events(lv_event_t* e);
+
 void slMutfakValueChanged(lv_event_t * e)
 {
 	// Your code here
@@ -77,15 +80,44 @@ void enRGBTurnOFFFunc(lv_event_t * e)
 
 void btnDimsCallbackFunc(lv_event_t * e)
 {
-	// Show dim widgets
-	lv_obj_clear_flag(ui_slDim1, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_clear_flag(ui_slDim2, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_clear_flag(ui_slDim3, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_clear_flag(ui_slDim4, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_clear_flag(ui_lblDim1, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_clear_flag(ui_lblDim2, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_clear_flag(ui_lblDim3, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_clear_flag(ui_lblDim4, LV_OBJ_FLAG_HIDDEN);
+	// Hide all dim widgets first
+	lv_obj_add_flag(ui_slDim1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_slDim2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_slDim3, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_slDim4, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim3, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim4, LV_OBJ_FLAG_HIDDEN);
+	
+	// Show only the configured number of dim widgets
+	extern int numOfDims; // Access the global variable
+	extern int dimsBuffer[4]; // Access the dims buffer
+	extern const char* lblBtnNames[16]; // Access the button names array
+	if (numOfDims >= 1) {
+		lv_obj_clear_flag(ui_slDim1, LV_OBJ_FLAG_HIDDEN);
+		lv_obj_clear_flag(ui_lblDim1, LV_OBJ_FLAG_HIDDEN);
+		lv_label_set_text_fmt(ui_lblDim1, "%s:", lblBtnNames[dimsBuffer[0] - 1]);
+		lv_obj_add_event_cb(ui_slDim1, dim_events, LV_EVENT_RELEASED, (void*)0);
+	}
+	if (numOfDims >= 2) {
+		lv_obj_clear_flag(ui_slDim2, LV_OBJ_FLAG_HIDDEN);
+		lv_obj_clear_flag(ui_lblDim2, LV_OBJ_FLAG_HIDDEN);
+		lv_label_set_text_fmt(ui_lblDim2, "%s:", lblBtnNames[dimsBuffer[1] - 1]);
+		lv_obj_add_event_cb(ui_slDim2, dim_events, LV_EVENT_RELEASED, (void*)1);
+	}
+	if (numOfDims >= 3) {
+		lv_obj_clear_flag(ui_slDim3, LV_OBJ_FLAG_HIDDEN);
+		lv_obj_clear_flag(ui_lblDim3, LV_OBJ_FLAG_HIDDEN);
+		lv_label_set_text_fmt(ui_lblDim3, "%s:", lblBtnNames[dimsBuffer[2] - 1]);
+		lv_obj_add_event_cb(ui_slDim3, dim_events, LV_EVENT_RELEASED, (void*)2);
+	}
+	if (numOfDims >= 4) {
+		lv_obj_clear_flag(ui_slDim4, LV_OBJ_FLAG_HIDDEN);
+		lv_obj_clear_flag(ui_lblDim4, LV_OBJ_FLAG_HIDDEN);
+		lv_label_set_text_fmt(ui_lblDim4, "%s:", lblBtnNames[dimsBuffer[3] - 1]);
+		lv_obj_add_event_cb(ui_slDim4, dim_events, LV_EVENT_RELEASED, (void*)3);
+	}
 	
 	// Hide temperature widgets
 	lv_obj_add_flag(ui_arcTemperature1, LV_OBJ_FLAG_HIDDEN);
@@ -197,4 +229,10 @@ void btnWatersCallbackFunc(lv_event_t * e)
 
 void btnReturnfromscrDimsandSensorstoscrMainCallback(lv_event_t * e)
 {
+
+}
+
+void sldBrightnessAdjustCallback(lv_event_t * e)
+{
+
 }

@@ -197,6 +197,7 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     lv_obj_set_align(ui_lblDim1, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblDim1, "Kitchen:");
     lv_obj_add_flag(ui_lblDim1, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_set_style_text_font(ui_lblDim1, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_lblDim2 = lv_label_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_lblDim2, LV_SIZE_CONTENT);   /// 1
@@ -206,6 +207,7 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     lv_obj_set_align(ui_lblDim2, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblDim2, "Kitchen:");
     lv_obj_add_flag(ui_lblDim2, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_set_style_text_font(ui_lblDim2, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_lblDim3 = lv_label_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_lblDim3, LV_SIZE_CONTENT);   /// 1
@@ -215,6 +217,7 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     lv_obj_set_align(ui_lblDim3, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblDim3, "Kitchen:");
     lv_obj_add_flag(ui_lblDim3, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_set_style_text_font(ui_lblDim3, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_lblDim4 = lv_label_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_lblDim4, LV_SIZE_CONTENT);   /// 1
@@ -224,12 +227,13 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     lv_obj_set_align(ui_lblDim4, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblDim4, "Kitchen:");
     lv_obj_add_flag(ui_lblDim4, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_set_style_text_font(ui_lblDim4, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_arcTemperature1 = lv_arc_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_arcTemperature1, 309);
     lv_obj_set_height(ui_arcTemperature1, 307);
-    lv_obj_set_x(ui_arcTemperature1, -180);
-    lv_obj_set_y(ui_arcTemperature1, -25);
+    lv_obj_set_x(ui_arcTemperature1, -179);
+    lv_obj_set_y(ui_arcTemperature1, -65);
     lv_obj_set_align(ui_arcTemperature1, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_arcTemperature1, LV_OBJ_FLAG_HIDDEN);     /// Flags
     lv_arc_set_value(ui_arcTemperature1, 100);
@@ -259,8 +263,8 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     ui_lblTemperature1 = lv_label_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_lblTemperature1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_lblTemperature1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblTemperature1, -184);
-    lv_obj_set_y(ui_lblTemperature1, -28);
+    lv_obj_set_x(ui_lblTemperature1, -180);
+    lv_obj_set_y(ui_lblTemperature1, -68);
     lv_obj_set_align(ui_lblTemperature1, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblTemperature1, "26 °C");
     lv_obj_add_flag(ui_lblTemperature1, LV_OBJ_FLAG_HIDDEN);     /// Flags
@@ -269,8 +273,8 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     ui_arcTemperature2 = lv_arc_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_arcTemperature2, 309);
     lv_obj_set_height(ui_arcTemperature2, 307);
-    lv_obj_set_x(ui_arcTemperature2, 201);
-    lv_obj_set_y(ui_arcTemperature2, -22);
+    lv_obj_set_x(ui_arcTemperature2, 200);
+    lv_obj_set_y(ui_arcTemperature2, -61);
     lv_obj_set_align(ui_arcTemperature2, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_arcTemperature2, LV_OBJ_FLAG_HIDDEN);     /// Flags
     lv_arc_set_value(ui_arcTemperature2, 100);
@@ -300,8 +304,8 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     ui_lblTemperature2 = lv_label_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_lblTemperature2, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_lblTemperature2, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblTemperature2, 202);
-    lv_obj_set_y(ui_lblTemperature2, -24);
+    lv_obj_set_x(ui_lblTemperature2, 200);
+    lv_obj_set_y(ui_lblTemperature2, -69);
     lv_obj_set_align(ui_lblTemperature2, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblTemperature2, "36 °C");
     lv_obj_add_flag(ui_lblTemperature2, LV_OBJ_FLAG_HIDDEN);     /// Flags
@@ -310,26 +314,28 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     ui_lblUnderArcTemperature1 = lv_label_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_lblUnderArcTemperature1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_lblUnderArcTemperature1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblUnderArcTemperature1, -180);
-    lv_obj_set_y(ui_lblUnderArcTemperature1, 164);
+    lv_obj_set_x(ui_lblUnderArcTemperature1, -185);
+    lv_obj_set_y(ui_lblUnderArcTemperature1, 116);
     lv_obj_set_align(ui_lblUnderArcTemperature1, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblUnderArcTemperature1, "Internal Temperature");
     lv_obj_add_flag(ui_lblUnderArcTemperature1, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_set_style_text_font(ui_lblUnderArcTemperature1, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_lblUnderArcTemperature2 = lv_label_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_lblUnderArcTemperature2, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_lblUnderArcTemperature2, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblUnderArcTemperature2, 177);
-    lv_obj_set_y(ui_lblUnderArcTemperature2, 167);
+    lv_obj_set_x(ui_lblUnderArcTemperature2, 199);
+    lv_obj_set_y(ui_lblUnderArcTemperature2, 124);
     lv_obj_set_align(ui_lblUnderArcTemperature2, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblUnderArcTemperature2, "External Temperature");
     lv_obj_add_flag(ui_lblUnderArcTemperature2, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_set_style_text_font(ui_lblUnderArcTemperature2, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_arcWater1 = lv_arc_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_arcWater1, 309);
     lv_obj_set_height(ui_arcWater1, 307);
-    lv_obj_set_x(ui_arcWater1, -180);
-    lv_obj_set_y(ui_arcWater1, -25);
+    lv_obj_set_x(ui_arcWater1, -178);
+    lv_obj_set_y(ui_arcWater1, -65);
     lv_obj_set_align(ui_arcWater1, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_arcWater1, LV_OBJ_FLAG_HIDDEN);     /// Flags
     lv_arc_set_value(ui_arcWater1, 100);
@@ -359,8 +365,8 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     ui_lblWater1 = lv_label_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_lblWater1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_lblWater1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblWater1, -184);
-    lv_obj_set_y(ui_lblWater1, -28);
+    lv_obj_set_x(ui_lblWater1, -180);
+    lv_obj_set_y(ui_lblWater1, -72);
     lv_obj_set_align(ui_lblWater1, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblWater1, "%29");
     lv_obj_add_flag(ui_lblWater1, LV_OBJ_FLAG_HIDDEN);     /// Flags
@@ -369,8 +375,8 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     ui_arcWater2 = lv_arc_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_arcWater2, 309);
     lv_obj_set_height(ui_arcWater2, 307);
-    lv_obj_set_x(ui_arcWater2, 201);
-    lv_obj_set_y(ui_arcWater2, -22);
+    lv_obj_set_x(ui_arcWater2, 199);
+    lv_obj_set_y(ui_arcWater2, -61);
     lv_obj_set_align(ui_arcWater2, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_arcWater2, LV_OBJ_FLAG_HIDDEN);     /// Flags
     lv_arc_set_value(ui_arcWater2, 100);
@@ -400,8 +406,8 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     ui_lblWater2 = lv_label_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_lblWater2, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_lblWater2, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblWater2, 207);
-    lv_obj_set_y(ui_lblWater2, -30);
+    lv_obj_set_x(ui_lblWater2, 204);
+    lv_obj_set_y(ui_lblWater2, -70);
     lv_obj_set_align(ui_lblWater2, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblWater2, "%75");
     lv_obj_add_flag(ui_lblWater2, LV_OBJ_FLAG_HIDDEN);     /// Flags
@@ -410,20 +416,22 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     ui_lblUnderArcWater1 = lv_label_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_lblUnderArcWater1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_lblUnderArcWater1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblUnderArcWater1, -180);
-    lv_obj_set_y(ui_lblUnderArcWater1, 164);
+    lv_obj_set_x(ui_lblUnderArcWater1, -193);
+    lv_obj_set_y(ui_lblUnderArcWater1, 121);
     lv_obj_set_align(ui_lblUnderArcWater1, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblUnderArcWater1, "Clean Water");
     lv_obj_add_flag(ui_lblUnderArcWater1, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_set_style_text_font(ui_lblUnderArcWater1, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_lblUnderArcWater2 = lv_label_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_lblUnderArcWater2, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_lblUnderArcWater2, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblUnderArcWater2, 177);
-    lv_obj_set_y(ui_lblUnderArcWater2, 167);
+    lv_obj_set_x(ui_lblUnderArcWater2, 183);
+    lv_obj_set_y(ui_lblUnderArcWater2, 128);
     lv_obj_set_align(ui_lblUnderArcWater2, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblUnderArcWater2, "Dirty Water");
     lv_obj_add_flag(ui_lblUnderArcWater2, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_set_style_text_font(ui_lblUnderArcWater2, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_Button21, ui_event_Button21, LV_EVENT_ALL, NULL);
 

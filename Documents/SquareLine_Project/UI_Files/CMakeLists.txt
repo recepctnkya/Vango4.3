@@ -33,7 +33,6 @@ SET(SOURCES ui_scrMain.c
     ui_img_tv_png.c
     ui_img_usb_png.c
     ui_img_water_png.c
-    ui_img_initlogo_png.c
     ui_img_sliderpassive_png.c
     ui_img_slideractivee_png.c
     ui_img_arcdesign2_png.c

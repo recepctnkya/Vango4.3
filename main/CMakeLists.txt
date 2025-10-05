@@ -38,7 +38,6 @@ idf_component_register(
     "../components/ui_files/ui_img_outcontrols2_png.c"
     "../components/ui_files/ui_img_logo3_png.c"
     "../components/ui_files/ui_img_lamp_png.c"
-    "../components/ui_files/ui_img_initlogo_png.c"
     "../components/ui_files/ui_img_heater_png.c"
     "../components/ui_files/ui_img_connectioncontrol_png.c"
     "../components/ui_files/ui_img_caravan_logo_png.c"

@@ -140,10 +140,7 @@ lv_obj_t * ui_btnIOGot;
 
 
 extern lv_obj_t *ui_lblSelectTheme;
-extern lv_obj_t *ui_lblWallpaper; 
-extern lv_obj_t *ui_lblRolllerTime;
-extern lv_obj_t *ui_swEnableWallpaper;
-extern lv_obj_t *ui_rlrTime;
+
 
 extern lv_obj_t * ui_scrInit;
 extern lv_obj_t *ui_scrPanelSettings;
@@ -423,12 +420,6 @@ void my_btnThemeWhiteFunc(void)
 
 
     lv_obj_set_style_text_color(ui_lblSelectTheme, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblWallpaper, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblRolllerTime, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_text_color(ui_lblRolllerTime, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblRolllerTime, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblRolllerTime, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_set_style_text_color(ui_lblWeather, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblDateAndTime, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -511,8 +502,6 @@ void my_btnBlackThemeFunc(void)
     lv_obj_set_style_text_color(ui_lblVangoText, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_set_style_text_color(ui_lblSelectTheme, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblWallpaper, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblRolllerTime, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_set_style_text_color(ui_lblWeather, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblDateAndTime, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -616,11 +605,16 @@ void button_events(lv_event_t* e) {
 // Function to toggle dimmer value based on current value
 void dim_events(lv_event_t* e) {
     uint8_t can_data[8] = {0}; // CAN data buffer
-    lv_obj_t* bar = lv_event_get_target(e);
+    lv_obj_t* slider = lv_event_get_target(e);
     int dim_index = (int)lv_event_get_user_data(e);
 
-    // Get the new value from the bar
-    int16_t dim_value = lv_bar_get_value(bar);
+    // Get the new value from the slider
+    int16_t dim_value = lv_slider_get_value(slider);
+
+    // Update the corresponding bar on main screen (sldDims)
+    if (dim_index < numOfDims && sldDims[dim_index] != NULL) {
+        lv_bar_set_value(sldDims[dim_index], dim_value, LV_ANIM_OFF);
+    }
 
     // Prepare CAN data: [index, value]
     can_data[0] = dim_index;
@@ -1655,7 +1649,7 @@ int SaveConfigsCounter = 0; // Counter for save configs bar
 static void save_configsbar_timer(lv_timer_t * timer)
 {
     lv_bar_set_value(ui_pbSaveConfigs, SaveConfigsCounter, LV_ANIM_OFF);  // 0 → 100 in steps of 10
-    SaveConfigsCounter += 10; // Increment the counter by 10
+    SaveConfigsCounter += 3; // Increment the counter by 10
     if(SaveConfigsCounter >= 100) {
         check_switches_and_get_dropdown_values();
         check_sensors_and_update_buffer();
@@ -1677,39 +1671,6 @@ void save_panel_settings()
 
 void save_theme_settings()
 {
-    uint16_t selected_index = 0;
-    static char selected_text[32];  // Buffer to store text
-
-    selected_index = lv_roller_get_selected(ui_rlrTime);
-    // Get the selected item text
-    lv_roller_get_selected_str(ui_rlrTime, selected_text, sizeof(selected_text));
-    // Check if switch is enabled (ON)
-    if (lv_obj_has_state(ui_swEnableWallpaper, LV_STATE_CHECKED)) {
-        // Get the selected roller item index
-        panelWallpaperEnable = 1;  // Enable wallpaper
-        // Print the selected roller item
-        ESP_LOGI(TAG, "Wallpaper Enabled, Selected Time: %s-----index = %d", selected_text, selected_index);
-    } else {
-        panelWallpaperEnable = 0;  // Disable wallpaper
-        ESP_LOGI(TAG, "Wallpaper Disabled");
-    }
-
-    // Set panelWallpaperTime based on the selected index
-    switch (selected_index) {
-        case 0: { panelWallpaperTime = 30;  break;}
-        case 1: { panelWallpaperTime = 60;  break;}
-        case 2: { panelWallpaperTime = 120; break;}
-        case 3: { panelWallpaperTime = 300; break;}
-        case 4: { panelWallpaperTime = 600; break;}
-        default:
-            {
-                ESP_LOGW(TAG, "Invalid roller index: %d, setting default to 30", selected_index);
-                panelWallpaperTime = 30;  // Default if index is out of range
-                break;
-            }
-    }
-    ESP_LOGI(TAG, "Wallpaper Enabled, Selected Time: %s-----index = %d panelThemeType =%d panelWallpaperEnable =%d panelWallpaperTime =%d ", selected_text, selected_index,
-             panelThemeType, panelWallpaperEnable, panelWallpaperTime);
     save_theme_configuration_to_nvs(&panelThemeType, &panelWallpaperEnable, &panelWallpaperTime);
 }
 
@@ -1717,36 +1678,6 @@ void save_theme_settings()
 void apply_theme_settings()
 {
     // Apply theme enabled status to the switch
-    if (panelWallpaperEnable) {
-        lv_obj_add_state(ui_swEnableWallpaper, LV_STATE_CHECKED);
-        lv_obj_clear_flag(ui_rlrTime, LV_OBJ_FLAG_HIDDEN);     /// Flags
-        lv_obj_clear_flag(ui_lblRolllerTime, LV_OBJ_FLAG_HIDDEN);     /// Flags
-    } else {
-        lv_obj_clear_state(ui_swEnableWallpaper, LV_STATE_CHECKED);
-        lv_obj_add_flag(ui_rlrTime, LV_OBJ_FLAG_HIDDEN);     /// Flags
-        lv_obj_add_flag(ui_lblRolllerTime, LV_OBJ_FLAG_HIDDEN);     /// Flags
-    }
-
-    // Map panelWallpaperTime to the roller index
-    uint16_t roller_index = 0;
-
-    switch (panelWallpaperTime) {
-        case 30:  roller_index = 0; break;
-        case 60:  roller_index = 1; break;
-        case 120: roller_index = 2; break;
-        case 300: roller_index = 3; break;
-        case 600: roller_index = 4; break;
-        default:
-            ESP_LOGW(TAG, "Invalid panelWallpaperTime: %d, setting default to 30s", panelWallpaperTime);
-            roller_index = 0;  // Default to first option
-            break;
-    }
-
-    // Set roller selection
-    lv_roller_set_selected(ui_rlrTime, roller_index, LV_ANIM_OFF);
-
-    // Log applied settings
-    ESP_LOGI(TAG, " ############################Applied Theme Settings:panelThemeType = %d panelWallpaperEnable=%d, WallpaperTimeIndex=%d",panelThemeType, panelWallpaperEnable, roller_index);
 }
 
 
@@ -1795,6 +1726,13 @@ void apply_theme_settings()
 // Function to initialize dim widgets visibility based on numOfDims
 void initialize_dim_widgets_visibility(void)
 {
+    // Check if UI objects are valid before accessing them
+    if (ui_slDim1 == NULL || ui_slDim2 == NULL || ui_slDim3 == NULL || ui_slDim4 == NULL ||
+        ui_lblDim1 == NULL || ui_lblDim2 == NULL || ui_lblDim3 == NULL || ui_lblDim4 == NULL) {
+        ESP_LOGW(TAG, "Dim widgets not yet initialized, skipping visibility setup");
+        return;
+    }
+    
     // Hide all dim widgets first
     lv_obj_add_flag(ui_slDim1, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(ui_slDim2, LV_OBJ_FLAG_HIDDEN);
@@ -1805,22 +1743,30 @@ void initialize_dim_widgets_visibility(void)
     lv_obj_add_flag(ui_lblDim3, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(ui_lblDim4, LV_OBJ_FLAG_HIDDEN);
     
-    // Unhide only the number of dims specified by numOfDims
+    // Unhide only the number of dims specified by numOfDims and add event callbacks
     if (numOfDims >= 1) {
         lv_obj_clear_flag(ui_slDim1, LV_OBJ_FLAG_HIDDEN);
         lv_obj_clear_flag(ui_lblDim1, LV_OBJ_FLAG_HIDDEN);
+        lv_label_set_text_fmt(ui_lblDim1, "%s:", lblBtnNames[dimsBuffer[0] - 1]);
+        lv_obj_add_event_cb(ui_slDim1, dim_events, LV_EVENT_RELEASED, (void*)0);
     }
     if (numOfDims >= 2) {
         lv_obj_clear_flag(ui_slDim2, LV_OBJ_FLAG_HIDDEN);
         lv_obj_clear_flag(ui_lblDim2, LV_OBJ_FLAG_HIDDEN);
+        lv_label_set_text_fmt(ui_lblDim2, "%s:", lblBtnNames[dimsBuffer[1] - 1]);
+        lv_obj_add_event_cb(ui_slDim2, dim_events, LV_EVENT_RELEASED, (void*)1);
     }
     if (numOfDims >= 3) {
         lv_obj_clear_flag(ui_slDim3, LV_OBJ_FLAG_HIDDEN);
         lv_obj_clear_flag(ui_lblDim3, LV_OBJ_FLAG_HIDDEN);
+        lv_label_set_text_fmt(ui_lblDim3, "%s:", lblBtnNames[dimsBuffer[2] - 1]);
+        lv_obj_add_event_cb(ui_slDim3, dim_events, LV_EVENT_RELEASED, (void*)2);
     }
     if (numOfDims >= 4) {
         lv_obj_clear_flag(ui_slDim4, LV_OBJ_FLAG_HIDDEN);
         lv_obj_clear_flag(ui_lblDim4, LV_OBJ_FLAG_HIDDEN);
+        lv_label_set_text_fmt(ui_lblDim4, "%s:", lblBtnNames[dimsBuffer[3] - 1]);
+        lv_obj_add_event_cb(ui_slDim4, dim_events, LV_EVENT_RELEASED, (void*)3);
     }
     
     ESP_LOGI(TAG, "Initialized %d dim widgets visibility", numOfDims);
@@ -1939,9 +1885,6 @@ void display_manager_init() {
 
      load_panel_configuration_from_nvs(&numOfOutputs, outputsBuffer, &numOfSensors, sensorsBuffer, &numOfDims, dimsBuffer);
      load_theme_configuration_from_nvs(&panelThemeType, &panelWallpaperEnable, &panelWallpaperTime);
-     
-     // Initialize dim widgets visibility based on numOfDims
-     initialize_dim_widgets_visibility();
 
             // Debug log the loaded configuration
     ESP_LOGW(TAG, "Loaded Panel Configuration:");
@@ -1976,6 +1919,10 @@ void display_manager_init() {
         ui_init();
         lv_scr_load(ui_scrInit);
         ui_scrPanelSettings_IO_Dim_init();
+        
+        // Initialize dim widgets visibility after UI is created
+        initialize_dim_widgets_visibility();
+        
         lvgl_port_unlock();
     }
 }
