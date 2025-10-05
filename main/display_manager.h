@@ -21,4 +21,12 @@ void save_panel_configuration_to_nvs(int totalOutps, int buffer1[16], int totalS
 void apply_rgb_data_to_wheel(uint8_t r, uint8_t g, uint8_t b);
 void set_rgb_to_white();
 void set_RGBTurnONOFF(int val);
+
+// Output buttons creation function
+void create_output_buttons_on_screen(void);
+void create_buttons_for_screen(lv_obj_t* parent, const char* screen_type);
+void move_buttons_to_main_screen(void);
+
+// Dim widgets visibility initialization
+void initialize_dim_widgets_visibility(void);
 #endif // DISPLAY_MANAGER_H

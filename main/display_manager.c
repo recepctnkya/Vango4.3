@@ -37,6 +37,8 @@ static const char *TAG = "DISPLAY_MANAGER";
 
 extern lv_obj_t * ui_scrTheme;
 extern lv_obj_t * ui_scrWallpaper;
+extern lv_obj_t * ui_scrPages;
+extern lv_obj_t * ui_scrDimsandSensorsandWaters;
 
 
 
@@ -94,6 +96,28 @@ extern lv_obj_t* ui_cbxDim2;
 extern lv_obj_t* ui_cbxDim3;
 extern lv_obj_t* ui_cbxDim4;
 
+// Dim slider widgets
+extern lv_obj_t* ui_slDim1;
+extern lv_obj_t* ui_slDim2;
+extern lv_obj_t* ui_slDim3;
+extern lv_obj_t* ui_slDim4;
+
+// Missing extern declarations for theme functions
+extern lv_obj_t * ui_Label9;
+extern lv_obj_t * ui_Label12;
+extern lv_obj_t * ui_lblDim1;
+extern lv_obj_t * ui_lblDim2;
+extern lv_obj_t * ui_lblDim3;
+extern lv_obj_t * ui_lblDim4;
+extern lv_obj_t * ui_lblTemperature1;
+extern lv_obj_t * ui_lblTemperature2;
+extern lv_obj_t * ui_lblUnderArcTemperature1;
+extern lv_obj_t * ui_lblUnderArcTemperature2;
+extern lv_obj_t * ui_lblWater1;
+extern lv_obj_t * ui_lblWater2;
+extern lv_obj_t * ui_lblUnderArcWater1;
+extern lv_obj_t * ui_lblUnderArcWater2;
+
 extern lv_obj_t* ui_Checkbox1;
 extern lv_obj_t* ui_Checkbox2;
 extern lv_obj_t* ui_Checkbox3;
@@ -101,15 +125,17 @@ extern lv_obj_t* ui_Checkbox4;
 extern lv_obj_t* ui_Checkbox5;
 
 
-// Declare the panels
-extern lv_obj_t* ui_pnlGrup1;
-extern lv_obj_t* ui_pnlGrup2;
-extern lv_obj_t* ui_pnlGrup3;
 extern lv_obj_t* ui_pnlOutputs;
 extern lv_obj_t* ui_pnlConnectionLost;
 
 extern lv_obj_t *ui_imgWForecast;
 extern lv_obj_t *ui_lblDateAndTime;
+extern lv_obj_t *ui_lblGrup1;
+extern lv_obj_t *ui_lblGrup2;
+extern lv_obj_t *ui_lblGrup1Oran1;
+extern lv_obj_t *ui_lblGrup1Oran2;
+extern lv_obj_t *ui_lblPnlGrup1Sicaklik1;
+extern lv_obj_t *ui_lblPnlGrup1Sicaklik2;
 lv_obj_t * ui_btnIOGot;
 
 
@@ -367,6 +393,8 @@ void my_btnThemeWhiteFunc(void)
     lv_obj_set_style_bg_color(ui_scrSettings, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_scrPanelSettings, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_scrRGB, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_scrPages, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_scrDimsandSensorsandWaters, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     
     lv_obj_set_style_text_color(ui_lblPanelSettings, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -378,26 +406,14 @@ void my_btnThemeWhiteFunc(void)
     lv_obj_set_style_text_color(ui_Checkbox4, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Checkbox5, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
 
-
     lv_obj_set_style_text_color(ui_lblPnlGrup1Sicaklik1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblPnlGrup1Sicaklik2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_pnlGrupSicaklik1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_pnlGrupSicaklik2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-
-
-    lv_obj_set_style_bg_color(ui_pnlGrup1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblGrup1Oran1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblGrup1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_bg_color(ui_pnlGrup2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblGrup1Oran2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblGrup1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblGrup2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    lv_obj_set_style_bg_color(ui_pnlGrup3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblGrup1Oran3, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblGrup3, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+
 
 
     lv_obj_set_style_bg_color(ui_pnlSensors, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -418,6 +434,35 @@ void my_btnThemeWhiteFunc(void)
     lv_obj_set_style_text_color(ui_lblDateAndTime, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblSettingsB, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     
+    // Add missing widgets for white theme
+    lv_obj_set_style_text_color(ui_lblHexnetTechnology, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblLock, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+
+    lv_obj_set_style_text_color(ui_Label1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Label2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Label3, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Label4, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Label6, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Label7, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Label8, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Label9, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    
+    // Dim and sensor widgets
+    lv_obj_set_style_text_color(ui_lblDim1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblDim2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblDim3, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblDim4, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblTemperature1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblTemperature2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblUnderArcTemperature1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblUnderArcTemperature2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblWater1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblWater2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblUnderArcWater1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblUnderArcWater2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     for (int i = 0; i < numOfDims; i++) {
         lv_obj_set_style_text_color(lblDims[i], lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -436,6 +481,8 @@ void my_btnBlackThemeFunc(void)
     lv_obj_set_style_bg_color(ui_scrSettings, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_scrPanelSettings, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_scrRGB, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_scrPages, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_scrDimsandSensorsandWaters, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     
     lv_obj_set_style_text_color(ui_lblPanelSettings, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -448,26 +495,14 @@ void my_btnBlackThemeFunc(void)
     lv_obj_set_style_text_color(ui_Checkbox5, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Checkbox6, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
 
-
     lv_obj_set_style_text_color(ui_lblPnlGrup1Sicaklik1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblPnlGrup1Sicaklik2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_pnlGrupSicaklik1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_pnlGrupSicaklik2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-
-
-    lv_obj_set_style_bg_color(ui_pnlGrup1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblGrup1Oran1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblGrup1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_set_style_bg_color(ui_pnlGrup2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblGrup1Oran2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblGrup1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblGrup2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    lv_obj_set_style_bg_color(ui_pnlGrup3, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblGrup1Oran3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_lblGrup3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+
 
 
     lv_obj_set_style_bg_color(ui_pnlSensors, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -482,6 +517,35 @@ void my_btnBlackThemeFunc(void)
     lv_obj_set_style_text_color(ui_lblWeather, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblDateAndTime, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblSettingsB, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    
+    // Add missing widgets for black theme
+    lv_obj_set_style_text_color(ui_lblHexnetTechnology, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblLock, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Label1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Label2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Label3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Label4, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Label6, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Label7, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Label8, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Label9, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    
+    // Dim and sensor widgets
+    lv_obj_set_style_text_color(ui_lblDim1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblDim2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblDim3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblDim4, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblTemperature1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblTemperature2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblUnderArcTemperature1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblUnderArcTemperature2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblWater1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblWater2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblUnderArcWater1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lblUnderArcWater2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
 
     for (int i = 0; i < numOfDims; i++) {
         lv_obj_set_style_text_color(lblDims[i], lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -526,48 +590,6 @@ const void* get_image_for_button(int outputBufferIndex) {
 }
 
 
-// Function to set panel coordinates dynamically
-void set_sensor_panels_coordinates(int numOfSensors, int sensorsBuffer[5]) {
-    lv_obj_t* panels[3] = {ui_pnlGrup1, ui_pnlGrup2, ui_pnlGrup3};
-    lv_obj_t* panels2[2] = {ui_pnlGrupSicaklik1, ui_pnlGrupSicaklik2};
-
-    int x_coords[3] = {-320, -210, -101};
-    int y_coords[3] = {60, 61, 59};
-    int x2_coords[2] = {-320, -208};
-    int y2_coords[2] = {147, 151};
-
-
-    lv_obj_clear_flag(ui_pnlGrup1, LV_OBJ_FLAG_HIDDEN);     /// Flags
-    lv_obj_clear_flag(ui_pnlGrup2, LV_OBJ_FLAG_HIDDEN);     /// Flags
-    lv_obj_clear_flag(ui_pnlGrup3, LV_OBJ_FLAG_HIDDEN);     /// Flags
-    lv_obj_clear_flag(ui_pnlGrupSicaklik1, LV_OBJ_FLAG_HIDDEN);     /// Flags
-    lv_obj_clear_flag(ui_pnlGrupSicaklik2, LV_OBJ_FLAG_HIDDEN);     /// Flags
-
-    int current_index = 0;
-    for (int i = 0; i < 3; i++) {
-        if (sensorsBuffer[i + 2] == 1) {
-            lv_obj_set_x(panels[i], x_coords[current_index]);
-            lv_obj_set_y(panels[i], y_coords[current_index]);
-            current_index++;
-        }
-        else {
-            lv_obj_set_x(panels[i], LV_COORD_MAX);
-            lv_obj_set_y(panels[i], LV_COORD_MAX);
-        }
-    }
-    current_index = 0;
-    for (int i = 0; i < 2; i++) {
-        if (sensorsBuffer[i] == 1) {
-            lv_obj_set_x(panels2[i], x2_coords[current_index]);
-            lv_obj_set_y(panels2[i], y2_coords[current_index]);
-            current_index++;
-        }
-        else {
-            lv_obj_set_x(panels2[i], LV_COORD_MAX);
-            lv_obj_set_y(panels2[i], LV_COORD_MAX);
-        }
-    }
-}
 
 // Function to toggle button color based on regs_data
 void button_events(lv_event_t* e) {
@@ -594,11 +616,11 @@ void button_events(lv_event_t* e) {
 // Function to toggle dimmer value based on current value
 void dim_events(lv_event_t* e) {
     uint8_t can_data[8] = {0}; // CAN data buffer
-    lv_obj_t* slider = lv_event_get_target(e);
+    lv_obj_t* bar = lv_event_get_target(e);
     int dim_index = (int)lv_event_get_user_data(e);
 
-    // Get the new value from the slider
-    int16_t dim_value = lv_slider_get_value(slider);
+    // Get the new value from the bar
+    int16_t dim_value = lv_bar_get_value(bar);
 
     // Prepare CAN data: [index, value]
     can_data[0] = dim_index;
@@ -694,22 +716,17 @@ void create_dynamic_ui(lv_obj_t* parent) {
 
 
         for (int i = 0; i < numOfDims; i++) {
-        // Create the slider
-        sldDims[i] = lv_slider_create(ui_pnlSensors);
-        //lv_slider_set_value(sldDims[i], dimsBuffer[i], LV_ANIM_OFF);
-        if (lv_slider_get_mode(sldDims[i]) == LV_SLIDER_MODE_RANGE) {
-            lv_slider_set_left_value(sldDims[i], 0, LV_ANIM_OFF);
-        }
+        // Create the bar
+        sldDims[i] = lv_bar_create(ui_pnlSensors);
+        lv_bar_set_value(sldDims[i], 0, LV_ANIM_OFF);
         lv_obj_set_width(sldDims[i], 305);
         lv_obj_set_height(sldDims[i], 14);
         lv_obj_set_x(sldDims[i], -6);
         lv_obj_set_y(sldDims[i], -56 + i * 40); // Adjust y position dynamically
         lv_obj_set_align(sldDims[i], LV_ALIGN_CENTER);
 
-        lv_obj_set_style_pad_left(sldDims[i], 15, LV_PART_KNOB | LV_STATE_PRESSED);
-        lv_obj_set_style_pad_right(sldDims[i], 15, LV_PART_KNOB | LV_STATE_PRESSED);
-        lv_obj_set_style_pad_top(sldDims[i], 15, LV_PART_KNOB | LV_STATE_PRESSED);
-        lv_obj_set_style_pad_bottom(sldDims[i], 15, LV_PART_KNOB | LV_STATE_PRESSED);
+        // Make bar non-clickable
+        lv_obj_clear_flag(sldDims[i], LV_OBJ_FLAG_CLICKABLE);
 
         lv_obj_add_event_cb(sldDims[i], dim_events, LV_EVENT_RELEASED, (void*)i);
 
@@ -795,7 +812,6 @@ void create_dynamic_ui(lv_obj_t* parent) {
         lv_obj_add_flag(switches[0], LV_OBJ_FLAG_CLICKABLE);
     }
 
-    set_sensor_panels_coordinates(3, sensorsBuffer);
     if (panelThemeType){
         my_btnBlackThemeFunc();
     }
@@ -984,17 +1000,15 @@ void update_display_with_data(const uint8_t *data, int length) {
 
 
     // Update the display labels with the fetched data
-    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger1, "%d°C", analog_input_4);
-    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger2, "%d°C", analog_input_5);
+    lv_label_set_text_fmt(ui_lblPnlGrup1Sicaklik1, "%d°C", analog_input_4);
+    lv_label_set_text_fmt(ui_lblPnlGrup1Sicaklik2, "%d°C", analog_input_5);
     lv_label_set_text_fmt(ui_lblGrup1Oran1, "%d%%", analog_input_1);
     lv_label_set_text_fmt(ui_lblGrup1Oran2, "%d%%", analog_input_2);
-    lv_label_set_text_fmt(ui_lblGrup1Oran3, "%d%%", analog_input_3);
-
 
     // Update the arcs with the fetched data
     lv_arc_set_value(ui_arcGrup1, analog_input_1);
     lv_arc_set_value(ui_arcGrup2, analog_input_2);
-    lv_arc_set_value(ui_arcGrup3, analog_input_3);
+
 
     
 
@@ -1035,7 +1049,7 @@ void update_display_with_data(const uint8_t *data, int length) {
             set_button_color(btnIO[i], (get_outputs() >> i)&0x01, Deviceconnected);
         }
         for (int i = 0; i < numOfDims; i++) {
-            //lv_slider_set_value(sldDims[i], get_dimmable_output(i), LV_ANIM_OFF);
+            lv_bar_set_value(sldDims[i], get_dimmable_output(i), LV_ANIM_OFF);
         }
     }
     ui_initialized++;
@@ -1696,7 +1710,7 @@ void save_theme_settings()
     }
     ESP_LOGI(TAG, "Wallpaper Enabled, Selected Time: %s-----index = %d panelThemeType =%d panelWallpaperEnable =%d panelWallpaperTime =%d ", selected_text, selected_index,
              panelThemeType, panelWallpaperEnable, panelWallpaperTime);
-    save_theme_configuration_to_nvs(panelThemeType, panelWallpaperEnable, panelWallpaperTime);
+    save_theme_configuration_to_nvs(&panelThemeType, &panelWallpaperEnable, &panelWallpaperTime);
 }
 
 
@@ -1778,6 +1792,138 @@ void apply_theme_settings()
 
 
 
+// Function to initialize dim widgets visibility based on numOfDims
+void initialize_dim_widgets_visibility(void)
+{
+    // Hide all dim widgets first
+    lv_obj_add_flag(ui_slDim1, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_slDim2, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_slDim3, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_slDim4, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_lblDim1, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_lblDim2, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_lblDim3, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_lblDim4, LV_OBJ_FLAG_HIDDEN);
+    
+    // Unhide only the number of dims specified by numOfDims
+    if (numOfDims >= 1) {
+        lv_obj_clear_flag(ui_slDim1, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_clear_flag(ui_lblDim1, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (numOfDims >= 2) {
+        lv_obj_clear_flag(ui_slDim2, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_clear_flag(ui_lblDim2, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (numOfDims >= 3) {
+        lv_obj_clear_flag(ui_slDim3, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_clear_flag(ui_lblDim3, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (numOfDims >= 4) {
+        lv_obj_clear_flag(ui_slDim4, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_clear_flag(ui_lblDim4, LV_OBJ_FLAG_HIDDEN);
+    }
+    
+    ESP_LOGI(TAG, "Initialized %d dim widgets visibility", numOfDims);
+}
+
+// Function to create output buttons on main screen
+void create_output_buttons_on_screen(void)
+{
+    // Clear any existing output buttons first
+    for (int i = 0; i < numOfOutputs; i++) {
+        if (btnIO[i] != NULL) {
+            lv_obj_del(btnIO[i]);
+            btnIO[i] = NULL;
+        }
+        if (lblIO[i] != NULL) {
+            lblIO[i] = NULL;
+        }
+        if (imgIO[i] != NULL) {
+            imgIO[i] = NULL;
+        }
+    }
+    
+    // Create buttons on scrMain screen
+    create_buttons_for_screen(ui_scrMain, "main");
+}
+
+// Function to create buttons for main screen
+void create_buttons_for_screen(lv_obj_t* parent, const char* screen_type)
+{
+    // Use exact design for main screen
+    int btn_width = 100;
+    int btn_height = 90;
+    int btn_x_offset = 106; // btn_width + 6 for spacing
+    int btn_y_offset = 96;  // btn_height + 6 for spacing
+    int x_start = 53;       // Start position for first column (right side)
+    int y_start = -150;     // Start position for first row
+    
+    // Adjust button size and spacing if numOfOutputs is greater than 8
+    if (numOfOutputs > 8) {
+        btn_width = 105;
+        btn_height = 95;
+        btn_x_offset = 106; // btn_width + 1 for spacing
+        btn_y_offset = 96; // btn_height + 1 for spacing
+        y_start = -150;
+    }
+
+    for (int i = 0; i < numOfOutputs; i++) {
+        int row = i / 4;
+        int col = i % 4;
+
+        btnIO[i] = lv_btn_create(parent);
+        lv_obj_set_width(btnIO[i], btn_width);
+        lv_obj_set_height(btnIO[i], btn_height);
+        lv_obj_set_x(btnIO[i], x_start + col * btn_x_offset);
+        lv_obj_set_y(btnIO[i], y_start + row * btn_y_offset);
+        lv_obj_set_align(btnIO[i], LV_ALIGN_CENTER);
+        lv_obj_add_flag(btnIO[i], LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+        lv_obj_clear_flag(btnIO[i], LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+        lv_obj_set_style_radius(btnIO[i], 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_bg_color(btnIO[i], lv_color_hex(0x5A5A5A), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_bg_opa(btnIO[i], 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+        lblIO[i] = lv_label_create(btnIO[i]);
+        lv_obj_set_width(lblIO[i], LV_SIZE_CONTENT);   /// 1
+        lv_obj_set_height(lblIO[i], LV_SIZE_CONTENT);    /// 1
+        lv_obj_set_x(lblIO[i], 0);
+
+        if (numOfOutputs > 8) {
+            lv_obj_set_align(lblIO[i], LV_ALIGN_BOTTOM_MID);
+            lv_obj_set_y(lblIO[i], btn_height / 2 - 35); // Adjust y position to align at the bottom mid
+        }
+        else {
+            lv_obj_set_y(lblIO[i], 0); // Adjust y position to align at the bottom mid
+            lv_obj_set_align(lblIO[i], LV_ALIGN_CENTER);
+        }
+        lv_obj_set_align(lblIO[i], LV_ALIGN_BOTTOM_MID);
+        lv_label_set_text(lblIO[i], lblBtnNames[outputsBuffer[i] - 1]);
+        lv_obj_set_style_text_color(lblIO[i], lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_text_opa(lblIO[i], 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_text_font(lblIO[i], &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+        imgIO[i] = lv_img_create(btnIO[i]);
+        lv_img_set_src(imgIO[i], get_image_for_button(outputsBuffer[i] - 1));
+        lv_obj_set_width(imgIO[i], LV_SIZE_CONTENT);   /// 1
+        lv_obj_set_height(imgIO[i], LV_SIZE_CONTENT);    /// 1
+        lv_obj_set_x(imgIO[i], 0);
+        lv_obj_set_y(imgIO[i], 5);
+        if(numOfOutputs > 8) {
+            lv_obj_set_align(imgIO[i], LV_ALIGN_TOP_MID);
+        }
+        else {
+            lv_obj_set_align(imgIO[i], LV_ALIGN_CENTER);
+        }
+        
+        lv_obj_add_flag(imgIO[i], LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+        lv_obj_clear_flag(imgIO[i], LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+        
+        // Add event callback for button click
+        lv_obj_add_event_cb(btnIO[i], button_events, LV_EVENT_CLICKED, (void*)i);
+    }
+}
+
+
 //###################################### Display Manager ################################################################
 
 void display_manager_init() {
@@ -1793,6 +1939,9 @@ void display_manager_init() {
 
      load_panel_configuration_from_nvs(&numOfOutputs, outputsBuffer, &numOfSensors, sensorsBuffer, &numOfDims, dimsBuffer);
      load_theme_configuration_from_nvs(&panelThemeType, &panelWallpaperEnable, &panelWallpaperTime);
+     
+     // Initialize dim widgets visibility based on numOfDims
+     initialize_dim_widgets_visibility();
 
             // Debug log the loaded configuration
     ESP_LOGW(TAG, "Loaded Panel Configuration:");

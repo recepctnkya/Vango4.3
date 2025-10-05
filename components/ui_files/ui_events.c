@@ -75,6 +75,126 @@ void enRGBTurnOFFFunc(lv_event_t * e)
 	set_rgb_to_white();
 }
 
+void btnDimsCallbackFunc(lv_event_t * e)
+{
+	// Show dim widgets
+	lv_obj_clear_flag(ui_slDim1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_slDim2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_slDim3, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_slDim4, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_lblDim1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_lblDim2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_lblDim3, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_lblDim4, LV_OBJ_FLAG_HIDDEN);
+	
+	// Hide temperature widgets
+	lv_obj_add_flag(ui_arcTemperature1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblTemperature1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_arcTemperature2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblTemperature2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblUnderArcTemperature1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblUnderArcTemperature2, LV_OBJ_FLAG_HIDDEN);
+	
+	// Hide water widgets
+	lv_obj_add_flag(ui_arcWater1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblWater1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_arcWater2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblWater2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblUnderArcWater1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblUnderArcWater2, LV_OBJ_FLAG_HIDDEN);
+	
+}
 
+void btnOutputsCallbackFunc(lv_event_t * e)
+{
+	// Hide dim widgets
+	lv_obj_add_flag(ui_slDim1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_slDim2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_slDim3, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_slDim4, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim3, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim4, LV_OBJ_FLAG_HIDDEN);
+	
+	// Hide temperature widgets
+	lv_obj_add_flag(ui_arcTemperature1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblTemperature1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_arcTemperature2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblTemperature2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblUnderArcTemperature1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblUnderArcTemperature2, LV_OBJ_FLAG_HIDDEN);
+	
+	// Hide water widgets
+	lv_obj_add_flag(ui_arcWater1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblWater1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_arcWater2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblWater2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblUnderArcWater1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblUnderArcWater2, LV_OBJ_FLAG_HIDDEN);
+	
+}
 
+void btnTemperaturesCallbackFunc(lv_event_t * e)
+{
+	// Hide dim widgets
+	lv_obj_add_flag(ui_slDim1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_slDim2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_slDim3, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_slDim4, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim3, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim4, LV_OBJ_FLAG_HIDDEN);
+	
+	// Show temperature widgets
+	lv_obj_clear_flag(ui_arcTemperature1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_lblTemperature1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_arcTemperature2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_lblTemperature2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_lblUnderArcTemperature1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_lblUnderArcTemperature2, LV_OBJ_FLAG_HIDDEN);
+	
+	// Hide water widgets
+	lv_obj_add_flag(ui_arcWater1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblWater1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_arcWater2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblWater2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblUnderArcWater1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblUnderArcWater2, LV_OBJ_FLAG_HIDDEN);
+	
+}
 
+void btnWatersCallbackFunc(lv_event_t * e)
+{
+	// Hide dim widgets
+	lv_obj_add_flag(ui_slDim1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_slDim2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_slDim3, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_slDim4, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim3, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblDim4, LV_OBJ_FLAG_HIDDEN);
+	
+	// Hide temperature widgets
+	lv_obj_add_flag(ui_arcTemperature1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblTemperature1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_arcTemperature2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblTemperature2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblUnderArcTemperature1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ui_lblUnderArcTemperature2, LV_OBJ_FLAG_HIDDEN);
+	
+	// Show water widgets
+	lv_obj_clear_flag(ui_arcWater1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_lblWater1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_arcWater2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_lblWater2, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_lblUnderArcWater1, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(ui_lblUnderArcWater2, LV_OBJ_FLAG_HIDDEN);
+	
+}
+
+void btnReturnfromscrDimsandSensorstoscrMainCallback(lv_event_t * e)
+{
+}

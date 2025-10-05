@@ -90,3 +90,23 @@ def enRGBTurnONFunc(event_struct):
 def enRGBTurnOFFFunc(event_struct):
     return
 
+
+def btnDimsCallbackFunc(event_struct):
+    return
+
+
+def btnOutputsCallbackFunc(event_struct):
+    return
+
+
+def btnTemperaturesCallbackFunc(event_struct):
+    return
+
+
+def btnWatersCallbackFunc(event_struct):
+    return
+
+
+def btnReturnfromscrDimsandSensorstoscrMainCallback(event_struct):
+    return
+

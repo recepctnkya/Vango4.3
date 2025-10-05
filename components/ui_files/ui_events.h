@@ -12,6 +12,16 @@ extern "C" {
 
 void arcTemizSuValueChanged(lv_event_t * e);
 void savePanelSettings(lv_event_t * e);
+void btnReturnfromscrDimsandSensorstoscrMainCallback(lv_event_t * e);
+void enRGBTurnONFunc(lv_event_t * e);
+void enRGBTurnOFFFunc(lv_event_t * e);
+void applyRGBColor(lv_event_t * e);
+void btnSaveThemeFunc(lv_event_t * e);
+void btnThemeWhiteFunc(lv_event_t * e);
+void btnBlackThemeFunc(lv_event_t * e);
+void btnDimsCallbackFunc(lv_event_t * e);
+void btnTemperaturesCallbackFunc(lv_event_t * e);
+void btnWatersCallbackFunc(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/

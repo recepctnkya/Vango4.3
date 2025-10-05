@@ -2,8 +2,8 @@ ui_scrMain.c
 ui_scrPanelSettings.c
 ui_scrWallpaper.c
 ui_scrInit.c
-ui_scrConnectionSettings.c
-ui_scrDims.c
+ui_scrCalibration.c
+ui_scrDimsandSensorsandWaters.c
 ui_scrSettings.c
 ui_scrRGB.c
 ui_scrTheme.c
@@ -19,6 +19,8 @@ ui_img_sconnected_png.c
 ui_img_snotconnected_png.c
 ui_img_btnotconnected_png.c
 ui_img_weatherforecast2_png.c
+ui_img_button_up_png.c
+ui_img_button_down_png.c
 ui_img_caravan_logo_png.c
 ui_img_ac_png.c
 ui_img_heater_png.c
@@ -32,11 +34,11 @@ ui_img_tv_png.c
 ui_img_usb_png.c
 ui_img_water_png.c
 ui_img_initlogo_png.c
-ui_img_arcdesign_png.c
 ui_img_sliderpassive_png.c
 ui_img_slideractivee_png.c
+ui_img_arcdesign2_png.c
+ui_img_arcdesign_png.c
 ui_img_outcontrols_png.c
-ui_img_birghtnescontrol_png.c
 ui_img_theme_png.c
 ui_img_connectioncontrol_png.c
 ui_img_calibration_png.c
@@ -44,6 +46,7 @@ ui_img_btnsettings2_png.c
 ui_img_sensors_png.c
 ui_img_waterlevel_png.c
 ui_img_rgbcontrol_png.c
+ui_img_settingsicon_png.c
 ui_img_arc1_png.c
 ui_img_outcontrols2_png.c
 ui_img_wifi3_png.c

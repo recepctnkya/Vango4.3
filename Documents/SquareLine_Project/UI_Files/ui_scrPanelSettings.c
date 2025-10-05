@@ -25,7 +25,7 @@ void ui_scrPanelSettings_screen_init(void)
 
     ui_Button5 = lv_btn_create(ui_Panel10);
     lv_obj_set_width(ui_Button5, 136);
-    lv_obj_set_height(ui_Button5, 54);
+    lv_obj_set_height(ui_Button5, 134);
     lv_obj_set_x(ui_Button5, -328);
     lv_obj_set_y(ui_Button5, 0);
     lv_obj_set_align(ui_Button5, LV_ALIGN_CENTER);
@@ -52,7 +52,7 @@ void ui_scrPanelSettings_screen_init(void)
 
     ui_Button3 = lv_btn_create(ui_Panel10);
     lv_obj_set_width(ui_Button3, 123);
-    lv_obj_set_height(ui_Button3, 45);
+    lv_obj_set_height(ui_Button3, 107);
     lv_obj_set_x(ui_Button3, 336);
     lv_obj_set_y(ui_Button3, -1);
     lv_obj_set_align(ui_Button3, LV_ALIGN_CENTER);

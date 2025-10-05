@@ -119,3 +119,28 @@ void enRGBTurnOFFFunc(lv_event_t * e)
 {
 	// Your code here
 }
+
+void btnDimsCallbackFunc(lv_event_t * e)
+{
+	// Your code here
+}
+
+void btnOutputsCallbackFunc(lv_event_t * e)
+{
+	// Your code here
+}
+
+void btnTemperaturesCallbackFunc(lv_event_t * e)
+{
+	// Your code here
+}
+
+void btnWatersCallbackFunc(lv_event_t * e)
+{
+	// Your code here
+}
+
+void btnReturnfromscrDimsandSensorstoscrMainCallback(lv_event_t * e)
+{
+	// Your code here
+}
