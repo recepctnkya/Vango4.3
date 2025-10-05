@@ -194,9 +194,6 @@ void ui_event_btnBlackTheme(lv_event_t * e);
 lv_obj_t * ui_btnBlackTheme;
 lv_obj_t * ui_lblSelectTheme;
 lv_obj_t * ui_lblSettingsB;
-void ui_event_sldBrightness(lv_event_t * e);
-lv_obj_t * ui_sldBrightness;
-lv_obj_t * ui_Label4;
 // CUSTOM VARIABLES
 
 
@@ -434,15 +431,6 @@ void ui_event_btnBlackTheme(lv_event_t * e)
 
     if(event_code == LV_EVENT_CLICKED) {
         btnBlackThemeFunc(e);
-    }
-}
-
-void ui_event_sldBrightness(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-    if(event_code == LV_EVENT_RELEASED) {
-        sldBrightnessAdjustCallback(e);
     }
 }
 

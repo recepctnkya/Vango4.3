@@ -8,6 +8,7 @@
 #include "hexnet_nvs.h"
 #include "hexnet_canbus.h"
 #include "settings_page.h"
+#include "waveshare_rgb_lcd_port.h"
 
 #include <stdio.h>
 #include "string.h"
@@ -140,6 +141,16 @@ lv_obj_t * ui_btnIOGot;
 
 
 extern lv_obj_t *ui_lblSelectTheme;
+extern lv_obj_t *ui_lblPnlGrup1SicaklikDeger1;
+extern lv_obj_t *ui_lblPnlGrup1SicaklikDeger2;
+extern lv_obj_t *ui_arcTemperature1;
+extern lv_obj_t *ui_arcTemperature2;
+extern lv_obj_t *ui_lblTemperature1;
+extern lv_obj_t *ui_lblTemperature2;
+extern lv_obj_t *ui_arcWater1;
+extern lv_obj_t *ui_arcWater2;
+extern lv_obj_t *ui_lblWater1;
+extern lv_obj_t *ui_lblWater2;
 
 
 extern lv_obj_t * ui_scrInit;
@@ -426,7 +437,6 @@ void my_btnThemeWhiteFunc(void)
     lv_obj_set_style_text_color(ui_lblSettingsB, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     
     // Add missing widgets for white theme
-    lv_obj_set_style_text_color(ui_lblHexnetTechnology, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblLock, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -435,7 +445,6 @@ void my_btnThemeWhiteFunc(void)
     lv_obj_set_style_text_color(ui_Label1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label3, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_Label4, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label6, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label7, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label8, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -508,14 +517,12 @@ void my_btnBlackThemeFunc(void)
     lv_obj_set_style_text_color(ui_lblSettingsB, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     
     // Add missing widgets for black theme
-    lv_obj_set_style_text_color(ui_lblHexnetTechnology, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblLock, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_Label4, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label6, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label7, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label8, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -916,7 +923,7 @@ static void wallpaper_update_timer_callback(lv_timer_t * timer) {
         if (panelWallpaperEnableCounter == panelWallpaperTime) {
             // Check if ui_scrWallpaper is valid before loading it
             if (ui_scrWallpaper != NULL) {
-                lv_scr_load(ui_scrWallpaper);
+                //lv_scr_load(ui_scrWallpaper);
             }
         }
         panelWallpaperEnableCounter++;
@@ -994,10 +1001,22 @@ void update_display_with_data(const uint8_t *data, int length) {
 
 
     // Update the display labels with the fetched data
-    lv_label_set_text_fmt(ui_lblPnlGrup1Sicaklik1, "%d°C", analog_input_4);
-    lv_label_set_text_fmt(ui_lblPnlGrup1Sicaklik2, "%d°C", analog_input_5);
+    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger1, "%d°C", analog_input_4);
+    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger2, "%d°C", analog_input_5);
     lv_label_set_text_fmt(ui_lblGrup1Oran1, "%d%%", analog_input_1);
     lv_label_set_text_fmt(ui_lblGrup1Oran2, "%d%%", analog_input_2);
+    
+    // Update temperature widgets with analog input values
+    lv_arc_set_value(ui_arcTemperature1, analog_input_4);
+    lv_arc_set_value(ui_arcTemperature2, analog_input_5);
+    lv_label_set_text_fmt(ui_lblTemperature1, "%d°C", analog_input_4);
+    lv_label_set_text_fmt(ui_lblTemperature2, "%d°C", analog_input_5);
+    
+    // Update water widgets with analog input values
+    lv_arc_set_value(ui_arcWater1, analog_input_1);
+    lv_arc_set_value(ui_arcWater2, analog_input_2);
+    lv_label_set_text_fmt(ui_lblWater1, "%d°C", analog_input_1);
+    lv_label_set_text_fmt(ui_lblWater2, "%d°C", analog_input_2);
 
     // Update the arcs with the fetched data
     lv_arc_set_value(ui_arcGrup1, analog_input_1);
@@ -1920,9 +1939,9 @@ void display_manager_init() {
         lv_scr_load(ui_scrInit);
         ui_scrPanelSettings_IO_Dim_init();
         
-        // Initialize dim widgets visibility after UI is created
-        initialize_dim_widgets_visibility();
-        
-        lvgl_port_unlock();
+    // Initialize dim widgets visibility after UI is created
+    initialize_dim_widgets_visibility();
+    
+    lvgl_port_unlock();
     }
 }

@@ -193,9 +193,6 @@ void ui_event_btnBlackTheme(lv_event_t * e);
 extern lv_obj_t * ui_btnBlackTheme;
 extern lv_obj_t * ui_lblSelectTheme;
 extern lv_obj_t * ui_lblSettingsB;
-void ui_event_sldBrightness(lv_event_t * e);
-extern lv_obj_t * ui_sldBrightness;
-extern lv_obj_t * ui_Label4;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_scrPages

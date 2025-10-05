@@ -110,3 +110,7 @@ def btnWatersCallbackFunc(event_struct):
 def btnReturnfromscrDimsandSensorstoscrMainCallback(event_struct):
     return
 
+
+def sldBrightnessAdjustCallback(event_struct):
+    return
+

@@ -236,6 +236,7 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     lv_obj_set_y(ui_arcTemperature1, -65);
     lv_obj_set_align(ui_arcTemperature1, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_arcTemperature1, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_clear_flag(ui_arcTemperature1, LV_OBJ_FLAG_CLICKABLE);      /// Flags
     lv_arc_set_value(ui_arcTemperature1, 100);
     lv_arc_set_bg_angles(ui_arcTemperature1, 115, 100);
     lv_obj_set_style_radius(ui_arcTemperature1, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -277,6 +278,7 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     lv_obj_set_y(ui_arcTemperature2, -61);
     lv_obj_set_align(ui_arcTemperature2, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_arcTemperature2, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_clear_flag(ui_arcTemperature2, LV_OBJ_FLAG_CLICKABLE);      /// Flags
     lv_arc_set_value(ui_arcTemperature2, 100);
     lv_arc_set_bg_angles(ui_arcTemperature2, 115, 100);
     lv_obj_set_style_radius(ui_arcTemperature2, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -338,6 +340,7 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     lv_obj_set_y(ui_arcWater1, -65);
     lv_obj_set_align(ui_arcWater1, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_arcWater1, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_clear_flag(ui_arcWater1, LV_OBJ_FLAG_CLICKABLE);      /// Flags
     lv_arc_set_value(ui_arcWater1, 100);
     lv_arc_set_bg_angles(ui_arcWater1, 115, 100);
     lv_obj_set_style_radius(ui_arcWater1, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -379,6 +382,7 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     lv_obj_set_y(ui_arcWater2, -61);
     lv_obj_set_align(ui_arcWater2, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_arcWater2, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_clear_flag(ui_arcWater2, LV_OBJ_FLAG_CLICKABLE);      /// Flags
     lv_arc_set_value(ui_arcWater2, 100);
     lv_arc_set_bg_angles(ui_arcWater2, 115, 100);
     lv_obj_set_style_radius(ui_arcWater2, 200, LV_PART_MAIN | LV_STATE_DEFAULT);

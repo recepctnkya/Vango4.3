@@ -6,6 +6,7 @@
 #include "ui.h"
 #include "display_manager.h"
 #include "definitions.h"
+#include "waveshare_rgb_lcd_port.h"
 
 // External function declarations
 extern void dim_events(lv_event_t* e);
@@ -233,6 +234,16 @@ void btnReturnfromscrDimsandSensorstoscrMainCallback(lv_event_t * e)
 }
 
 void sldBrightnessAdjustCallback(lv_event_t * e)
+{
+
+}
+
+void btnBrightnessOnCallback(lv_event_t * e)
+{
+
+}
+
+void btnBrightnessOffCallback(lv_event_t * e)
 {
 
 }
