@@ -33,10 +33,12 @@ ui_img_toilet_png.c
 ui_img_tv_png.c
 ui_img_usb_png.c
 ui_img_water_png.c
+ui_img_1096609443.c
 ui_img_sliderpassive_png.c
 ui_img_slideractivee_png.c
 ui_img_arcdesign2_png.c
 ui_img_arcdesign_png.c
+ui_img_tempicon_png.c
 ui_img_outcontrols_png.c
 ui_img_theme_png.c
 ui_img_connectioncontrol_png.c

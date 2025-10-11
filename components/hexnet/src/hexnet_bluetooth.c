@@ -30,6 +30,7 @@ static uint16_t spp_conn_id = 0xffff;
 static esp_gatt_if_t spp_gatts_if = 0xff;
 QueueHandle_t spp_uart_queue = NULL;
 static QueueHandle_t cmd_cmd_queue = NULL;
+static QueueHandle_t data_transmit_queue = NULL;
 
 #ifdef SUPPORT_HEARTBEAT
 static QueueHandle_t cmd_heartbeat_queue = NULL;
@@ -263,6 +264,45 @@ static bool store_wr_buffer(esp_ble_gatts_cb_param_t *p_data)
     return true;
 }
 
+static void process_complete_data(void)
+{
+    if (SppRecvDataBuff.first_node == NULL || SppRecvDataBuff.buff_size == 0) {
+        return;
+    }
+
+    // Allocate buffer for complete data
+    char *complete_data = malloc(SppRecvDataBuff.buff_size + 1);
+    if (complete_data == NULL) {
+        ESP_LOGE(GATTS_TABLE_TAG, "Failed to allocate memory for complete data");
+        free_write_buffer();
+        return;
+    }
+
+    // Reassemble data from all chunks
+    temp_spp_recv_data_node_p1 = SppRecvDataBuff.first_node;
+    int offset = 0;
+    
+    while(temp_spp_recv_data_node_p1 != NULL){
+        if (temp_spp_recv_data_node_p1->node_buff && temp_spp_recv_data_node_p1->len > 0) {
+            memcpy(complete_data + offset, temp_spp_recv_data_node_p1->node_buff, temp_spp_recv_data_node_p1->len);
+            offset += temp_spp_recv_data_node_p1->len;
+        }
+        temp_spp_recv_data_node_p1 = temp_spp_recv_data_node_p1->next_node;
+    }
+    
+    complete_data[offset] = '\0'; // Null terminate
+    
+    ESP_LOGI(GATTS_TABLE_TAG, "Complete data received (%d bytes): %s", offset, complete_data);
+    
+    // Process the complete JSON data
+    extern void parse_ble_data(const char* json_data);
+    parse_ble_data(complete_data);
+    
+    // Clean up
+    free(complete_data);
+    free_write_buffer();
+}
+
 static void free_write_buffer(void)
 {
     temp_spp_recv_data_node_p1 = SppRecvDataBuff.first_node;
@@ -310,18 +350,46 @@ void spp_heartbeat_task(void * arg)
 
 
 const char example_json_data_packet[] = "{\"temperature\": 25.0, \"humidity\": 50.0, \"pressure\": 1013.25}";
+
+// Data transmission task to handle chunking
+void data_transmit_task(void *arg)
+{
+    char *data_to_send = NULL;
+    
+    for(;;) {
+        if(xQueueReceive(data_transmit_queue, &data_to_send, portMAX_DELAY)) {
+            if (data_to_send != NULL && is_connected) {
+                int data_len = strlen(data_to_send);
+                int max_payload = spp_mtu_size - 3; // Account for GATT protocol overhead
+                
+                ESP_LOGI(GATTS_TABLE_TAG, "Sending JSON data, length: %d, MTU: %d", data_len, spp_mtu_size);
+                
+                if (data_len <= max_payload) {
+                    // Data fits in single packet
+                    esp_ble_gatts_send_indicate(spp_gatts_if, spp_conn_id, spp_handle_table[SPP_IDX_SPP_DATA_NTY_VAL],
+                                                data_len, (uint8_t *)data_to_send, false);
+                } else {
+                    // Send first chunk only to avoid stack overflow
+                    ESP_LOGW(GATTS_TABLE_TAG, "Data too large (%d bytes), sending first %d bytes", data_len, max_payload);
+                    esp_ble_gatts_send_indicate(spp_gatts_if, spp_conn_id, spp_handle_table[SPP_IDX_SPP_DATA_NTY_VAL],
+                                                max_payload, (uint8_t *)data_to_send, false);
+                }
+                
+                // Note: We don't free data_to_send here since it's the original converted_json_data2 pointer
+                // The memory is managed by the caller (display_manager)
+            }
+        }
+    }
+    vTaskDelete(NULL);
+}
 void bluetooth_send_periodic_callback(TimerHandle_t xTimer)
 {
     static int counter = 0;
-    if (is_connected) {
-        char counter_str[16]; // Buffer to hold the counter value as a string
-        snprintf(counter_str, sizeof(counter_str), "%d", counter); // Convert counter to string
-
-        // Sending BLE notification
-        esp_ble_gatts_send_indicate(spp_gatts_if, spp_conn_id, spp_handle_table[SPP_IDX_SPP_DATA_NTY_VAL],
-                                    strlen(converted_json_data2), (uint8_t *)converted_json_data2, false);
-
-        counter++; // Increment the counter for the next iteration
+    if (is_connected && converted_json_data2 != NULL) {
+        // Just signal the transmission task - no memory operations in timer callback
+        char *data_ptr = converted_json_data2;
+        xQueueSend(data_transmit_queue, &data_ptr, 0); // Non-blocking send
+        counter++;
     }
 }
 
@@ -401,11 +469,13 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
                 }
 #endif
                 else if(res == SPP_IDX_SPP_DATA_RECV_VAL){
+                    ESP_LOGI(GATTS_TABLE_TAG, "---Data Received from App---");
                     esp_log_buffer_char(GATTS_TABLE_TAG,(char *)(p_data->write.value),p_data->write.len);
                 }else{
                     //TODO:
                 }
             }else if((p_data->write.is_prep == true)&&(res == SPP_IDX_SPP_DATA_RECV_VAL)){
+                
                 ESP_LOGI(GATTS_TABLE_TAG, "ESP_GATTS_PREP_WRITE_EVT : handle = %d", res);
                 store_wr_buffer(p_data);
             }
@@ -414,13 +484,14 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
     	case ESP_GATTS_EXEC_WRITE_EVT:{
     	    ESP_LOGI(GATTS_TABLE_TAG, "ESP_GATTS_EXEC_WRITE_EVT");
     	    if(p_data->exec_write.exec_write_flag){
-    	        //print_write_buffer();
-    	        free_write_buffer();
+    	        // Process the complete reassembled data
+    	        process_complete_data();
     	    }
     	    break;
     	}
     	case ESP_GATTS_MTU_EVT:
     	    spp_mtu_size = p_data->mtu.mtu;
+    	    ESP_LOGI(GATTS_TABLE_TAG, "MTU size updated to: %d", spp_mtu_size);
     	    break;
     	case ESP_GATTS_CONF_EVT:
     	    break;
@@ -437,6 +508,7 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
     	    spp_gatts_if = gatts_if;
     	    is_connected = true;
 
+            ESP_LOGI(GATTS_TABLE_TAG, "Client connected, current MTU: %d", spp_mtu_size);
 
             // Create a FreeRTOS timer that triggers every 300 ms (300 / portTICK_PERIOD_MS)
             TimerHandle_t periodic_timer = xTimerCreate("PeriodicTimer", pdMS_TO_TICKS(300), pdTRUE, (void *)0, bluetooth_send_periodic_callback);
@@ -569,7 +641,17 @@ void ble_init(void)
     esp_ble_gap_register_callback(gap_event_handler);
     esp_ble_gatts_app_register(ESP_SPP_APP_ID);
 
+    // Create queues
+    cmd_cmd_queue = xQueueCreate(10, sizeof(uint16_t));
+    data_transmit_queue = xQueueCreate(5, sizeof(char*));
+    
+    if (cmd_cmd_queue == NULL || data_transmit_queue == NULL) {
+        ESP_LOGE(GATTS_TABLE_TAG, "Failed to create queues");
+        return;
+    }
 
+    // Create data transmission task
+    xTaskCreate(data_transmit_task, "data_transmit", 4096, NULL, 5, NULL);
 
     esp_err_t local_mtu_ret = esp_ble_gatt_set_local_mtu(500);
     if (local_mtu_ret){

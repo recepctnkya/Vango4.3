@@ -128,6 +128,8 @@ extern lv_obj_t* ui_Checkbox5;
 
 extern lv_obj_t* ui_pnlOutputs;
 extern lv_obj_t* ui_pnlConnectionLost;
+extern lv_obj_t * ui_Panel9;
+extern lv_obj_t * ui_Panel1;
 
 extern lv_obj_t *ui_imgWForecast;
 extern lv_obj_t *ui_lblDateAndTime;
@@ -315,6 +317,45 @@ extern const lv_img_dsc_t ui_img_heater_png;
 #define EXAMPLE_LVGL_TASK_PRIORITY     2
 
 static SemaphoreHandle_t lvgl_mux = NULL;
+static lv_timer_t * comm_animation_timer = NULL;
+
+// Forward declaration for animation function
+void commScreen_Animation(lv_obj_t * TargetObject, int delay);
+
+// Custom opacity animation callback
+static void set_opacity_cb(void * var, int32_t val) {
+    lv_obj_set_style_opa((lv_obj_t*)var, val, LV_PART_MAIN | LV_STATE_DEFAULT);
+}
+
+// Custom repetitive animation function
+static void commScreen_RepetitiveAnimation(lv_obj_t * TargetObject) {
+    // Create a simple repetitive animation that moves the object back and forth
+    lv_anim_t anim;
+    lv_anim_init(&anim);
+    lv_anim_set_var(&anim, TargetObject);
+    lv_anim_set_time(&anim, 1000);  // 1 second duration
+    lv_anim_set_repeat_count(&anim, LV_ANIM_REPEAT_INFINITE);  // Repeat infinitely
+    lv_anim_set_playback_time(&anim, 1000);  // 1 second playback
+    lv_anim_set_values(&anim, -175, -75);  // Move from -175px to -75px (100px range)
+    lv_anim_set_exec_cb(&anim, (lv_anim_exec_xcb_t) lv_obj_set_x);
+    lv_anim_set_path_cb(&anim, lv_anim_path_ease_in_out);
+    lv_anim_start(&anim);
+}
+
+// Custom repetitive animation function for Bluetooth connection
+static void btScreen_RepetitiveAnimation(lv_obj_t * TargetObject) {
+    // Create a simple repetitive animation that moves the object back and forth
+    lv_anim_t anim;
+    lv_anim_init(&anim);
+    lv_anim_set_var(&anim, TargetObject);
+    lv_anim_set_time(&anim, 1000);  // 1 second duration
+    lv_anim_set_repeat_count(&anim, LV_ANIM_REPEAT_INFINITE);  // Repeat infinitely
+    lv_anim_set_playback_time(&anim, 1000);  // 1 second playback
+    lv_anim_set_values(&anim, 160, 60);  // Move from 160px to 60px (100px range)
+    lv_anim_set_exec_cb(&anim, (lv_anim_exec_xcb_t) lv_obj_set_x);
+    lv_anim_set_path_cb(&anim, lv_anim_path_ease_in_out);
+    lv_anim_start(&anim);
+}
 
 // we use two semaphores to sync the VSYNC event and the LVGL task, to avoid potential tearing effect
 #if CONFIG_EXAMPLE_AVOID_TEAR_EFFECT_WITH_SEM
@@ -442,7 +483,7 @@ void my_btnThemeWhiteFunc(void)
     lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
 
 
-    lv_obj_set_style_text_color(ui_Label1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+
     lv_obj_set_style_text_color(ui_Label2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label3, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label6, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -520,7 +561,6 @@ void my_btnBlackThemeFunc(void)
     lv_obj_set_style_text_color(ui_lblLock, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_lblPnlGrup1SicaklikDeger2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(ui_Label1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_color(ui_Label6, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -932,6 +972,55 @@ static void wallpaper_update_timer_callback(lv_timer_t * timer) {
         panelWallpaperEnableCounter = 0;
     }
     
+}
+
+// Timer callback for communication animation
+static void comm_animation_timer_callback(lv_timer_t * timer) {
+    static bool comm_animation_started = false;
+    static bool bt_animation_started = false;
+    
+    bool Deviceconnected = get_canbus_connection_status();
+    bool btConnected = get_connection_status();
+    
+    // Handle device connection animation (ui_Panel9)
+    if (Deviceconnected && !comm_animation_started) {
+        // Start the repetitive animation when device connects
+        commScreen_RepetitiveAnimation(ui_Panel9);
+        comm_animation_started = true;
+        // Set color to green when connected
+        lv_obj_set_style_bg_color(ui_Panel9, lv_color_hex(0x00FF00), LV_PART_MAIN | LV_STATE_DEFAULT);
+    } else if (!Deviceconnected && comm_animation_started) {
+        // Stop the animation when device disconnects
+        lv_anim_del(ui_Panel9, NULL);  // Stop all animations on this object
+        comm_animation_started = false;
+        // Set position to -100px and color to red when disconnected
+        lv_obj_set_x(ui_Panel9, -100);
+        lv_obj_set_style_bg_color(ui_Panel9, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    } else if (!Deviceconnected && !comm_animation_started) {
+        // Ensure position and color are set correctly when disconnected
+        lv_obj_set_x(ui_Panel9, -100);
+        lv_obj_set_style_bg_color(ui_Panel9, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    }
+    
+    // Handle Bluetooth connection animation (ui_Panel1)
+    if (btConnected && !bt_animation_started) {
+        // Start the repetitive animation when Bluetooth connects
+        btScreen_RepetitiveAnimation(ui_Panel1);
+        bt_animation_started = true;
+        // Set color to green when connected
+        lv_obj_set_style_bg_color(ui_Panel1, lv_color_hex(0x00FF00), LV_PART_MAIN | LV_STATE_DEFAULT);
+    } else if (!btConnected && bt_animation_started) {
+        // Stop the animation when Bluetooth disconnects
+        lv_anim_del(ui_Panel1, NULL);  // Stop all animations on this object
+        bt_animation_started = false;
+        // Set position to 110px and color to red when disconnected
+        lv_obj_set_x(ui_Panel1, 110);
+        lv_obj_set_style_bg_color(ui_Panel1, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    } else if (!btConnected && !bt_animation_started) {
+        // Ensure position and color are set correctly when disconnected
+        lv_obj_set_x(ui_Panel1, 110);
+        lv_obj_set_style_bg_color(ui_Panel1, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    }
 }
 
 // Function to set the button color based on the value
@@ -1889,6 +1978,20 @@ void create_buttons_for_screen(lv_obj_t* parent, const char* screen_type)
 }
 
 
+// Function to start the communication animation timer
+void start_comm_animation_timer(void) {
+    if (comm_animation_timer != NULL) {
+        lv_timer_resume(comm_animation_timer);
+    }
+}
+
+// Function to stop the communication animation timer
+void stop_comm_animation_timer(void) {
+    if (comm_animation_timer != NULL) {
+        lv_timer_pause(comm_animation_timer);
+    }
+}
+
 //###################################### Display Manager ################################################################
 
 void display_manager_init() {
@@ -1901,6 +2004,8 @@ void display_manager_init() {
     lv_timer_t * wallpaperTimer = lv_timer_create(wallpaper_update_timer_callback, 1000, NULL);
     lv_timer_t * initTim = lv_timer_create(init_timer, 100, NULL);
     
+    // Create communication animation timer (1 second interval)
+    comm_animation_timer = lv_timer_create(comm_animation_timer_callback, 1000, NULL);
 
      load_panel_configuration_from_nvs(&numOfOutputs, outputsBuffer, &numOfSensors, sensorsBuffer, &numOfDims, dimsBuffer);
      load_theme_configuration_from_nvs(&panelThemeType, &panelWallpaperEnable, &panelWallpaperTime);

@@ -15,7 +15,7 @@ extern "C" {
 #include "ui_helpers.h"
 #include "ui_events.h"
 
-void InitBar_Animation(lv_obj_t * TargetObject, int delay);
+void commScreen_Animation(lv_obj_t * TargetObject, int delay);
 
 // SCREEN: ui_scrMain
 void ui_scrMain_screen_init(void);
@@ -113,6 +113,9 @@ extern lv_obj_t * ui_Panel6;
 void ui_event_Button13(lv_event_t * e);
 extern lv_obj_t * ui_Button13;
 extern lv_obj_t * ui_lblLock7;
+extern lv_obj_t * ui_Image1;
+extern lv_obj_t * ui_Panel9;
+extern lv_obj_t * ui_Panel1;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_scrDimsandSensorsandWaters
@@ -143,6 +146,8 @@ extern lv_obj_t * ui_arcWater2;
 extern lv_obj_t * ui_lblWater2;
 extern lv_obj_t * ui_lblUnderArcWater1;
 extern lv_obj_t * ui_lblUnderArcWater2;
+extern lv_obj_t * ui_imgTemp1;
+extern lv_obj_t * ui_imgTemp2;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_scrSettings
@@ -241,10 +246,12 @@ LV_IMG_DECLARE(ui_img_toilet_png);    // assets/toilet.png
 LV_IMG_DECLARE(ui_img_tv_png);    // assets/tv.png
 LV_IMG_DECLARE(ui_img_usb_png);    // assets/usb.png
 LV_IMG_DECLARE(ui_img_water_png);    // assets/water.png
+LV_IMG_DECLARE(ui_img_1096609443);    // assets/connstatusıcons.png
 LV_IMG_DECLARE(ui_img_sliderpassive_png);    // assets/sliderpassive.png
 LV_IMG_DECLARE(ui_img_slideractivee_png);    // assets/slideractivee.png
 LV_IMG_DECLARE(ui_img_arcdesign2_png);    // assets/arcdesign2.png
 LV_IMG_DECLARE(ui_img_arcdesign_png);    // assets/arcdesign.png
+LV_IMG_DECLARE(ui_img_tempicon_png);    // assets/tempicon.png
 LV_IMG_DECLARE(ui_img_outcontrols_png);    // assets/outcontrols.png
 LV_IMG_DECLARE(ui_img_theme_png);    // assets/theme.png
 LV_IMG_DECLARE(ui_img_connectioncontrol_png);    // assets/connectioncontrol.png

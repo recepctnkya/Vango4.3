@@ -29,4 +29,9 @@ void move_buttons_to_main_screen(void);
 
 // Dim widgets visibility initialization
 void initialize_dim_widgets_visibility(void);
+
+// Communication animation timer control functions
+void start_comm_animation_timer(void);
+void stop_comm_animation_timer(void);
+
 #endif // DISPLAY_MANAGER_H

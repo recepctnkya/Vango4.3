@@ -7,7 +7,7 @@
 #include "ui_helpers.h"
 
 ///////////////////// VARIABLES ////////////////////
-void InitBar_Animation(lv_obj_t * TargetObject, int delay);
+void commScreen_Animation(lv_obj_t * TargetObject, int delay);
 
 
 // SCREEN: ui_scrMain
@@ -110,6 +110,9 @@ lv_obj_t * ui_Panel6;
 void ui_event_Button13(lv_event_t * e);
 lv_obj_t * ui_Button13;
 lv_obj_t * ui_lblLock7;
+lv_obj_t * ui_Image1;
+lv_obj_t * ui_Panel9;
+lv_obj_t * ui_Panel1;
 // CUSTOM VARIABLES
 
 
@@ -141,6 +144,8 @@ lv_obj_t * ui_arcWater2;
 lv_obj_t * ui_lblWater2;
 lv_obj_t * ui_lblUnderArcWater1;
 lv_obj_t * ui_lblUnderArcWater2;
+lv_obj_t * ui_imgTemp1;
+lv_obj_t * ui_imgTemp2;
 // CUSTOM VARIABLES
 
 
@@ -222,12 +227,12 @@ lv_obj_t * ui____initial_actions0;
 
 // IMAGES AND IMAGE SETS
 const lv_img_dsc_t * ui_imgset_arc[1] = {&ui_img_arc1_png};
+const lv_img_dsc_t * ui_imgset_arcdesign[1] = {&ui_img_arcdesign2_png};
 const lv_img_dsc_t * ui_imgset_btnsettings[1] = {&ui_img_btnsettings2_png};
 const lv_img_dsc_t * ui_imgset_logo[1] = {&ui_img_logo3_png};
 const lv_img_dsc_t * ui_imgset_outcontrols[1] = {&ui_img_outcontrols2_png};
 const lv_img_dsc_t * ui_imgset_weatherforecast[1] = {&ui_img_weatherforecast2_png};
 const lv_img_dsc_t * ui_imgset_wifi[1] = {&ui_img_wifi3_png};
-const lv_img_dsc_t * ui_imgset_arcdesign[1] = {&ui_img_arcdesign2_png};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -238,8 +243,46 @@ const lv_img_dsc_t * ui_imgset_arcdesign[1] = {&ui_img_arcdesign2_png};
 #endif
 
 ///////////////////// ANIMATIONS ////////////////////
-void InitBar_Animation(lv_obj_t * TargetObject, int delay)
+void commScreen_Animation(lv_obj_t * TargetObject, int delay)
 {
+    ui_anim_user_data_t * PropertyAnimation_0_user_data = lv_mem_alloc(sizeof(ui_anim_user_data_t));
+    PropertyAnimation_0_user_data->target = TargetObject;
+    PropertyAnimation_0_user_data->val = -1;
+    lv_anim_t PropertyAnimation_0;
+    lv_anim_init(&PropertyAnimation_0);
+    lv_anim_set_time(&PropertyAnimation_0, 1000);
+    lv_anim_set_user_data(&PropertyAnimation_0, PropertyAnimation_0_user_data);
+    lv_anim_set_custom_exec_cb(&PropertyAnimation_0, _ui_anim_callback_set_x);
+    lv_anim_set_values(&PropertyAnimation_0, 0, 100);
+    lv_anim_set_path_cb(&PropertyAnimation_0, lv_anim_path_ease_in);
+    lv_anim_set_delay(&PropertyAnimation_0, delay + 0);
+    lv_anim_set_deleted_cb(&PropertyAnimation_0, _ui_anim_callback_free_user_data);
+    lv_anim_set_playback_time(&PropertyAnimation_0, 10);
+    lv_anim_set_playback_delay(&PropertyAnimation_0, 0);
+    lv_anim_set_repeat_count(&PropertyAnimation_0, 0);
+    lv_anim_set_repeat_delay(&PropertyAnimation_0, 0);
+    lv_anim_set_early_apply(&PropertyAnimation_0, false);
+    lv_anim_set_get_value_cb(&PropertyAnimation_0, &_ui_anim_callback_get_x);
+    lv_anim_start(&PropertyAnimation_0);
+    ui_anim_user_data_t * PropertyAnimation_1_user_data = lv_mem_alloc(sizeof(ui_anim_user_data_t));
+    PropertyAnimation_1_user_data->target = TargetObject;
+    PropertyAnimation_1_user_data->val = -1;
+    lv_anim_t PropertyAnimation_1;
+    lv_anim_init(&PropertyAnimation_1);
+    lv_anim_set_time(&PropertyAnimation_1, 500);
+    lv_anim_set_user_data(&PropertyAnimation_1, PropertyAnimation_1_user_data);
+    lv_anim_set_custom_exec_cb(&PropertyAnimation_1, _ui_anim_callback_set_opacity);
+    lv_anim_set_values(&PropertyAnimation_1, 255, 0);
+    lv_anim_set_path_cb(&PropertyAnimation_1, lv_anim_path_linear);
+    lv_anim_set_delay(&PropertyAnimation_1, delay + 500);
+    lv_anim_set_deleted_cb(&PropertyAnimation_1, _ui_anim_callback_free_user_data);
+    lv_anim_set_playback_time(&PropertyAnimation_1, 10);
+    lv_anim_set_playback_delay(&PropertyAnimation_1, 0);
+    lv_anim_set_repeat_count(&PropertyAnimation_1, 0);
+    lv_anim_set_repeat_delay(&PropertyAnimation_1, 0);
+    lv_anim_set_early_apply(&PropertyAnimation_1, false);
+    lv_anim_set_get_value_cb(&PropertyAnimation_1, &_ui_anim_callback_get_opacity);
+    lv_anim_start(&PropertyAnimation_1);
 
 }
 

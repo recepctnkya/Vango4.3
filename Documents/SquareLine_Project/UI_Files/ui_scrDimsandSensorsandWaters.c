@@ -316,8 +316,8 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     ui_lblUnderArcTemperature1 = lv_label_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_lblUnderArcTemperature1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_lblUnderArcTemperature1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblUnderArcTemperature1, -185);
-    lv_obj_set_y(ui_lblUnderArcTemperature1, 116);
+    lv_obj_set_x(ui_lblUnderArcTemperature1, -255);
+    lv_obj_set_y(ui_lblUnderArcTemperature1, 114);
     lv_obj_set_align(ui_lblUnderArcTemperature1, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblUnderArcTemperature1, "Internal Temperature");
     lv_obj_add_flag(ui_lblUnderArcTemperature1, LV_OBJ_FLAG_HIDDEN);     /// Flags
@@ -326,8 +326,8 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     ui_lblUnderArcTemperature2 = lv_label_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_lblUnderArcTemperature2, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_lblUnderArcTemperature2, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblUnderArcTemperature2, 199);
-    lv_obj_set_y(ui_lblUnderArcTemperature2, 124);
+    lv_obj_set_x(ui_lblUnderArcTemperature2, 113);
+    lv_obj_set_y(ui_lblUnderArcTemperature2, 113);
     lv_obj_set_align(ui_lblUnderArcTemperature2, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblUnderArcTemperature2, "External Temperature");
     lv_obj_add_flag(ui_lblUnderArcTemperature2, LV_OBJ_FLAG_HIDDEN);     /// Flags
@@ -436,6 +436,26 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     lv_label_set_text(ui_lblUnderArcWater2, "Dirty Water");
     lv_obj_add_flag(ui_lblUnderArcWater2, LV_OBJ_FLAG_HIDDEN);     /// Flags
     lv_obj_set_style_text_font(ui_lblUnderArcWater2, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_imgTemp1 = lv_img_create(ui_scrDimsandSensorsandWaters);
+    lv_img_set_src(ui_imgTemp1, &ui_img_tempicon_png);
+    lv_obj_set_width(ui_imgTemp1, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_imgTemp1, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_imgTemp1, -287);
+    lv_obj_set_y(ui_imgTemp1, -56);
+    lv_obj_set_align(ui_imgTemp1, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_imgTemp1, LV_OBJ_FLAG_HIDDEN | LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_imgTemp1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_imgTemp2 = lv_img_create(ui_scrDimsandSensorsandWaters);
+    lv_img_set_src(ui_imgTemp2, &ui_img_tempicon_png);
+    lv_obj_set_width(ui_imgTemp2, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_imgTemp2, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_imgTemp2, 96);
+    lv_obj_set_y(ui_imgTemp2, -59);
+    lv_obj_set_align(ui_imgTemp2, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_imgTemp2, LV_OBJ_FLAG_HIDDEN | LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_imgTemp2, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
     lv_obj_add_event_cb(ui_Button21, ui_event_Button21, LV_EVENT_ALL, NULL);
 
