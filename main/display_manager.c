@@ -2210,9 +2210,9 @@ void apply_language_settings()
     }
 
         /* Conflict detected → restore defaults */
-        lv_dropdown_set_selected(ui_cbRSelect, 2);
-        lv_dropdown_set_selected(ui_cbGSelect, 1);
-        lv_dropdown_set_selected(ui_cbBSelect, 0);
+        lv_dropdown_set_selected(ui_cbRSelect, selected_R);
+        lv_dropdown_set_selected(ui_cbGSelect, selected_G);
+        lv_dropdown_set_selected(ui_cbBSelect, selected_B);
 }
 
 
@@ -2246,8 +2246,8 @@ void apply_language_settings()
     uint8_t can_data[8] = {0}; // CAN verisi için buffer
 
     can_data[0] = rr;  // İlk byte veri
-    can_data[1] = bb;  // İlk byte veri
-    can_data[2] = gg;  // İlk byte veri
+    can_data[1] = gg;  // İlk byte veri
+    can_data[2] = bb;  // İlk byte veri
     can_data[3] = 1;
     ESP_LOGI(TAG, "SET RGB COLOR R:%d G:%d B:%d", rr, gg, bb);
     send_can_frame(0x740, can_data);  // RGB için CAN ID: 0x740

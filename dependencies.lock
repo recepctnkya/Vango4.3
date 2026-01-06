@@ -2,23 +2,23 @@ dependencies:
   espressif/esp_lcd_touch:
     dependencies: []
     source:
-      path: C:\Users\nakau\Desktop\VanGo4.3\Vango_ESPIDF\components\espressif__esp_lcd_touch
+      path: C:\Users\Smartup\Desktop\ARGE\Hexnet\vango43\Vango4.3\components\espressif__esp_lcd_touch
       type: local
     version: 1.1.2
   espressif/esp_lcd_touch_gt911:
     dependencies: []
     source:
-      path: C:\Users\nakau\Desktop\VanGo4.3\Vango_ESPIDF\components\espressif__esp_lcd_touch_gt911
+      path: C:\Users\Smartup\Desktop\ARGE\Hexnet\vango43\Vango4.3\components\espressif__esp_lcd_touch_gt911
       type: local
     version: 1.1.1~1
   idf:
     source:
       type: idf
-    version: 5.3.0
+    version: 5.3.4
   lvgl/lvgl:
     dependencies: []
     source:
-      path: C:\Users\nakau\Desktop\VanGo4.3\Vango_ESPIDF\components\lvgl__lvgl
+      path: C:\Users\Smartup\Desktop\ARGE\Hexnet\vango43\Vango4.3\components\lvgl__lvgl
       type: local
     version: 8.4.0
 direct_dependencies:
