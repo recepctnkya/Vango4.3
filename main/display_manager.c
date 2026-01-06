@@ -1123,7 +1123,13 @@ void update_display_with_data(const uint8_t *data, int length) {
     } else {
         int before_comma_volt = (int)batarya_volt;
         int after_comma_volt = (int)((batarya_volt - before_comma_volt) * 100);
+        if(panelLanguageType == 0) {
+            // Turkish
+            snprintf(batarya_volt_str, sizeof(batarya_volt_str), "Battery: %d,%02dV", before_comma_volt, after_comma_volt);
+        } else {
+            // English  
         snprintf(batarya_volt_str, sizeof(batarya_volt_str), "Battery: %d,%02dV", before_comma_volt, after_comma_volt);
+        }
     }
 
     // Convert current to string with comma
@@ -1472,7 +1478,13 @@ void parse_read_data(cJSON* json) {
     // Merge time, date, and batarya_volt
     char merged_str[128];
     lv_label_set_text(ui_lblScreenClock, time->valuestring);
+    if(panelLanguageType == 0) {
+        // Turkish
+        snprintf(merged_str, sizeof(merged_str), "Batarya:  %.2fV  Tarih:  %s   Saat:  %s",batarya_volt, date->valuestring, time->valuestring);
+    } else {
+        // English  
     snprintf(merged_str, sizeof(merged_str), "Battery:  %.2fV  Date:  %s   Time:  %s",batarya_volt, date->valuestring, time->valuestring);
+    }
 
     // Set the combined value to ui_lblDateAndTime
     lv_label_set_text(ui_lblDateAndTime, merged_str);
