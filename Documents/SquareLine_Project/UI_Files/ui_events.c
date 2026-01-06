@@ -149,3 +149,33 @@ void sldBrightnessAdjustCallback(lv_event_t * e)
 {
 	// Your code here
 }
+
+void motorMoveBackwardPressed(lv_event_t * e)
+{
+	// Your code here
+}
+
+void motorMoveBackwardReleased(lv_event_t * e)
+{
+	// Your code here
+}
+
+void motorMoveForwardPressed(lv_event_t * e)
+{
+	// Your code here
+}
+
+void motorMoveForwardReleased(lv_event_t * e)
+{
+	// Your code here
+}
+
+void selectLanguagecallback(lv_event_t * e)
+{
+	// Your code here
+}
+
+void scrMainClickedCallback(lv_event_t * e)
+{
+	// Your code here
+}

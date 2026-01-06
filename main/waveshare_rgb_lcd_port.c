@@ -168,6 +168,7 @@ esp_err_t waveshare_esp32_s3_rgb_lcd_init()
 #endif // CONFIG_EXAMPLE_LCD_TOUCH_CONTROLLER_GT911
 
     ESP_ERROR_CHECK(lvgl_port_init(panel_handle, tp_handle)); // Initialize LVGL with the panel and touch handles
+    
 
     // Register callbacks for RGB panel events
     esp_lcd_rgb_panel_event_callbacks_t cbs = {

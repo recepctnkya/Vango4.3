@@ -38,5 +38,6 @@ uint8_t get_dimmable_output(uint8_t index);
 uint8_t get_rgb_value(uint8_t index);
 uint8_t get_canbus_connection_status();
 void send_can_frame(uint32_t id, uint8_t *data);
+
  #endif /* HEXNET_CANBUS_H */
  

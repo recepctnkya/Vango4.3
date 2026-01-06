@@ -74,7 +74,17 @@ lv_obj_t * ui_Checkbox2;
 lv_obj_t * ui_Checkbox3;
 lv_obj_t * ui_Checkbox4;
 lv_obj_t * ui_Checkbox5;
-lv_obj_t * ui_Checkbox6;
+
+
+lv_obj_t * ui_cbRSelect = NULL;
+lv_obj_t * ui_btnRSelect = NULL;
+lv_obj_t * ui_btnGSelect = NULL;
+lv_obj_t * ui_btnBSelect = NULL;
+lv_obj_t * ui_cbGSelect = NULL;
+lv_obj_t * ui_cbBSelect = NULL;
+lv_obj_t * ui_lbRSelect = NULL;
+lv_obj_t * ui_lbGSelect = NULL;
+lv_obj_t * ui_lbBSelect = NULL;
 
 lv_obj_t * ui_lblSensors;
 lv_obj_t * ui_lblDimmableOutputs;
@@ -617,6 +627,33 @@ void ui_event_swDim4(lv_event_t * e)
 }
 
 
+void ui_event_ButtonSelectR(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        sendCanFrameRGB_R(e);
+    }
+}
+
+void ui_event_ButtonSelectG(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        sendCanFrameRGB_G(e);
+    }
+}
+
+void ui_event_ButtonSelectB(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        sendCanFrameRGB_B(e);
+    }
+}
+
 
 void ui_scrPanelSettings_IO_Dim_init(void)
 {
@@ -1076,70 +1113,92 @@ void ui_scrPanelSettings_IO_Dim_init(void)
 
     lv_obj_set_style_radius(ui_swO13, 10, LV_PART_KNOB | LV_STATE_DEFAULT);
 
-    ui_Checkbox1 = lv_checkbox_create(ui_scrPanelSettings);
-    lv_checkbox_set_text(ui_Checkbox1, "An1-Internal Temperature");
-    lv_obj_set_width(ui_Checkbox1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Checkbox1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Checkbox1, 249);
-    lv_obj_set_y(ui_Checkbox1, -172);
-    lv_obj_set_align(ui_Checkbox1, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Checkbox1, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
 
-    ui_Checkbox2 = lv_checkbox_create(ui_scrPanelSettings);
-    lv_checkbox_set_text(ui_Checkbox2, "An2-External Temperature");
-    lv_obj_set_width(ui_Checkbox2, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Checkbox2, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Checkbox2, 252);
-    lv_obj_set_y(ui_Checkbox2, -149);
-    lv_obj_set_align(ui_Checkbox2, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Checkbox2, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
 
-    ui_Checkbox3 = lv_checkbox_create(ui_scrPanelSettings);
-    lv_checkbox_set_text(ui_Checkbox3, "An3-Clean Water");
-    lv_obj_set_width(ui_Checkbox3, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Checkbox3, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Checkbox3, 216);
-    lv_obj_set_y(ui_Checkbox3, -125);
-    lv_obj_set_align(ui_Checkbox3, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Checkbox3, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
 
-    ui_Checkbox4 = lv_checkbox_create(ui_scrPanelSettings);
-    lv_checkbox_set_text(ui_Checkbox4, "An4-Gray Water");
-    lv_obj_set_width(ui_Checkbox4, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Checkbox4, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Checkbox4, 214);
-    lv_obj_set_y(ui_Checkbox4, -101);
-    lv_obj_set_align(ui_Checkbox4, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Checkbox4, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    ui_cbRSelect = lv_dropdown_create(ui_scrPanelSettings);
+    lv_dropdown_set_options(ui_cbRSelect, "R\nG\nB");
+    lv_obj_set_width(ui_cbRSelect, 69);
+    lv_obj_set_height(ui_cbRSelect, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_cbRSelect, 310);
+    lv_obj_set_y(ui_cbRSelect, -205);
+    lv_obj_set_align(ui_cbRSelect, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_cbRSelect, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
 
-    ui_Checkbox5 = lv_checkbox_create(ui_scrPanelSettings);
-    lv_checkbox_set_text(ui_Checkbox5, "An5-Dirty Water");
-    lv_obj_set_width(ui_Checkbox5, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Checkbox5, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Checkbox5, 214);
-    lv_obj_set_y(ui_Checkbox5, -76);
-    lv_obj_set_align(ui_Checkbox5, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Checkbox5, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
 
-    ui_Checkbox6 = lv_checkbox_create(ui_scrPanelSettings);
-    lv_checkbox_set_text(ui_Checkbox6, "RGB Control");
-    lv_obj_set_width(ui_Checkbox6, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Checkbox6, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Checkbox6, 201);
-    lv_obj_set_y(ui_Checkbox6, -50);
-    lv_obj_set_align(ui_Checkbox6, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Checkbox6, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    ui_cbGSelect = lv_dropdown_create(ui_scrPanelSettings);
+    lv_dropdown_set_options(ui_cbGSelect, "R\nG\nB");
+    lv_obj_set_width(ui_cbGSelect, 69);
+    lv_obj_set_height(ui_cbGSelect, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_cbGSelect, 310);
+    lv_obj_set_y(ui_cbGSelect, -148);
+    lv_obj_set_align(ui_cbGSelect, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_cbGSelect, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
 
- 
+    ui_cbBSelect = lv_dropdown_create(ui_scrPanelSettings);
+    lv_dropdown_set_options(ui_cbBSelect, "R\nG\nB");
+    lv_obj_set_width(ui_cbBSelect, 69);
+    lv_obj_set_height(ui_cbBSelect, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_cbBSelect, 310);
+    lv_obj_set_y(ui_cbBSelect, -90);
+    lv_obj_set_align(ui_cbBSelect, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_cbBSelect, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
 
-    ui_lblSensors = lv_label_create(ui_scrPanelSettings);
-    lv_obj_set_width(ui_lblSensors, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_lblSensors, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblSensors, 233);
-    lv_obj_set_y(ui_lblSensors, -202);
-    lv_obj_set_align(ui_lblSensors, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_lblSensors, "Sensors");
-    lv_obj_set_style_text_font(ui_lblSensors, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+     ui_btnRSelect = lv_btn_create(ui_scrPanelSettings);
+    lv_obj_set_width(ui_btnRSelect, 85);
+    lv_obj_set_height(ui_btnRSelect, 50);
+    lv_obj_set_x(ui_btnRSelect, 213);
+    lv_obj_set_y(ui_btnRSelect, -208);
+    lv_obj_set_align(ui_btnRSelect, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_btnRSelect, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_clear_flag(ui_btnRSelect, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_lbRSelect = lv_label_create(ui_btnRSelect);
+    lv_obj_set_width(ui_lbRSelect, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_lbRSelect, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_lbRSelect, -2);
+    lv_obj_set_y(ui_lbRSelect, -1);
+    lv_obj_set_align(ui_lbRSelect, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_lbRSelect, "SET R");
+
+    ui_btnGSelect = lv_btn_create(ui_scrPanelSettings);
+    lv_obj_set_width(ui_btnGSelect, 85);
+    lv_obj_set_height(ui_btnGSelect, 50);
+    lv_obj_set_x(ui_btnGSelect, 213);
+    lv_obj_set_y(ui_btnGSelect, -148);
+    lv_obj_set_align(ui_btnGSelect, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_btnGSelect, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_clear_flag(ui_btnGSelect, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_lbGSelect = lv_label_create(ui_btnGSelect);
+    lv_obj_set_width(ui_lbGSelect, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_lbGSelect, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_lbGSelect, -2);
+    lv_obj_set_y(ui_lbGSelect, -1);
+    lv_obj_set_align(ui_lbGSelect, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_lbGSelect, "SET G");
+
+    ui_btnBSelect = lv_btn_create(ui_scrPanelSettings);
+    lv_obj_set_width(ui_btnBSelect, 85);
+    lv_obj_set_height(ui_btnBSelect, 50);
+    lv_obj_set_x(ui_btnBSelect, 213);
+    lv_obj_set_y(ui_btnBSelect, -90);
+    lv_obj_set_align(ui_btnBSelect, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_btnBSelect, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_clear_flag(ui_btnBSelect, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_lbBSelect = lv_label_create(ui_btnBSelect);
+    lv_obj_set_width(ui_lbBSelect, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_lbBSelect, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_lbBSelect, -2);
+    lv_obj_set_y(ui_lbBSelect, -1);
+    lv_obj_set_align(ui_lbBSelect, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_lbBSelect, "SET B");
+
+
+    lv_obj_add_event_cb(ui_btnRSelect, ui_event_ButtonSelectR, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_btnGSelect, ui_event_ButtonSelectG, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_btnBSelect, ui_event_ButtonSelectB, LV_EVENT_ALL, NULL);
 
     ui_lblDimmableOutputs = lv_label_create(ui_scrPanelSettings);
     lv_obj_set_width(ui_lblDimmableOutputs, LV_SIZE_CONTENT);   /// 1
@@ -1278,4 +1337,90 @@ void ui_scrPanelSettings_IO_Dim_init(void)
     lv_obj_add_event_cb(ui_swDim3, ui_event_swDim3, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_swDim4, ui_event_swDim4, LV_EVENT_ALL, NULL);
 
+}
+
+
+void set_language_for_dropdowns()
+{
+    lv_dropdown_set_options(ui_cbxO1,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+    lv_dropdown_set_options(ui_cbxO2,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+    lv_dropdown_set_options(ui_cbxO3,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+    lv_dropdown_set_options(ui_cbxO4,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+    lv_dropdown_set_options(ui_cbxO5,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+    lv_dropdown_set_options(ui_cbxO6,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+    lv_dropdown_set_options(ui_cbxO7,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+    lv_dropdown_set_options(ui_cbxO8,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+    lv_dropdown_set_options(ui_cbxO9,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+    lv_dropdown_set_options(ui_cbxO10,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+    lv_dropdown_set_options(ui_cbxO11,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+    lv_dropdown_set_options(ui_cbxO12,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+    lv_dropdown_set_options(ui_cbxO13,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+    lv_dropdown_set_options(ui_cbxO14,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+    lv_dropdown_set_options(ui_cbxO15,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+    lv_dropdown_set_options(ui_cbxO16,
+                            "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nAC\nUSB\nREGRIGE.\nWATER P.\nOUTLET\nOVEN\nTV\nEX. LIGHT\nEX. OUTLE\nHEATER\nSPOT\nREADING L.");
+
+    lv_dropdown_set_options(ui_cbxDim1, "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nEX. LIGHT\nSPOT");
+    lv_dropdown_set_options(ui_cbxDim2, "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nEX. LIGHT\nSPOT");
+    lv_dropdown_set_options(ui_cbxDim3, "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nEX. LIGHT\nSPOT");
+    lv_dropdown_set_options(ui_cbxDim4, "LAMP\nTOILET\nKITCHEN\nBEDROOM\nCORRIDOR\nSTEP\nEX. LIGHT\nSPOT"); 
+}
+
+//convert dropdown options to Turkish
+void set_language_for_dropdowns_TR()
+{
+    //"LAMBA", "TUVALET", "MUTFAK", "YATAK OD.", "KORIDOR", "MERDIVEN", "KLIMA", "USB", "BUZDOLABI", "SU POMPASI", "PRIZ", "FIRIN", "TV", "DIS. LAMBA", "DIS. PRIZ", "ISI TICICI", "SPOT", "OKUMA L."
+    lv_dropdown_set_options(ui_cbxO1,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+    lv_dropdown_set_options(ui_cbxO2,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+    lv_dropdown_set_options(ui_cbxO3,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+    lv_dropdown_set_options(ui_cbxO4,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+    lv_dropdown_set_options(ui_cbxO5,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+    lv_dropdown_set_options(ui_cbxO6,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+    lv_dropdown_set_options(ui_cbxO7,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+    lv_dropdown_set_options(ui_cbxO8,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+    lv_dropdown_set_options(ui_cbxO9,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+    lv_dropdown_set_options(ui_cbxO10,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+    lv_dropdown_set_options(ui_cbxO11,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+    lv_dropdown_set_options(ui_cbxO12,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+    lv_dropdown_set_options(ui_cbxO13,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+    lv_dropdown_set_options(ui_cbxO14,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+    lv_dropdown_set_options(ui_cbxO15,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+    lv_dropdown_set_options(ui_cbxO16,
+                            "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nKLIMA\nUSB\nBUZDOLABI\nSU POMPASI\nPRIZ\nFIRIN\nTV\nDIS. LAMBA\nDIS. PRIZ\nISI TICICI\nSPOT\nOKUMA L.");
+
+    //"LAMBA", "TUVALET", "MUTFAK", "YATAK OD.", "KORIDOR", "MERDIVEN", "DIS. LAMBA", "SPOT"
+    lv_dropdown_set_options(ui_cbxDim1, "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nDIS. LAMBA\nSPOT");
+    lv_dropdown_set_options(ui_cbxDim2, "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nDIS. LAMBA\nSPOT");
+    lv_dropdown_set_options(ui_cbxDim3, "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nDIS. LAMBA\nSPOT");
+    lv_dropdown_set_options(ui_cbxDim4, "LAMBA\nTUVALET\nMUTFAK\nYATAK OD.\nKORIDOR\nMERDIVEN\nDIS. LAMBA\nSPOT");
 }

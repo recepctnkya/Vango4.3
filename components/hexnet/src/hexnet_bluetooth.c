@@ -13,7 +13,7 @@ static const uint8_t spp_adv_data[23] = {
     /* Complete List of 16-bit Service Class UUIDs */
     0x03,0x03,0xF0,0xAB,
     /* Complete Local Name in advertising */
-    0x0F,0x09, 'V', 'A', 'N', 'G', 'O', '_'
+    0x0F,0x09, 'V', 'A', 'N', 'G', 'O', 'D', '-', '5'
 };
 
 
@@ -42,6 +42,9 @@ static uint8_t heartbeat_count_num = 0;
 static bool enable_data_ntf = false;
 static bool is_connected = false;
 static esp_bd_addr_t spp_remote_bda = {0x0,};
+
+// MTU negotiation state tracking
+static bool mtu_negotiation_pending = false;
 
 static uint16_t spp_handle_table[SPP_IDX_NB];
 
@@ -362,17 +365,17 @@ void data_transmit_task(void *arg)
                 int data_len = strlen(data_to_send);
                 int max_payload = spp_mtu_size - 3; // Account for GATT protocol overhead
                 
-                ESP_LOGI(GATTS_TABLE_TAG, "Sending JSON data, length: %d, MTU: %d", data_len, spp_mtu_size);
+                //ESP_LOGI(GATTS_TABLE_TAG, "Sending JSON data, length: %d, MTU: %d", data_len, spp_mtu_size);
                 
                 if (data_len <= max_payload) {
                     // Data fits in single packet
                     esp_ble_gatts_send_indicate(spp_gatts_if, spp_conn_id, spp_handle_table[SPP_IDX_SPP_DATA_NTY_VAL],
                                                 data_len, (uint8_t *)data_to_send, false);
                 } else {
-                    // Send first chunk only to avoid stack overflow
-                    ESP_LOGW(GATTS_TABLE_TAG, "Data too large (%d bytes), sending first %d bytes", data_len, max_payload);
-                    esp_ble_gatts_send_indicate(spp_gatts_if, spp_conn_id, spp_handle_table[SPP_IDX_SPP_DATA_NTY_VAL],
-                                                max_payload, (uint8_t *)data_to_send, false);
+                    // // Send first chunk only to avoid stack overflow
+                    // ESP_LOGW(GATTS_TABLE_TAG, "Data too large (%d bytes), sending first %d bytes", data_len, max_payload);
+                    // esp_ble_gatts_send_indicate(spp_gatts_if, spp_conn_id, spp_handle_table[SPP_IDX_SPP_DATA_NTY_VAL],
+                    //                             max_payload, (uint8_t *)data_to_send, false);
                 }
                 
                 // Note: We don't free data_to_send here since it's the original converted_json_data2 pointer
@@ -385,8 +388,9 @@ void data_transmit_task(void *arg)
 void bluetooth_send_periodic_callback(TimerHandle_t xTimer)
 {
     static int counter = 0;
+    
+    // Send data if connected and data is available - minimal operations only
     if (is_connected && converted_json_data2 != NULL) {
-        // Just signal the transmission task - no memory operations in timer callback
         char *data_ptr = converted_json_data2;
         xQueueSend(data_transmit_queue, &data_ptr, 0); // Non-blocking send
         counter++;
@@ -406,8 +410,13 @@ static void gap_event_handler(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param
         //advertising start complete event to indicate advertising start successfully or failed
         if((err = param->adv_start_cmpl.status) != ESP_BT_STATUS_SUCCESS) {
             ESP_LOGE(GATTS_TABLE_TAG, "Advertising start failed: %s", esp_err_to_name(err));
+        } else {
+            ESP_LOGI(GATTS_TABLE_TAG, "Advertising started successfully");
         }
         break;
+    // Note: ESP_GAP_BLE_CONN_PARAMS_UPD_EVT and ESP_GAP_BLE_CONN_PARAMS_UPD_FAIL_EVT 
+    // are no longer available in ESP-IDF v5.3. Connection parameter updates are now
+    // handled automatically by the stack or through different mechanisms.
     default:
         break;
     }
@@ -439,12 +448,16 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
     	case ESP_GATTS_WRITE_EVT: {
     	    res = find_char_and_desr_index(p_data->write.handle);
             if(p_data->write.is_prep == false){
-                ESP_LOGI(GATTS_TABLE_TAG, "ESP_GATTS_WRITE_EVT : handle = %d", res);
+                //ESP_LOGI(GATTS_TABLE_TAG, "ESP_GATTS_WRITE_EVT : handle = %d", res);
                 if(res == SPP_IDX_SPP_COMMAND_VAL){
                     // Use the buffer directly instead of malloc
                     memset(spp_cmd_buff, 0x0, sizeof(spp_cmd_buff));
                     memcpy(spp_cmd_buff, p_data->write.value, p_data->write.len);
                     ESP_LOGI(GATTS_TABLE_TAG, "Received Buffer Data: %s", (char *)spp_cmd_buff);
+                    
+                    // Process the JSON data for command messages
+                    extern void parse_ble_data(const char* json_data);
+                    parse_ble_data((const char*)spp_cmd_buff);
 
 
                 }else if(res == SPP_IDX_SPP_DATA_NTF_CFG){
@@ -469,8 +482,12 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
                 }
 #endif
                 else if(res == SPP_IDX_SPP_DATA_RECV_VAL){
-                    ESP_LOGI(GATTS_TABLE_TAG, "---Data Received from App---");
+                    ESP_LOGI(GATTS_TABLE_TAG, "Single write data received (%d bytes): %.*s", p_data->write.len, p_data->write.len, (char *)p_data->write.value);
                     esp_log_buffer_char(GATTS_TABLE_TAG,(char *)(p_data->write.value),p_data->write.len);
+                    
+                    // Process the JSON data directly for single writes
+                    extern void parse_ble_data(const char* json_data);
+                    parse_ble_data((const char*)p_data->write.value);
                 }else{
                     //TODO:
                 }
@@ -491,6 +508,7 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
     	}
     	case ESP_GATTS_MTU_EVT:
     	    spp_mtu_size = p_data->mtu.mtu;
+    	    mtu_negotiation_pending = false; // MTU negotiation completed
     	    ESP_LOGI(GATTS_TABLE_TAG, "MTU size updated to: %d", spp_mtu_size);
     	    break;
     	case ESP_GATTS_CONF_EVT:
@@ -510,8 +528,24 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
 
             ESP_LOGI(GATTS_TABLE_TAG, "Client connected, current MTU: %d", spp_mtu_size);
 
-            // Create a FreeRTOS timer that triggers every 300 ms (300 / portTICK_PERIOD_MS)
-            TimerHandle_t periodic_timer = xTimerCreate("PeriodicTimer", pdMS_TO_TICKS(300), pdTRUE, (void *)0, bluetooth_send_periodic_callback);
+            // Initialize MTU negotiation state
+            mtu_negotiation_pending = true;
+
+            // Note: MTU exchange is initiated by the client, server responds to it
+            // The local MTU is already set to 500 in ble_init()
+            ESP_LOGI(GATTS_TABLE_TAG, "Waiting for client MTU exchange request...");
+
+            // Set connection parameters for better stability
+            esp_ble_conn_update_params_t conn_params = {0};
+            memcpy(conn_params.bda, p_data->connect.remote_bda, sizeof(esp_bd_addr_t));
+            conn_params.min_int = 0x10;    // 20ms
+            conn_params.max_int = 0x20;    // 40ms  
+            conn_params.latency = 0;       // No latency
+            conn_params.timeout = 400;     // 4 seconds
+            esp_ble_gap_update_conn_params(&conn_params);
+
+            // Create a FreeRTOS timer for periodic data transmission
+            TimerHandle_t periodic_timer = xTimerCreate("PeriodicTimer", pdMS_TO_TICKS(500), pdTRUE, (void *)0, bluetooth_send_periodic_callback);
 
             if (periodic_timer == NULL) {
                 ESP_LOGE(GATTS_TABLE_TAG, "Failed to create timer");
@@ -529,7 +563,9 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
 #endif
         	break;
     	case ESP_GATTS_DISCONNECT_EVT:
+            ESP_LOGI(GATTS_TABLE_TAG, "Client disconnected, reason: %d", p_data->disconnect.reason);
             spp_mtu_size = 23;
+            mtu_negotiation_pending = false; // Reset MTU negotiation state
     	    is_connected = false;
     	    enable_data_ntf = false;
 #ifdef SUPPORT_HEARTBEAT

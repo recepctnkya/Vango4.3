@@ -25,6 +25,7 @@
 #include "esp_bt_main.h"
 #include "esp_bt_device.h"
 #include "esp_gatt_common_api.h"
+#include "esp_timer.h"
 
 #define GATTS_TABLE_TAG  "HEXNET_BLE"
 

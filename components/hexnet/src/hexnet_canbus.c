@@ -244,9 +244,9 @@ void handle_rx_message(twai_message_t message) {
 
             break;
         case FRAME_3_ID:
-            // rgb_values[0] = message.data[0];
-            // rgb_values[1] = message.data[1];
-            // rgb_values[2] = message.data[2];
+             rgb_values[0] = message.data[0];
+             rgb_values[1] = message.data[1];
+             rgb_values[2] = message.data[2];
             break;
         default:
             break;
