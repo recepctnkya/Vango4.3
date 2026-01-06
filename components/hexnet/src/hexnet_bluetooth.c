@@ -13,7 +13,7 @@ static const uint8_t spp_adv_data[23] = {
     /* Complete List of 16-bit Service Class UUIDs */
     0x03,0x03,0xF0,0xAB,
     /* Complete Local Name in advertising */
-    0x0F,0x09, 'V', 'A', 'N', 'G', 'O', 'D', '-', '5'
+    0x0F,0x09, 'V', 'A', 'N', 'G', 'O', '_'
 };
 
 
