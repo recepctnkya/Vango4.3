@@ -52,7 +52,7 @@ uint16_t outputs = 0;
 uint16_t inputs = 0;
 uint8_t analog_inputs[5] = {0};
 uint8_t dimmable_outputs[4] = {0};
-uint8_t rgb_values[3] = {0};
+uint8_t rgb_values[4] = {0};
 uint8_t rgb_enabled = 0; // RGB'nin aktif olup olmadığını tutar
 uint8_t canbusConnection = 0;
 
@@ -85,7 +85,7 @@ uint8_t get_dimmable_output(uint8_t index) {
 }
 
 uint8_t get_rgb_value(uint8_t index) {
-    if (index < 3) {
+    if (index < 4) {
         return rgb_values[index];
     }
     return 0;  // Hatalı index
@@ -247,6 +247,7 @@ void handle_rx_message(twai_message_t message) {
              rgb_values[0] = message.data[0];
              rgb_values[1] = message.data[1];
              rgb_values[2] = message.data[2];
+             rgb_values[3] = message.data[3];
             break;
         default:
             break;

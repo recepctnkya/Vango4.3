@@ -1293,9 +1293,10 @@ char* create_json_data_packet(const uint16_t* regs_data, int numOfOutputs, int n
     rgbBuffer[0] = get_rgb_value(0);
     rgbBuffer[1] = get_rgb_value(1);
     rgbBuffer[2] = get_rgb_value(2);
-    ESP_LOGI(TAG, "RGB Values: %d, %d, %d", get_rgb_value(0), get_rgb_value(1), get_rgb_value(2));
+    rgbBuffer[3] = get_rgb_value(3);
+    ESP_LOGI(TAG, "RGB Values: %d, %d, %d, %d", get_rgb_value(0), get_rgb_value(1), get_rgb_value(2), get_rgb_value(3));
     // Add rgbBuffer to the JSON object
-    cJSON *rgb = cJSON_CreateIntArray(rgbBuffer, 3);
+    cJSON *rgb = cJSON_CreateIntArray(rgbBuffer, 4);
     cJSON_AddItemToObject(json, "RGBDB", rgb);
     
 
@@ -1578,13 +1579,14 @@ void parse_write_data(cJSON* json) {
             }
         } else if (strcmp(writeDataType->valuestring, "RGB") == 0) {
             cJSON* rgbArray = cJSON_GetObjectItem(json, "writeData");
-            if (rgbArray && cJSON_IsArray(rgbArray) && cJSON_GetArraySize(rgbArray) == 3) {
+            if (rgbArray && cJSON_IsArray(rgbArray) && cJSON_GetArraySize(rgbArray) == 4) {
                 can_data[0] = (uint8_t)cJSON_GetArrayItem(rgbArray, 0)->valueint; // Red
                 can_data[1] = (uint8_t)cJSON_GetArrayItem(rgbArray, 1)->valueint; // Green
                 can_data[2] = (uint8_t)cJSON_GetArrayItem(rgbArray, 2)->valueint; // Blue
-                ESP_LOGI("PARSE_WRITE_DATA", "RGB Values: R=%d, G=%d, B=%d", can_data[0], can_data[1], can_data[2]);
-                can_data[3] = 1;
+                can_data[3] = (uint8_t)cJSON_GetArrayItem(rgbArray, 3)->valueint; // Alpha
+                ESP_LOGI("PARSE_WRITE_DATA", "RGB Values: R=%d, G=%d, B=%d, A=%d", can_data[0], can_data[1], can_data[2], can_data[3]);
                 send_can_frame(0x740, can_data);  // RGB için CAN ID: 0x740
+                rgbEna = can_data[3];
             } else {
                 ESP_LOGE("PARSE_WRITE_DATA", "RGB writeData must be an array of 3 values.");
             }
