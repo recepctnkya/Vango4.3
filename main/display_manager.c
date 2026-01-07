@@ -1282,10 +1282,13 @@ char* create_json_data_packet(const uint16_t* regs_data, int numOfOutputs, int n
     cJSON_AddItemToObject(json, "dDB", dims);
 
 
-    // Fetch sensorsBuffer from regs_data
-    for (int i = 0; i < numOfSensors; i++) {
-        buf[i] = get_analog_input(i);
-    }
+
+        buf[0] = get_analog_input(3);
+        buf[1] = get_analog_input(4);
+        buf[2] = get_analog_input(0);
+        buf[3] = get_analog_input(2);
+        buf[4] = get_analog_input(1);
+
     cJSON *sensors = cJSON_CreateIntArray(buf, numOfSensors);
     cJSON_AddItemToObject(json, "sDB", sensors);
 
@@ -1971,11 +1974,6 @@ void check_switches_and_get_dropdown_values_for_dims() {
 
 // Function to check the state of the first 5 switches and update sensorsBuffer
 void check_sensors_and_update_buffer() {
-    // sensorsBuffer[0] = 1;
-    // sensorsBuffer[1] = 1;
-    // sensorsBuffer[2] = 1;
-    // sensorsBuffer[3] = 1;
-    // sensorsBuffer[4] = 1;
 
     // Reset the sensorsBufferd
     memset(sensorsBuffer, 0, sizeof(sensorsBuffer));
@@ -2502,6 +2500,13 @@ void display_manager_init() {
     comm_animation_timer = lv_timer_create(comm_animation_timer_callback, 1000, NULL);
 
      load_panel_configuration_from_nvs(&numOfOutputs, outputsBuffer, &numOfSensors, sensorsBuffer, &numOfDims, dimsBuffer);
+    sensorsBuffer[0] = 1;//temperature 1
+    sensorsBuffer[1] = 1;//temperature 2
+    sensorsBuffer[2] = 1;
+    sensorsBuffer[3] = 0;
+    sensorsBuffer[4] = 1;
+    numOfSensors = 5;
+
      load_theme_configuration_from_nvs(&panelThemeType, &panelWallpaperEnable, &panelWallpaperTime, &panelLanguageType);
 
             // Debug log the loaded configuration
