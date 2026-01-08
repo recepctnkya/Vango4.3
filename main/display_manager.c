@@ -413,6 +413,7 @@ int dimsBuffer[4] = {0};
 int rgbBuffer[3] = {0};
 int btn_index = 0;
 uint8_t rgbEna = 0; // RGB LED enable variable
+uint8_t fromBleConfig = 0;
 int panelWallpaperEnableCounter = 1;
 int panelLanguageType = 0; // 
 int motorData = 0;
@@ -884,7 +885,7 @@ void create_dynamic_ui(lv_obj_t* parent) {
 }
 
 
-static void connectionLostPopupTimer(lv_timer_t * timer) {
+static void connectionLostPopupTimerr(lv_timer_t * timer) {
     lv_obj_add_flag(ui_pnlConnectionLost, LV_OBJ_FLAG_HIDDEN);     /// Flags
 }
 
@@ -896,12 +897,6 @@ void set_device_image(bool connected) {
     if (connected) {
         lv_obj_clear_flag(ui_imgsconnected, LV_OBJ_FLAG_HIDDEN);
         lv_obj_add_flag(ui_imgsnotconnected, LV_OBJ_FLAG_HIDDEN);
-
-    if (ConnectionLostPopupTimer != NULL)
-    {
-        lv_timer_del(ConnectionLostPopupTimer);
-        ConnectionLostPopupTimer = NULL;
-    }
 
         condition = true;
 
@@ -915,7 +910,7 @@ void set_device_image(bool connected) {
             lv_obj_clear_flag(ui_pnlConnectionLost, LV_OBJ_FLAG_HIDDEN);     /// Flags
             lv_obj_move_foreground(ui_pnlConnectionLost);
             lv_label_set_text(ui_Label1, "IO Module Connection Lost!");
-            ConnectionLostPopupTimer = lv_timer_create(connectionLostPopupTimer, 60000, NULL);
+            ConnectionLostPopupTimer = lv_timer_create(connectionLostPopupTimerr, 60000, NULL);
         }
         
     }  
@@ -940,7 +935,7 @@ void set_bluetooth_icon(bool connected) {
             lv_obj_move_foreground(ui_pnlConnectionLost);
             lv_label_set_text(ui_Label1, "Bluetooth Connection Lost!");
             ESP_LOGI(TAG, "Bluetooth Connection Lost Popup Shown");
-            ConnectionLostPopupTimer = lv_timer_create(connectionLostPopupTimer, 60000, NULL);
+            ConnectionLostPopupTimer = lv_timer_create(connectionLostPopupTimerr, 60000, NULL);
         }
     }
 }
@@ -1297,7 +1292,7 @@ char* create_json_data_packet(const uint16_t* regs_data, int numOfOutputs, int n
     rgbBuffer[1] = get_rgb_value(1);
     rgbBuffer[2] = get_rgb_value(2);
     rgbBuffer[3] = get_rgb_value(3);
-    ESP_LOGI(TAG, "RGB Values: %d, %d, %d, %d", get_rgb_value(0), get_rgb_value(1), get_rgb_value(2), get_rgb_value(3));
+    //ESP_LOGI(TAG, "RGB Values: %d, %d, %d, %d", get_rgb_value(0), get_rgb_value(1), get_rgb_value(2), get_rgb_value(3));
     // Add rgbBuffer to the JSON object
     cJSON *rgb = cJSON_CreateIntArray(rgbBuffer, 4);
     cJSON_AddItemToObject(json, "RGBDB", rgb);
@@ -1308,7 +1303,7 @@ char* create_json_data_packet(const uint16_t* regs_data, int numOfOutputs, int n
 
     // Convert JSON object to string
     char *json_str = cJSON_PrintUnformatted(json);
-    ESP_LOGI("JSON_DATA_PACKET", "%s", json_str);
+    //ESP_LOGI("JSON_DATA_PACKET", "%s", json_str);
 
     // Free the JSON object
     cJSON_Delete(json);
@@ -1609,6 +1604,15 @@ void set_rgb_to_white() {
     send_can_frame(0x740, can_data);  // RGB için CAN ID: 0x740
 }
 
+// Timer callback for BLE-triggered restart
+static void ble_restart_timer_callback(lv_timer_t * timer)
+{
+    ESP_LOGI("BLE_RESTART", "BLE restart timer callback called");
+    save_panel_settings();
+    ESP_LOGI("BLE_RESTART", "save_panel_settings() called");
+    lv_timer_del(timer); // Delete the timer after use
+}
+
 
 // Function to parse Configuration data
 void parse_configuration_data(cJSON* json) {
@@ -1675,6 +1679,16 @@ void parse_configuration_data(cJSON* json) {
     }
 
     save_panel_configuration_to_nvs(numOfOutputs->valueint, outputsBuf, numOfSensors->valueint, sensorsBuf, numOfDims->valueint, dimsBuf);
+    fromBleConfig = 1;
+    ESP_LOGI("BLE_CONFIG", "Creating restart timer for BLE configuration");
+    // Create a one-shot timer to show restart panel in LVGL task context
+    lv_timer_t * restart_timer = lv_timer_create(ble_restart_timer_callback, 100, NULL);
+    if (restart_timer == NULL) {
+        ESP_LOGE("BLE_CONFIG", "Failed to create restart timer!");
+    } else {
+        lv_timer_set_repeat_count(restart_timer, 1); // Run only once
+        ESP_LOGI("BLE_CONFIG", "Restart timer created successfully");
+    }
 }
 // Function to parse Rules data
 void parse_rules_data(cJSON* json) {
@@ -1996,16 +2010,26 @@ void check_sensors_and_update_buffer() {
 }
 
 int SaveConfigsCounter = 0; // Counter for save configs bar
+lv_obj_t* current_progress_bar = NULL; // Global reference to the current progress bar
 static void save_configsbar_timer(lv_timer_t * timer)
 {
-    lv_bar_set_value(ui_pbSaveConfigs, SaveConfigsCounter, LV_ANIM_OFF);  // 0 → 100 in steps of 10
-    SaveConfigsCounter += 3; // Increment the counter by 10
+    if (current_progress_bar != NULL) {
+        lv_bar_set_value(current_progress_bar, SaveConfigsCounter, LV_ANIM_OFF);  // 0 → 100 in steps of 3
+    }
+    SaveConfigsCounter += 3; // Increment the counter by 3
     if(SaveConfigsCounter >= 100) {
         check_switches_and_get_dropdown_values();
         check_sensors_and_update_buffer();
         check_switches_and_get_dropdown_values_for_dims();
-        save_panel_configuration_to_nvs(numOfOutputs, outputsBuffer, numOfSensors, sensorsBuffer, numOfDims, dimsBuffer);
         // Save the panel settings to NVS
+        if(fromBleConfig == 1) {
+            ESP_LOGI(TAG, "##### Saving Panel Settings from BLE Configuration #####");
+            
+            fromBleConfig = 0; // Reset the flag
+        } else {
+            ESP_LOGI(TAG, "##### Saving Panel Settings from UI Configuration #####");
+            save_panel_configuration_to_nvs(numOfOutputs, outputsBuffer, numOfSensors, sensorsBuffer, numOfDims, dimsBuffer);
+        }
         ESP_LOGI(TAG, "##### Panel Settings Saved Successfully! #####");
         esp_restart();
     }
@@ -2013,10 +2037,72 @@ static void save_configsbar_timer(lv_timer_t * timer)
 
 void save_panel_settings()
 {
-    lv_obj_clear_flag(ui_pnlSaveConfigs, LV_OBJ_FLAG_HIDDEN);     /// Flags
-    lv_obj_move_foreground(ui_pnlSaveConfigs);
+    // Create restart panel as overlay on current screen
+    lv_obj_t * current_screen = lv_scr_act();
+    if (current_screen == NULL) {
+        ESP_LOGE("SAVE_PANEL", "No active screen!");
+        return;
+    }
+    
+    ESP_LOGI("SAVE_PANEL", "Creating restart panel overlay on current screen");
+    
+    // Create the restart panel as a child of the current screen
+    lv_obj_t * restart_panel = lv_obj_create(current_screen);
+    lv_obj_set_width(restart_panel, 545);
+    lv_obj_set_height(restart_panel, 125);
+    lv_obj_set_align(restart_panel, LV_ALIGN_CENTER);
+    lv_obj_clear_flag(restart_panel, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_set_style_bg_color(restart_panel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(restart_panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(restart_panel, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(restart_panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_color(restart_panel, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_opa(restart_panel, 50, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_width(restart_panel, 1, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_spread(restart_panel, 1, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_ofs_x(restart_panel, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_ofs_y(restart_panel, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
+    
+    // Create the text labels
+    lv_obj_t * label1 = lv_label_create(restart_panel);
+    lv_obj_set_align(label1, LV_ALIGN_TOP_MID);
+    lv_obj_set_y(label1, -20);
+    lv_label_set_text(label1, "Device will restart");
+    lv_obj_set_style_text_color(label1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(label1, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+    
+    lv_obj_t * label2 = lv_label_create(restart_panel);
+    lv_obj_set_align(label2, LV_ALIGN_CENTER);
+    lv_label_set_text(label2, "Please wait...");
+    lv_obj_set_style_text_color(label2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(label2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(label2, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+    
+    // Create progress bar
+    lv_obj_t * progress_bar = lv_bar_create(restart_panel);
+    lv_obj_set_width(progress_bar, 173);
+    lv_obj_set_height(progress_bar, 10);
+    lv_obj_set_align(progress_bar, LV_ALIGN_BOTTOM_MID);
+    lv_obj_set_y(progress_bar, -10);
+    lv_bar_set_range(progress_bar, 0, 100);
+    lv_bar_set_value(progress_bar, 0, LV_ANIM_OFF);
+    
+    // Set the global progress bar reference for the timer
+    current_progress_bar = progress_bar;
+    
+    // Reset counter for new restart
+    SaveConfigsCounter = 0;
+    
+    // Move panel to foreground
+    lv_obj_move_foreground(restart_panel);
+    
+    // Force LVGL to refresh the display
+    lv_refr_now(NULL);
+    
+    // Create timer with the new progress bar
     lv_timer_t * initTim = lv_timer_create(save_configsbar_timer, 100, NULL);
-
+    ESP_LOGI("SAVE_PANEL", "Restart panel overlay created and visible");
 }
 
 void save_theme_settings()
@@ -2067,6 +2153,11 @@ void save_theme_settings()
         panelLanguageType = 0;  // English
         apply_language_settings();
         
+    }
+    else
+    {
+        panelLanguageType = 0;  // Default to English
+        apply_language_settings();
     }
     
     
