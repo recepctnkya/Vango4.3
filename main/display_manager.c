@@ -1616,9 +1616,9 @@ void parse_write_data(cJSON* json) {
                 rgbEna = can_data[3];
 
                 rgb_ui_data_t *d = lv_mem_alloc(sizeof(rgb_ui_data_t));
-                d->r = can_data[0];
-                d->g = can_data[1];
-                d->b = can_data[2];
+                d->r = can_data[selected_R];
+                d->g = can_data[selected_G];
+                d->b = can_data[selected_B];
                 d->ena = rgbEna;
 
                 lv_async_call(rgb_ui_update_cb, d);
