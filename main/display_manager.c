@@ -1607,9 +1607,9 @@ void parse_write_data(cJSON* json) {
         } else if (strcmp(writeDataType->valuestring, "RGB") == 0) {
             cJSON* rgbArray = cJSON_GetObjectItem(json, "writeData");
             if (rgbArray && cJSON_IsArray(rgbArray) && cJSON_GetArraySize(rgbArray) == 4) {
-                can_data[0] = (uint8_t)cJSON_GetArrayItem(rgbArray, 0)->valueint; // Red
-                can_data[1] = (uint8_t)cJSON_GetArrayItem(rgbArray, 1)->valueint; // Green
-                can_data[2] = (uint8_t)cJSON_GetArrayItem(rgbArray, 2)->valueint; // Blue
+                can_data[selected_R] = (uint8_t)cJSON_GetArrayItem(rgbArray, 0)->valueint; // Red
+                can_data[selected_G] = (uint8_t)cJSON_GetArrayItem(rgbArray, 1)->valueint; // Green
+                can_data[selected_B] = (uint8_t)cJSON_GetArrayItem(rgbArray, 2)->valueint; // Blue
                 can_data[3] = (uint8_t)cJSON_GetArrayItem(rgbArray, 3)->valueint; // Alpha
                 ESP_LOGI("PARSE_WRITE_DATA", "RGB Values: R=%d, G=%d, B=%d, A=%d", can_data[0], can_data[1], can_data[2], can_data[3]);
                 send_can_frame(0x740, can_data);  // RGB için CAN ID: 0x740
@@ -1622,7 +1622,7 @@ void parse_write_data(cJSON* json) {
                 d->ena = rgbEna;
 
                 lv_async_call(rgb_ui_update_cb, d);
-                
+
             } else {
                 ESP_LOGE("PARSE_WRITE_DATA", "RGB writeData must be an array of 3 values.");
             }
