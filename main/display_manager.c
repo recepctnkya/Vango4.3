@@ -147,6 +147,8 @@ extern lv_obj_t *ui_lblPnlGrup1Sicaklik1;
 extern lv_obj_t *ui_lblPnlGrup1Sicaklik2;
 lv_obj_t * ui_btnIOGot;
 
+extern lv_obj_t *ui_swRGBTurnON;
+
 
 extern lv_obj_t *ui_lblSelectTheme;
 extern lv_obj_t *ui_lblPnlGrup1SicaklikDeger1;
@@ -192,6 +194,7 @@ extern const lv_img_dsc_t ui_img_ac_png;
 extern const lv_img_dsc_t ui_img_readinglamp_png;
 extern const lv_img_dsc_t ui_img_heater_png;
 
+lv_color_t slc;
 
 // Slave ID 
 #define SLAVE_ID 50
@@ -1546,6 +1549,32 @@ void parse_read_data(cJSON* json) {
 
 }
 
+typedef struct {
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
+    uint8_t ena;
+} rgb_ui_data_t;
+
+static void rgb_ui_update_cb(void *data)
+{
+    rgb_ui_data_t *d = (rgb_ui_data_t *)data;
+
+    if(d->ena) {
+        lv_color_t slc = lv_color_make(d->r, d->g, d->b);
+        lv_obj_set_style_bg_color(ui_btnRGBColor, slc, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_add_state(ui_swRGBTurnON, LV_STATE_CHECKED);
+        lv_obj_clear_flag(ui_Colorwheel1, LV_OBJ_FLAG_HIDDEN);
+    } else {
+        lv_color_t slc = lv_color_make(128, 128, 128);
+        lv_obj_set_style_bg_color(ui_btnRGBColor, slc, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_clear_state(ui_swRGBTurnON, LV_STATE_CHECKED);
+        lv_obj_add_flag(ui_Colorwheel1, LV_OBJ_FLAG_HIDDEN);
+    }
+
+    lv_mem_free(d);
+}
+
 // Function to parse Write data
 void parse_write_data(cJSON* json) {
     cJSON* writeDataType = cJSON_GetObjectItem(json, "writeDataType");
@@ -1585,6 +1614,15 @@ void parse_write_data(cJSON* json) {
                 ESP_LOGI("PARSE_WRITE_DATA", "RGB Values: R=%d, G=%d, B=%d, A=%d", can_data[0], can_data[1], can_data[2], can_data[3]);
                 send_can_frame(0x740, can_data);  // RGB için CAN ID: 0x740
                 rgbEna = can_data[3];
+
+                rgb_ui_data_t *d = lv_mem_alloc(sizeof(rgb_ui_data_t));
+                d->r = can_data[0];
+                d->g = can_data[1];
+                d->b = can_data[2];
+                d->ena = rgbEna;
+
+                lv_async_call(rgb_ui_update_cb, d);
+                
             } else {
                 ESP_LOGE("PARSE_WRITE_DATA", "RGB writeData must be an array of 3 values.");
             }
