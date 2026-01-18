@@ -2152,13 +2152,13 @@
                       {
                         "nid": 1001177,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "MOVE_RIGHT",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1001178,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
+                        "integer": 500,
                         "InheritedType": 6
                       },
                       {
@@ -2839,13 +2839,12 @@
                       {
                         "nid": 1001708,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1001709,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -3089,13 +3088,12 @@
                       {
                         "nid": 1001700,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1001701,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -5020,13 +5018,12 @@
                       {
                         "nid": 1001684,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1001685,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -7172,13 +7169,12 @@
                       {
                         "nid": 1001692,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1001693,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -7754,19 +7750,18 @@
                           {
                             "nid": 629706482,
                             "strtype": "CHANGE SCREEN/Screen_to",
-                            "strval": "GUID58918178-625253S4563216",
+                            "strval": "GUID76092305-230852S7424273",
                             "InheritedType": 9
                           },
                           {
                             "nid": 574720047,
                             "strtype": "CHANGE SCREEN/Fade_mode",
-                            "strval": "FADE_ON",
+                            "strval": "NONE",
                             "InheritedType": 3
                           },
                           {
                             "nid": 1908801760,
                             "strtype": "CHANGE SCREEN/Speed",
-                            "integer": 200,
                             "InheritedType": 6
                           },
                           {
@@ -9520,13 +9515,12 @@
                       {
                         "nid": 1001610,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1001611,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -12905,7 +12899,7 @@
                       {
                         "nid": 574720047,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
@@ -14325,13 +14319,12 @@
                       {
                         "nid": 574720047,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1908801760,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -14545,12 +14538,6 @@
                         "InheritedType": 7
                       },
                       {
-                        "nid": 10610,
-                        "strtype": "_style/Bg_Image",
-                        "strval": "assets/sliderpassive.png",
-                        "InheritedType": 5
-                      },
-                      {
                         "nid": 10710,
                         "strtype": "_style/Border_Color",
                         "intarray": [
@@ -14608,18 +14595,12 @@
                         "nid": 10520,
                         "strtype": "_style/Bg_Color",
                         "intarray": [
-                          255,
-                          255,
-                          255,
+                          0,
+                          170,
+                          246,
                           255
                         ],
                         "InheritedType": 7
-                      },
-                      {
-                        "nid": 10610,
-                        "strtype": "_style/Bg_Image",
-                        "strval": "assets/slideractivee.png",
-                        "InheritedType": 5
                       }
                     ],
                     "InheritedType": 1
@@ -14917,12 +14898,6 @@
                         "InheritedType": 7
                       },
                       {
-                        "nid": 10610,
-                        "strtype": "_style/Bg_Image",
-                        "strval": "assets/sliderpassive.png",
-                        "InheritedType": 5
-                      },
-                      {
                         "nid": 10710,
                         "strtype": "_style/Border_Color",
                         "intarray": [
@@ -14980,18 +14955,12 @@
                         "nid": 10520,
                         "strtype": "_style/Bg_Color",
                         "intarray": [
-                          255,
-                          255,
-                          255,
+                          0,
+                          170,
+                          246,
                           255
                         ],
                         "InheritedType": 7
-                      },
-                      {
-                        "nid": 10610,
-                        "strtype": "_style/Bg_Image",
-                        "strval": "assets/slideractivee.png",
-                        "InheritedType": 5
                       }
                     ],
                     "InheritedType": 1
@@ -15289,12 +15258,6 @@
                         "InheritedType": 7
                       },
                       {
-                        "nid": 10610,
-                        "strtype": "_style/Bg_Image",
-                        "strval": "assets/sliderpassive.png",
-                        "InheritedType": 5
-                      },
-                      {
                         "nid": 10710,
                         "strtype": "_style/Border_Color",
                         "intarray": [
@@ -15352,18 +15315,12 @@
                         "nid": 10520,
                         "strtype": "_style/Bg_Color",
                         "intarray": [
-                          255,
-                          255,
-                          255,
+                          0,
+                          170,
+                          246,
                           255
                         ],
                         "InheritedType": 7
-                      },
-                      {
-                        "nid": 10610,
-                        "strtype": "_style/Bg_Image",
-                        "strval": "assets/slideractivee.png",
-                        "InheritedType": 5
                       }
                     ],
                     "InheritedType": 1
@@ -15661,12 +15618,6 @@
                         "InheritedType": 7
                       },
                       {
-                        "nid": 10610,
-                        "strtype": "_style/Bg_Image",
-                        "strval": "assets/sliderpassive.png",
-                        "InheritedType": 5
-                      },
-                      {
                         "nid": 10710,
                         "strtype": "_style/Border_Color",
                         "intarray": [
@@ -15724,18 +15675,12 @@
                         "nid": 10520,
                         "strtype": "_style/Bg_Color",
                         "intarray": [
-                          255,
-                          255,
-                          255,
+                          0,
+                          170,
+                          246,
                           255
                         ],
                         "InheritedType": 7
-                      },
-                      {
-                        "nid": 10610,
-                        "strtype": "_style/Bg_Image",
-                        "strval": "assets/slideractivee.png",
-                        "InheritedType": 5
                       }
                     ],
                     "InheritedType": 1
@@ -20423,13 +20368,12 @@
                       {
                         "nid": 1001081,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1001082,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -20683,13 +20627,12 @@
                       {
                         "nid": 1001105,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1001106,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -20943,13 +20886,12 @@
                       {
                         "nid": 1001117,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1001118,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -21688,13 +21630,12 @@
                       {
                         "nid": 574720047,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1908801760,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -24245,13 +24186,12 @@
                       {
                         "nid": 574720047,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1908801760,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -25101,13 +25041,13 @@
                       {
                         "nid": 629706482,
                         "strtype": "CHANGE SCREEN/Screen_to",
-                        "strval": "GUID58918178-625253S4563216",
+                        "strval": "GUID76092305-230852S7424273",
                         "InheritedType": 9
                       },
                       {
                         "nid": 574720047,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
@@ -26855,13 +26795,12 @@
                       {
                         "nid": 1001129,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1001130,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -27153,13 +27092,12 @@
                       {
                         "nid": 1001145,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1001146,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -27451,13 +27389,12 @@
                       {
                         "nid": 1001157,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1001158,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -27749,13 +27686,12 @@
                       {
                         "nid": 1001169,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1001170,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -28328,13 +28264,12 @@
                       {
                         "nid": 1001366,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1001367,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -28748,13 +28683,12 @@
                       {
                         "nid": 574720047,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1908801760,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 200,
                         "InheritedType": 6
                       },
                       {
@@ -29906,7 +29840,7 @@
     "theme_color1": 5,
     "theme_color2": 0,
     "custom_variable_prefix": "uic",
-    "backup_cnt": 5556,
+    "backup_cnt": 5565,
     "autosave_cnt": 0,
     "group_color_cnt": 0,
     "lvgl_version": "8.3.11",

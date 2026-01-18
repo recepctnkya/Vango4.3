@@ -25,7 +25,7 @@ void ui_event_btnDims(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0,
+        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_NONE, 0, 0,
                           &ui_scrDimsandSensorsandWaters_screen_init);
         btnDimsCallbackFunc(e);
     }
@@ -36,7 +36,7 @@ void ui_event_btnTemperatures(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0,
+        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_NONE, 0, 0,
                           &ui_scrDimsandSensorsandWaters_screen_init);
         btnTemperaturesCallbackFunc(e);
     }
@@ -47,7 +47,7 @@ void ui_event_btnWaters(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0,
+        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_NONE, 0, 0,
                           &ui_scrDimsandSensorsandWaters_screen_init);
         btnWatersCallbackFunc(e);
     }
@@ -58,7 +58,7 @@ void ui_event_btnRGBs(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrRGB, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_scrRGB_screen_init);
+        _ui_screen_change(&ui_scrRGB, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_scrRGB_screen_init);
     }
 }
 
@@ -67,7 +67,7 @@ void ui_event_Button12(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrSettings, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_scrSettings_screen_init);
+        _ui_screen_change(&ui_scrSettings, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_scrSettings_screen_init);
     }
 }
 
@@ -76,7 +76,7 @@ void ui_event_Button19(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrMain, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_scrMain_screen_init);
+        _ui_screen_change(&ui_scrMain, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_scrMain_screen_init);
     }
 }
 

@@ -23,7 +23,7 @@ void ui_event_Button4(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrPanelSettings, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_scrPanelSettings_screen_init);
+        _ui_screen_change(&ui_scrPanelSettings, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_scrPanelSettings_screen_init);
     }
 }
 
@@ -32,7 +32,7 @@ void ui_event_Button8(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrTheme, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_scrTheme_screen_init);
+        _ui_screen_change(&ui_scrTheme, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_scrTheme_screen_init);
     }
 }
 
@@ -41,7 +41,7 @@ void ui_event_Button9(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrCalibration, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_scrCalibration_screen_init);
+        _ui_screen_change(&ui_scrCalibration, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_scrCalibration_screen_init);
     }
 }
 
@@ -50,7 +50,7 @@ void ui_event_Button18(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrPages, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_scrPages_screen_init);
+        _ui_screen_change(&ui_scrPages, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_scrPages_screen_init);
     }
 }
 

@@ -61,8 +61,6 @@ LV_IMG_DECLARE(ui_img_tv_png);    // assets/tv.png
 LV_IMG_DECLARE(ui_img_usb_png);    // assets/usb.png
 LV_IMG_DECLARE(ui_img_water_png);    // assets/water.png
 LV_IMG_DECLARE(ui_img_1096609443);    // assets/connstatusıcons.png
-LV_IMG_DECLARE(ui_img_sliderpassive_png);    // assets/sliderpassive.png
-LV_IMG_DECLARE(ui_img_slideractivee_png);    // assets/slideractivee.png
 LV_IMG_DECLARE(ui_img_arcdesign2_png);    // assets/arcdesign2.png
 LV_IMG_DECLARE(ui_img_arcdesign_png);    // assets/arcdesign.png
 LV_IMG_DECLARE(ui_img_tempicon_png);    // assets/tempicon.png

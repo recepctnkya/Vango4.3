@@ -67,7 +67,7 @@ void ui_event_Button1(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrPages, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_scrPages_screen_init);
+        _ui_screen_change(&ui_scrPages, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 500, 0, &ui_scrPages_screen_init);
     }
 }
 
@@ -77,7 +77,7 @@ void ui_event_lblPnlGrup1Sicaklik1(lv_event_t * e)
 
     if(event_code == LV_EVENT_CLICKED) {
         btnTemperaturesCallbackFunc(e);
-        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0,
+        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_NONE, 0, 0,
                           &ui_scrDimsandSensorsandWaters_screen_init);
     }
 }
@@ -88,7 +88,7 @@ void ui_event_lblPnlGrup1Sicaklik2(lv_event_t * e)
 
     if(event_code == LV_EVENT_CLICKED) {
         btnTemperaturesCallbackFunc(e);
-        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0,
+        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_NONE, 0, 0,
                           &ui_scrDimsandSensorsandWaters_screen_init);
     }
 }
@@ -99,7 +99,7 @@ void ui_event_pnlSensors(lv_event_t * e)
 
     if(event_code == LV_EVENT_CLICKED) {
         btnDimsCallbackFunc(e);
-        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0,
+        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_NONE, 0, 0,
                           &ui_scrDimsandSensorsandWaters_screen_init);
     }
 }
@@ -152,7 +152,7 @@ void ui_event_Container1(lv_event_t * e)
 
     if(event_code == LV_EVENT_CLICKED) {
         btnWatersCallbackFunc(e);
-        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0,
+        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_NONE, 0, 0,
                           &ui_scrDimsandSensorsandWaters_screen_init);
     }
 }

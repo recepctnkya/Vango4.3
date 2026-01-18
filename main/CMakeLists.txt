@@ -25,8 +25,6 @@ idf_component_register(
     "../components/ui_files/ui_img_theme_png.c"
     "../components/ui_files/ui_img_tempicon_png.c"
     "../components/ui_files/ui_img_snotconnected_png.c"
-    "../components/ui_files/ui_img_sliderpassive_png.c"
-    "../components/ui_files/ui_img_slideractivee_png.c"
     "../components/ui_files/ui_img_settingsicon_png.c"
     "../components/ui_files/ui_img_sensors_png.c"
     "../components/ui_files/ui_img_sconnected_png.c"

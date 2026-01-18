@@ -8,7 +8,9 @@ path1 = r"C:\Users\nakau\Desktop\VanGo4.3\Vango_ESPIDF\components\ui_files"
 path2 = r"C:\Users\nakau\Desktop\VanGo4.3\Vango_ESPIDF\Documents\SquareLine_Project\UI_Files"
 path3 = r"C:\Users\nakau\Desktop\VanGo4.3\Vango_ESPIDF\main"
 path_txt = r"C:\Users\nakau\Desktop\VanGo4.3\Vango_ESPIDF\ui_events.txt"
+path_h_txt = r"C:\Users\nakau\Desktop\VanGo4.3\Vango_ESPIDF\ui_events.h.txt"
 path_c = r"C:\Users\nakau\Desktop\VanGo4.3\Vango_ESPIDF\components\ui_files\ui_events.c"
+path_h = r"C:\Users\nakau\Desktop\VanGo4.3\Vango_ESPIDF\components\ui_files\ui_events.h"
 
 # Files to keep (do not copy)
 files_to_keep = [
@@ -131,6 +133,14 @@ def update_eventc_file():
         print("Content copied successfully.")
     except Exception as e:
         print(f"Error: {e}")
+def update_eventh_file():
+    # Copy content from txt to h file
+    try:
+        with open(path_h_txt, 'r', encoding='utf-8') as src, open(path_h, 'w', encoding='utf-8') as dest:
+            shutil.copyfileobj(src, dest)
+        print("Content copied successfully.")
+    except Exception as e:
+        print(f"Error: {e}")
 # Function to execute the copy and update tasks
 def execute_task():
     try:
@@ -155,6 +165,7 @@ def execute_task():
                     update_cmakelists(new_file=file)
                     synchronize_cmakelists()
         update_eventc_file()
+        update_eventh_file()
 
 
         # Show a success message
