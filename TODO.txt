@@ -7,7 +7,7 @@ saat ve hava datasi 5 sn de bir gelmiyor
 Dil secenegi
 
 
-
+Sadece Tablet ve IO modulu yapisi eklenecek
 
 
 

@@ -1143,16 +1143,16 @@ void update_display_with_data(const uint8_t *data, int length) {
 
 
     // Update the display labels with the fetched data
-    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger1, "%d°C", analog_input_4);
-    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger2, "%d°C", analog_input_5);
+    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger1, "%d°C", get_sensorTemp());
+    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger2, "%d°C", get_sensorHum);
     lv_label_set_text_fmt(ui_lblGrup1Oran1, "%d%%", analog_input_1);
     lv_label_set_text_fmt(ui_lblGrup1Oran2, "%d%%", analog_input_2);
     
     // Update temperature widgets with analog input values
-    lv_arc_set_value(ui_arcTemperature1, analog_input_4);
-    lv_arc_set_value(ui_arcTemperature2, analog_input_5);
-    lv_label_set_text_fmt(ui_lblTemperature1, "%d°C", analog_input_4);
-    lv_label_set_text_fmt(ui_lblTemperature2, "%d°C", analog_input_5);
+    lv_arc_set_value(ui_arcTemperature1, get_sensorTemp());
+    lv_arc_set_value(ui_arcTemperature2, get_sensorHum());
+    lv_label_set_text_fmt(ui_lblTemperature1, "%d°C", get_sensorTemp());
+    lv_label_set_text_fmt(ui_lblTemperature2, "%d°C", get_sensorHum());
     
     // Update water widgets with analog input values
     lv_arc_set_value(ui_arcWater1, analog_input_1);
@@ -2669,12 +2669,6 @@ void display_manager_init() {
     ESP_LOGI(TAG, "Display LVGL Scatter Chart");
     // Lock the mutex due to the LVGL APIs are not thread-safe
     if (lvgl_port_lock(-1)) {
-         //example_lvgl_demo_ui(disp);
-        //lv_demo_widgets();
-        // lv_demo_benchmark();
-        // lv_demo_music();
-        // lv_demo_stress();
-        // Release the mutex
         ui_init();
         lv_scr_load(ui_scrInit);
         ui_scrPanelSettings_IO_Dim_init();

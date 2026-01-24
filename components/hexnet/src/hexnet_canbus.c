@@ -55,6 +55,8 @@ uint8_t dimmable_outputs[4] = {0};
 uint8_t rgb_values[4] = {0};
 uint8_t rgb_enabled = 0; // RGB'nin aktif olup olmadığını tutar
 uint8_t canbusConnection = 0;
+uint8_t sensorTemp = 0;
+uint8_t sensorHum = 0;
 
 
 // Getter Functions
@@ -68,6 +70,12 @@ uint16_t get_outputs() {
 
 uint16_t get_inputs() {
     return inputs;
+}
+uint8_t get_sensorTemp() {
+    return sensorTemp;
+}
+uint8_t get_sensorHum() {
+    return sensorHum;
 }
 
 uint8_t get_analog_input(uint8_t index) {
@@ -248,6 +256,8 @@ void handle_rx_message(twai_message_t message) {
              rgb_values[1] = message.data[1];
              rgb_values[2] = message.data[2];
              rgb_values[3] = message.data[3];
+             sensorTemp = message.data[4];
+             sensorHum = message.data[5];
             break;
         default:
             break;
