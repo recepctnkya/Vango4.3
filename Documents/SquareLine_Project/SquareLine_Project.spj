@@ -2152,13 +2152,12 @@
                       {
                         "nid": 1001177,
                         "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "MOVE_RIGHT",
+                        "strval": "NONE",
                         "InheritedType": 3
                       },
                       {
                         "nid": 1001178,
                         "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 500,
                         "InheritedType": 6
                       },
                       {
@@ -29840,7 +29839,7 @@
     "theme_color1": 5,
     "theme_color2": 0,
     "custom_variable_prefix": "uic",
-    "backup_cnt": 5565,
+    "backup_cnt": 5566,
     "autosave_cnt": 0,
     "group_color_cnt": 0,
     "lvgl_version": "8.3.11",

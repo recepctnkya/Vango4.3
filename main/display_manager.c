@@ -1626,7 +1626,14 @@ void parse_write_data(cJSON* json) {
             } else {
                 ESP_LOGE("PARSE_WRITE_DATA", "RGB writeData must be an array of 3 values.");
             }
-        } else {
+        }else if (strcmp(writeDataType->valuestring, "Motor") == 0) {
+            if (writeData && cJSON_IsNumber(writeData)) {
+                ESP_LOGI("PARSE_WRITE_DATA", "Motor Value: %d", writeData->valueint);
+                can_data[0] = (uint8_t)writeNo->valueint;  // İlk byte veri
+                can_data[1] = (uint8_t)writeData->valueint;  // İlk byte veri
+                send_can_frame(0x750, can_data);  // Motor için CAN ID: 0x750
+            }
+        }else {
             ESP_LOGI("PARSE_WRITE_DATA", "Unknown writeDataType: %s", writeDataType->valuestring);
         }
     }

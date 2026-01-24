@@ -67,7 +67,7 @@ void ui_event_Button1(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrPages, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 500, 0, &ui_scrPages_screen_init);
+        _ui_screen_change(&ui_scrPages, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_scrPages_screen_init);
     }
 }
 

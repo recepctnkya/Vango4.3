@@ -1,46 +1,22 @@
-
-Git BASICS
-
-Steps to apply a repo to github
-
-1-git init
-2-git add .
-3-git commit -m "test"
-4-connect remote repo to git. (git remote add origin https://github.com/yourusername/your-repo.git)
-5-Git remote -v (check remote connection data like above.)
-6-git branch (check branch name)
-7-git push --set-upstream main main (it will set main as upstream branch and push it to git.)
-8-
-
-    
+Android
+Android uygulama da motor yazilimi eklenecek
+RGB buton pop up seklinde acilsin ve toggle button ile aktif pasif yapsin
+Panel ayarlarinda iconlarin degistilebildigini gosteren oklar
+ayarlar sayfasindaki ufak toggle butonlarin rengi degistirilecek
+saat ve hava datasi 5 sn de bir gelmiyor
+Dil secenegi
 
 
 
-Git checkout  -b developer
-Git merge tester-Recep
-
-
-Git push --set-upstream origin tester
-git push -u origin developer
-
-git push origin --delete tester
-git branch -D tester
-
-git remote rename main origin
 
 
 
-Yapilacaklar
-    Can i saglam bir seviyeye getirmek
-    Sicaklik ve seviye sensorlerini devreye al
-    Inputlari devreye al.
-    Genel market calismasi yaparak eksikleri biraz daha belirle
-    4.3 inc ekrani ayaga kaldirma
-    5 inc ekrani ayaga kaldirma
-    Ekran prototip tasarimlari da yaparak linkedin de paylasma
+IO MOdulu
+-sicaklik nem sensoru. 
+Sicaklik senosuru donanumini calistiricaksin
+inputlara bagli outputlar ayarlanacak.
 
-Prototip Ekran tasarimlari
--Wall charger
--Portable PowerBank
--Wall PowerBank
-https://www.instagram.com/reel/DO39LhUiHgR/?utm_source=ig_web_button_share_sheet&igsh=ODdmZWVhMTFiMw==
+
+
+7 Inc ekran 1024x600 yazilimi toparlanacak
+5 yaizlimi guncellenecek
