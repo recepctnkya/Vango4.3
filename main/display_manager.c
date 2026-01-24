@@ -1143,8 +1143,8 @@ void update_display_with_data(const uint8_t *data, int length) {
 
 
     // Update the display labels with the fetched data
-    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger1, "%d°C", get_sensorTemp());
-    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger2, "%d°C", get_sensorHum);
+    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger1, "%d°C", (uint16_t)get_sensorTemp());
+    lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger2, "%d%%", (uint16_t)get_sensorHum());
     lv_label_set_text_fmt(ui_lblGrup1Oran1, "%d%%", analog_input_1);
     lv_label_set_text_fmt(ui_lblGrup1Oran2, "%d%%", analog_input_2);
     
@@ -1152,7 +1152,7 @@ void update_display_with_data(const uint8_t *data, int length) {
     lv_arc_set_value(ui_arcTemperature1, get_sensorTemp());
     lv_arc_set_value(ui_arcTemperature2, get_sensorHum());
     lv_label_set_text_fmt(ui_lblTemperature1, "%d°C", get_sensorTemp());
-    lv_label_set_text_fmt(ui_lblTemperature2, "%d°C", get_sensorHum());
+    lv_label_set_text_fmt(ui_lblTemperature2, "%d%%", get_sensorHum());
     
     // Update water widgets with analog input values
     lv_arc_set_value(ui_arcWater1, analog_input_1);
@@ -2274,13 +2274,13 @@ void apply_language_settings()
         lv_label_set_text(ui_lblWallpaper, "Wallpaper: ");
         lv_label_set_text(ui_lblGrup1, "Clean Water");
         lv_label_set_text(ui_lblGrup2, "Dirty Water");
-        lv_label_set_text(ui_lblPnlGrup1Sicaklik1, "\nEx. Temp.");
-        lv_label_set_text(ui_lblPnlGrup1Sicaklik2, "\nIn. Temp.");
+        lv_label_set_text(ui_lblPnlGrup1Sicaklik1, "\nTemperature");
+        lv_label_set_text(ui_lblPnlGrup1Sicaklik2, "\nHumidity");
         lv_label_set_text(ui_Label12, "SAVING CONFIGURATIONS...\n   DEVICE WILL RESTART");
         lv_label_set_text(ui_lblPanelSettings, "PANEL SETTINGS");
         lv_label_set_text(ui_lblDimmableOutputs, "Dimmable Outputs");
-        lv_label_set_text(ui_lblUnderArcTemperature1, "Internal Temperature");
-        lv_label_set_text(ui_lblUnderArcTemperature2, "External Temperature");
+        lv_label_set_text(ui_lblUnderArcTemperature1, "Temperature");
+        lv_label_set_text(ui_lblUnderArcTemperature2, "Humidity");
         lv_label_set_text(ui_lblUnderArcWater1, "Clean Water");
         lv_label_set_text(ui_lblUnderArcWater2, "Dirty Water");
 
@@ -2318,13 +2318,13 @@ void apply_language_settings()
         lv_label_set_text(ui_lblWallpaper, "Duvar Kagidi: ");
         lv_label_set_text(ui_lblGrup1, "Temiz Su");
         lv_label_set_text(ui_lblGrup2, "Kirli Su");
-        lv_label_set_text(ui_lblPnlGrup1Sicaklik1, "\nIc Sicak.");
-        lv_label_set_text(ui_lblPnlGrup1Sicaklik2, "\nDis Sicak.");
+        lv_label_set_text(ui_lblPnlGrup1Sicaklik1, "\nSicaklik");
+        lv_label_set_text(ui_lblPnlGrup1Sicaklik2, "\nNem");
         lv_label_set_text(ui_Label12, "AYARLAR KAYDEDILIYOR...\nCIHAZ YENIDEN BASLAYACAK");
         lv_label_set_text(ui_lblPanelSettings, "PANEL AYARLARI");
         lv_label_set_text(ui_lblDimmableOutputs, "Dim Cikislari");
-        lv_label_set_text(ui_lblUnderArcTemperature1, "Ic Sicaklik");
-        lv_label_set_text(ui_lblUnderArcTemperature2, "Dis Sicaklik");
+        lv_label_set_text(ui_lblUnderArcTemperature1, "Sicaklik");
+        lv_label_set_text(ui_lblUnderArcTemperature2, "Nem");
         lv_label_set_text(ui_lblUnderArcWater1, "Temiz Su");
         lv_label_set_text(ui_lblUnderArcWater2, "Kirli Su");
 
