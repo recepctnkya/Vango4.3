@@ -14,12 +14,6 @@ extern "C" {
 extern void ui_scrSettings_screen_init(void);
 extern void ui_scrSettings_screen_destroy(void);
 extern lv_obj_t * ui_scrSettings;
-extern void ui_event_Button4(lv_event_t * e);
-extern lv_obj_t * ui_Button4;
-extern void ui_event_Button8(lv_event_t * e);
-extern lv_obj_t * ui_Button8;
-extern void ui_event_Button9(lv_event_t * e);
-extern lv_obj_t * ui_Button9;
 extern lv_obj_t * ui_Panel5;
 extern lv_obj_t * ui_lblHexnetTechnology5;
 extern void ui_event_Button18(lv_event_t * e);
@@ -30,6 +24,12 @@ extern lv_obj_t * ui_lblThemeSettingsB;
 extern lv_obj_t * ui_lblConnectionSettingsB;
 extern void ui_event_dbLanguage(lv_event_t * e);
 extern lv_obj_t * ui_dbLanguage;
+extern void ui_event_Image3(lv_event_t * e);
+extern lv_obj_t * ui_Image3;
+extern void ui_event_Image4(lv_event_t * e);
+extern lv_obj_t * ui_Image4;
+extern void ui_event_Image5(lv_event_t * e);
+extern lv_obj_t * ui_Image5;
 // CUSTOM VARIABLES
 
 #ifdef __cplusplus

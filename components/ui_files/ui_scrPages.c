@@ -6,10 +6,6 @@
 #include "ui.h"
 
 lv_obj_t * ui_scrPages = NULL;
-lv_obj_t * ui_btnDims = NULL;
-lv_obj_t * ui_btnTemperatures = NULL;
-lv_obj_t * ui_btnWaters = NULL;
-lv_obj_t * ui_btnRGBs = NULL;
 lv_obj_t * ui_Panel7 = NULL;
 lv_obj_t * ui_lblHexnetTechnology6 = NULL;
 lv_obj_t * ui_Button12 = NULL;
@@ -19,14 +15,35 @@ lv_obj_t * ui_lblDimmableOutputsB = NULL;
 lv_obj_t * ui_lblSensorsB = NULL;
 lv_obj_t * ui_lblWaterLevelsB = NULL;
 lv_obj_t * ui_lblRGBsB = NULL;
+lv_obj_t * ui_btnDims = NULL;
+lv_obj_t * ui_btnTemperatures = NULL;
+lv_obj_t * ui_btnWaters = NULL;
+lv_obj_t * ui_btnRGBs = NULL;
 // event funtions
+void ui_event_Button12(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_scrSettings, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_scrSettings_screen_init);
+    }
+}
+
+void ui_event_Button19(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_scrMain, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_scrMain_screen_init);
+    }
+}
+
 void ui_event_btnDims(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_NONE, 0, 0,
-                          &ui_scrDimsandSensorsandWaters_screen_init);
+        _ui_screen_change(&ui_scrPanelSettings, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_scrPanelSettings_screen_init);
         btnDimsCallbackFunc(e);
     }
 }
@@ -62,102 +79,12 @@ void ui_event_btnRGBs(lv_event_t * e)
     }
 }
 
-void ui_event_Button12(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrSettings, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_scrSettings_screen_init);
-    }
-}
-
-void ui_event_Button19(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrMain, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_scrMain_screen_init);
-    }
-}
-
 // build funtions
 
 void ui_scrPages_screen_init(void)
 {
     ui_scrPages = lv_obj_create(NULL);
     lv_obj_clear_flag(ui_scrPages, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-
-    ui_btnDims = lv_btn_create(ui_scrPages);
-    lv_obj_set_width(ui_btnDims, 151);
-    lv_obj_set_height(ui_btnDims, 199);
-    lv_obj_set_x(ui_btnDims, -294);
-    lv_obj_set_y(ui_btnDims, -31);
-    lv_obj_set_align(ui_btnDims, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_btnDims, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_btnDims, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_radius(ui_btnDims, 20, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_img_src(ui_btnDims, &ui_img_btnsettings2_png, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_color(ui_btnDims, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_opa(ui_btnDims, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_width(ui_btnDims, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_color(ui_btnDims, lv_color_hex(0xE0E0E0), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_opa(ui_btnDims, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_width(ui_btnDims, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_pad(ui_btnDims, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_btnTemperatures = lv_btn_create(ui_scrPages);
-    lv_obj_set_width(ui_btnTemperatures, 151);
-    lv_obj_set_height(ui_btnTemperatures, 199);
-    lv_obj_set_x(ui_btnTemperatures, -101);
-    lv_obj_set_y(ui_btnTemperatures, -31);
-    lv_obj_set_align(ui_btnTemperatures, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_btnTemperatures, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_btnTemperatures, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_radius(ui_btnTemperatures, 20, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_img_src(ui_btnTemperatures, &ui_img_sensors_png, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_color(ui_btnTemperatures, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_opa(ui_btnTemperatures, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_width(ui_btnTemperatures, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_color(ui_btnTemperatures, lv_color_hex(0xE0E0E0), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_opa(ui_btnTemperatures, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_width(ui_btnTemperatures, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_pad(ui_btnTemperatures, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_btnWaters = lv_btn_create(ui_scrPages);
-    lv_obj_set_width(ui_btnWaters, 151);
-    lv_obj_set_height(ui_btnWaters, 199);
-    lv_obj_set_x(ui_btnWaters, 95);
-    lv_obj_set_y(ui_btnWaters, -28);
-    lv_obj_set_align(ui_btnWaters, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_btnWaters, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_btnWaters, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_radius(ui_btnWaters, 20, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_img_src(ui_btnWaters, &ui_img_waterlevel_png, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_color(ui_btnWaters, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_opa(ui_btnWaters, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_width(ui_btnWaters, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_color(ui_btnWaters, lv_color_hex(0xE0E0E0), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_opa(ui_btnWaters, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_width(ui_btnWaters, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_pad(ui_btnWaters, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_btnRGBs = lv_btn_create(ui_scrPages);
-    lv_obj_set_width(ui_btnRGBs, 151);
-    lv_obj_set_height(ui_btnRGBs, 199);
-    lv_obj_set_x(ui_btnRGBs, 291);
-    lv_obj_set_y(ui_btnRGBs, -29);
-    lv_obj_set_align(ui_btnRGBs, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_btnRGBs, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_btnRGBs, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_radius(ui_btnRGBs, 20, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_img_src(ui_btnRGBs, &ui_img_rgbcontrol_png, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_color(ui_btnRGBs, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_opa(ui_btnRGBs, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_width(ui_btnRGBs, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_color(ui_btnRGBs, lv_color_hex(0xE0E0E0), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_opa(ui_btnRGBs, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_width(ui_btnRGBs, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_outline_pad(ui_btnRGBs, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Panel7 = lv_obj_create(ui_scrPages);
     lv_obj_set_width(ui_Panel7, 797);
@@ -183,9 +110,9 @@ void ui_scrPages_screen_init(void)
 
     ui_Button12 = lv_btn_create(ui_scrPages);
     lv_obj_set_width(ui_Button12, 144);
-    lv_obj_set_height(ui_Button12, 85);
-    lv_obj_set_x(ui_Button12, 318);
-    lv_obj_set_y(ui_Button12, -189);
+    lv_obj_set_height(ui_Button12, 77);
+    lv_obj_set_x(ui_Button12, 322);
+    lv_obj_set_y(ui_Button12, -197);
     lv_obj_set_align(ui_Button12, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_Button12, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
     lv_obj_clear_flag(ui_Button12, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
@@ -228,8 +155,8 @@ void ui_scrPages_screen_init(void)
     ui_lblDimmableOutputsB = lv_label_create(ui_scrPages);
     lv_obj_set_width(ui_lblDimmableOutputsB, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_lblDimmableOutputsB, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblDimmableOutputsB, -291);
-    lv_obj_set_y(ui_lblDimmableOutputsB, 98);
+    lv_obj_set_x(ui_lblDimmableOutputsB, -293);
+    lv_obj_set_y(ui_lblDimmableOutputsB, 105);
     lv_obj_set_align(ui_lblDimmableOutputsB, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblDimmableOutputsB, "DIMMABLE\nOUTPUTS");
     lv_obj_set_style_text_font(ui_lblDimmableOutputsB, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -261,12 +188,56 @@ void ui_scrPages_screen_init(void)
     lv_label_set_text(ui_lblRGBsB, "RGB");
     lv_obj_set_style_text_font(ui_lblRGBsB, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    ui_btnDims = lv_img_create(ui_scrPages);
+    lv_img_set_src(ui_btnDims, &ui_img_btnsettings2_png);
+    lv_obj_set_width(ui_btnDims, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_btnDims, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_btnDims, -291);
+    lv_obj_set_y(ui_btnDims, -37);
+    lv_obj_set_align(ui_btnDims, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_btnDims, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_btnDims, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_img_set_zoom(ui_btnDims, 310);
+
+    ui_btnTemperatures = lv_img_create(ui_scrPages);
+    lv_img_set_src(ui_btnTemperatures, &ui_img_sensors_png);
+    lv_obj_set_width(ui_btnTemperatures, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_btnTemperatures, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_btnTemperatures, -97);
+    lv_obj_set_y(ui_btnTemperatures, -35);
+    lv_obj_set_align(ui_btnTemperatures, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_btnTemperatures, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_btnTemperatures, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_img_set_zoom(ui_btnTemperatures, 310);
+
+    ui_btnWaters = lv_img_create(ui_scrPages);
+    lv_img_set_src(ui_btnWaters, &ui_img_waterlevel_png);
+    lv_obj_set_width(ui_btnWaters, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_btnWaters, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_btnWaters, 97);
+    lv_obj_set_y(ui_btnWaters, -38);
+    lv_obj_set_align(ui_btnWaters, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_btnWaters, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_btnWaters, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_img_set_zoom(ui_btnWaters, 310);
+
+    ui_btnRGBs = lv_img_create(ui_scrPages);
+    lv_img_set_src(ui_btnRGBs, &ui_img_rgbcontrol_png);
+    lv_obj_set_width(ui_btnRGBs, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_btnRGBs, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_btnRGBs, 293);
+    lv_obj_set_y(ui_btnRGBs, -35);
+    lv_obj_set_align(ui_btnRGBs, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_btnRGBs, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_btnRGBs, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_img_set_zoom(ui_btnRGBs, 310);
+
+    lv_obj_add_event_cb(ui_Button12, ui_event_Button12, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_Button19, ui_event_Button19, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_btnDims, ui_event_btnDims, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_btnTemperatures, ui_event_btnTemperatures, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_btnWaters, ui_event_btnWaters, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_btnRGBs, ui_event_btnRGBs, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_Button12, ui_event_Button12, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_Button19, ui_event_Button19, LV_EVENT_ALL, NULL);
 
 }
 
@@ -276,10 +247,6 @@ void ui_scrPages_screen_destroy(void)
 
     // NULL screen variables
     ui_scrPages = NULL;
-    ui_btnDims = NULL;
-    ui_btnTemperatures = NULL;
-    ui_btnWaters = NULL;
-    ui_btnRGBs = NULL;
     ui_Panel7 = NULL;
     ui_lblHexnetTechnology6 = NULL;
     ui_Button12 = NULL;
@@ -289,5 +256,9 @@ void ui_scrPages_screen_destroy(void)
     ui_lblSensorsB = NULL;
     ui_lblWaterLevelsB = NULL;
     ui_lblRGBsB = NULL;
+    ui_btnDims = NULL;
+    ui_btnTemperatures = NULL;
+    ui_btnWaters = NULL;
+    ui_btnRGBs = NULL;
 
 }

@@ -338,7 +338,7 @@ void ui_scrMain_screen_init(void)
     ui_lblPnlGrup1Sicaklik2 = lv_label_create(ui_scrMain);
     lv_obj_set_width(ui_lblPnlGrup1Sicaklik2, 149);
     lv_obj_set_height(ui_lblPnlGrup1Sicaklik2, 45);
-    lv_obj_set_x(ui_lblPnlGrup1Sicaklik2, -129);
+    lv_obj_set_x(ui_lblPnlGrup1Sicaklik2, -134);
     lv_obj_set_y(ui_lblPnlGrup1Sicaklik2, 75);
     lv_obj_set_align(ui_lblPnlGrup1Sicaklik2, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblPnlGrup1Sicaklik2, "\nTemperature");

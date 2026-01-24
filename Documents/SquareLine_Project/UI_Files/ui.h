@@ -67,11 +67,11 @@ LV_IMG_DECLARE(ui_img_tempicon_png);    // assets/tempicon.png
 LV_IMG_DECLARE(ui_img_outcontrols_png);    // assets/outcontrols.png
 LV_IMG_DECLARE(ui_img_theme_png);    // assets/theme.png
 LV_IMG_DECLARE(ui_img_connectioncontrol_png);    // assets/connectioncontrol.png
+LV_IMG_DECLARE(ui_img_settingsicon_png);    // assets/settingsicon.png
 LV_IMG_DECLARE(ui_img_btnsettings2_png);    // assets/btnSettings2.png
 LV_IMG_DECLARE(ui_img_sensors_png);    // assets/sensors.png
 LV_IMG_DECLARE(ui_img_waterlevel_png);    // assets/waterlevel.png
 LV_IMG_DECLARE(ui_img_rgbcontrol_png);    // assets/rgbcontrol.png
-LV_IMG_DECLARE(ui_img_settingsicon_png);    // assets/settingsicon.png
 
 // UI INIT
 void ui_init(void);

@@ -14,14 +14,6 @@ extern "C" {
 extern void ui_scrPages_screen_init(void);
 extern void ui_scrPages_screen_destroy(void);
 extern lv_obj_t * ui_scrPages;
-extern void ui_event_btnDims(lv_event_t * e);
-extern lv_obj_t * ui_btnDims;
-extern void ui_event_btnTemperatures(lv_event_t * e);
-extern lv_obj_t * ui_btnTemperatures;
-extern void ui_event_btnWaters(lv_event_t * e);
-extern lv_obj_t * ui_btnWaters;
-extern void ui_event_btnRGBs(lv_event_t * e);
-extern lv_obj_t * ui_btnRGBs;
 extern lv_obj_t * ui_Panel7;
 extern lv_obj_t * ui_lblHexnetTechnology6;
 extern void ui_event_Button12(lv_event_t * e);
@@ -33,6 +25,14 @@ extern lv_obj_t * ui_lblDimmableOutputsB;
 extern lv_obj_t * ui_lblSensorsB;
 extern lv_obj_t * ui_lblWaterLevelsB;
 extern lv_obj_t * ui_lblRGBsB;
+extern void ui_event_btnDims(lv_event_t * e);
+extern lv_obj_t * ui_btnDims;
+extern void ui_event_btnTemperatures(lv_event_t * e);
+extern lv_obj_t * ui_btnTemperatures;
+extern void ui_event_btnWaters(lv_event_t * e);
+extern lv_obj_t * ui_btnWaters;
+extern void ui_event_btnRGBs(lv_event_t * e);
+extern lv_obj_t * ui_btnRGBs;
 // CUSTOM VARIABLES
 
 #ifdef __cplusplus

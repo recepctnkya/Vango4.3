@@ -118,8 +118,8 @@ void ui_scrTheme_screen_init(void)
     ui_btnWhiteTheme = lv_btn_create(ui_scrTheme);
     lv_obj_set_width(ui_btnWhiteTheme, 200);
     lv_obj_set_height(ui_btnWhiteTheme, 198);
-    lv_obj_set_x(ui_btnWhiteTheme, -89);
-    lv_obj_set_y(ui_btnWhiteTheme, -118);
+    lv_obj_set_x(ui_btnWhiteTheme, -65);
+    lv_obj_set_y(ui_btnWhiteTheme, -117);
     lv_obj_set_align(ui_btnWhiteTheme, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_btnWhiteTheme, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
     lv_obj_clear_flag(ui_btnWhiteTheme, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
@@ -133,8 +133,8 @@ void ui_scrTheme_screen_init(void)
     ui_btnBlackTheme = lv_btn_create(ui_scrTheme);
     lv_obj_set_width(ui_btnBlackTheme, 209);
     lv_obj_set_height(ui_btnBlackTheme, 210);
-    lv_obj_set_x(ui_btnBlackTheme, 166);
-    lv_obj_set_y(ui_btnBlackTheme, -117);
+    lv_obj_set_x(ui_btnBlackTheme, 151);
+    lv_obj_set_y(ui_btnBlackTheme, -118);
     lv_obj_set_align(ui_btnBlackTheme, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_btnBlackTheme, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
     lv_obj_clear_flag(ui_btnBlackTheme, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
@@ -148,11 +148,11 @@ void ui_scrTheme_screen_init(void)
     ui_lblSelectTheme = lv_label_create(ui_scrTheme);
     lv_obj_set_width(ui_lblSelectTheme, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_lblSelectTheme, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblSelectTheme, -282);
-    lv_obj_set_y(ui_lblSelectTheme, -115);
+    lv_obj_set_x(ui_lblSelectTheme, -288);
+    lv_obj_set_y(ui_lblSelectTheme, -123);
     lv_obj_set_align(ui_lblSelectTheme, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblSelectTheme, "Select Theme:");
-    lv_obj_set_style_text_font(ui_lblSelectTheme, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_lblSelectTheme, &lv_font_montserrat_26, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_lblSettingsB = lv_label_create(ui_scrTheme);
     lv_obj_set_width(ui_lblSettingsB, LV_SIZE_CONTENT);   /// 1
@@ -162,7 +162,7 @@ void ui_scrTheme_screen_init(void)
     lv_obj_set_align(ui_lblSettingsB, LV_ALIGN_CENTER);
 
     ui_swEnableWallpaper = lv_switch_create(ui_scrTheme);
-    lv_obj_set_width(ui_swEnableWallpaper, 89);
+    lv_obj_set_width(ui_swEnableWallpaper, 144);
     lv_obj_set_height(ui_swEnableWallpaper, 62);
     lv_obj_set_x(ui_swEnableWallpaper, 25);
     lv_obj_set_y(ui_swEnableWallpaper, 23);
@@ -171,10 +171,11 @@ void ui_scrTheme_screen_init(void)
     ui_lblWallpaper = lv_label_create(ui_scrTheme);
     lv_obj_set_width(ui_lblWallpaper, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_lblWallpaper, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblWallpaper, -283);
-    lv_obj_set_y(ui_lblWallpaper, 26);
+    lv_obj_set_x(ui_lblWallpaper, -261);
+    lv_obj_set_y(ui_lblWallpaper, 27);
     lv_obj_set_align(ui_lblWallpaper, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lblWallpaper, "Enable Wallpaper:");
+    lv_obj_set_style_text_font(ui_lblWallpaper, &lv_font_montserrat_26, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_rlrTime = lv_roller_create(ui_scrTheme);
     lv_roller_set_options(ui_rlrTime, "30 Seconds\n1 Minute\n2 Minutes\n5 Minutes\n10 Minutes", LV_ROLLER_MODE_NORMAL);
@@ -184,6 +185,7 @@ void ui_scrTheme_screen_init(void)
     lv_obj_set_y(ui_rlrTime, 119);
     lv_obj_set_align(ui_rlrTime, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_rlrTime, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_set_style_text_font(ui_rlrTime, &lv_font_montserrat_26, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_Button14, ui_event_Button14, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_btnWhiteTheme, ui_event_btnWhiteTheme, LV_EVENT_ALL, NULL);

@@ -392,20 +392,20 @@ void ui_scrDimsandSensorsandWaters_screen_init(void)
     ui_lblUnderArcTemperature1 = lv_label_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_lblUnderArcTemperature1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_lblUnderArcTemperature1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblUnderArcTemperature1, -255);
-    lv_obj_set_y(ui_lblUnderArcTemperature1, 114);
+    lv_obj_set_x(ui_lblUnderArcTemperature1, -188);
+    lv_obj_set_y(ui_lblUnderArcTemperature1, 116);
     lv_obj_set_align(ui_lblUnderArcTemperature1, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_lblUnderArcTemperature1, "Internal Temperature");
+    lv_label_set_text(ui_lblUnderArcTemperature1, "Temperature");
     lv_obj_add_flag(ui_lblUnderArcTemperature1, LV_OBJ_FLAG_HIDDEN);     /// Flags
     lv_obj_set_style_text_font(ui_lblUnderArcTemperature1, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_lblUnderArcTemperature2 = lv_label_create(ui_scrDimsandSensorsandWaters);
     lv_obj_set_width(ui_lblUnderArcTemperature2, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_lblUnderArcTemperature2, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_lblUnderArcTemperature2, 113);
-    lv_obj_set_y(ui_lblUnderArcTemperature2, 113);
+    lv_obj_set_x(ui_lblUnderArcTemperature2, 192);
+    lv_obj_set_y(ui_lblUnderArcTemperature2, 119);
     lv_obj_set_align(ui_lblUnderArcTemperature2, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_lblUnderArcTemperature2, "External Temperature");
+    lv_label_set_text(ui_lblUnderArcTemperature2, "Humidity");
     lv_obj_add_flag(ui_lblUnderArcTemperature2, LV_OBJ_FLAG_HIDDEN);     /// Flags
     lv_obj_set_style_text_font(ui_lblUnderArcTemperature2, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
