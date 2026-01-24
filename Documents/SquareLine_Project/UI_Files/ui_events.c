@@ -179,3 +179,8 @@ void scrMainClickedCallback(lv_event_t * e)
 {
 	// Your code here
 }
+
+void btnMenuCallback(lv_event_t * e)
+{
+	// Your code here
+}

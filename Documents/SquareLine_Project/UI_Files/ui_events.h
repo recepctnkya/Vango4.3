@@ -11,6 +11,7 @@ extern "C" {
 #endif
 
 void arcTemizSuValueChanged(lv_event_t * e);
+void btnMenuCallback(lv_event_t * e);
 void btnTemperaturesCallbackFunc(lv_event_t * e);
 void btnDimsCallbackFunc(lv_event_t * e);
 void motorMoveBackwardPressed(lv_event_t * e);

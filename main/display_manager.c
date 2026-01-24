@@ -767,7 +767,7 @@ void create_dynamic_ui(lv_obj_t* parent) {
         lv_label_set_text(lblIO[i], lblBtnNames[outputsBuffer[i] - 1]);
         lv_obj_set_style_text_color(lblIO[i], lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
         lv_obj_set_style_text_opa(lblIO[i], 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-        lv_obj_set_style_text_font(lblIO[i], &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_text_font(lblIO[i], &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
 
         imgIO[i] = lv_img_create(btnIO[i]);
         lv_img_set_src(imgIO[i], get_image_for_button(outputsBuffer[i] - 1));
@@ -2318,8 +2318,8 @@ void apply_language_settings()
         lv_label_set_text(ui_lblWallpaper, "Duvar Kagidi: ");
         lv_label_set_text(ui_lblGrup1, "Temiz Su");
         lv_label_set_text(ui_lblGrup2, "Kirli Su");
-        lv_label_set_text(ui_lblPnlGrup1Sicaklik1, "\nSicaklik");
-        lv_label_set_text(ui_lblPnlGrup1Sicaklik2, "\nNem");
+        lv_label_set_text(ui_lblPnlGrup1Sicaklik1, "\n Sicaklik");
+        lv_label_set_text(ui_lblPnlGrup1Sicaklik2, "\n   Nem");
         lv_label_set_text(ui_Label12, "AYARLAR KAYDEDILIYOR...\nCIHAZ YENIDEN BASLAYACAK");
         lv_label_set_text(ui_lblPanelSettings, "PANEL AYARLARI");
         lv_label_set_text(ui_lblDimmableOutputs, "Dim Cikislari");

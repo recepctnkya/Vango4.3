@@ -350,6 +350,11 @@ void sendCanFrameRGB_B(lv_event_t * e)
 	rgbCalibration = 3;
 }
 
+void btnMenuCallback(lv_event_t * e)
+{
+	panelWallpaperEnableCounter	 = 0;
+}
+
 
 
 

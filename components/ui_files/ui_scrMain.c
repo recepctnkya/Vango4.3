@@ -68,6 +68,7 @@ void ui_event_Button1(lv_event_t * e)
 
     if(event_code == LV_EVENT_CLICKED) {
         _ui_screen_change(&ui_scrPages, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_scrPages_screen_init);
+        btnMenuCallback(e);
     }
 }
 
@@ -329,19 +330,19 @@ void ui_scrMain_screen_init(void)
     ui_lblPnlGrup1Sicaklik1 = lv_label_create(ui_scrMain);
     lv_obj_set_width(ui_lblPnlGrup1Sicaklik1, 132);
     lv_obj_set_height(ui_lblPnlGrup1Sicaklik1, 45);
-    lv_obj_set_x(ui_lblPnlGrup1Sicaklik1, -129);
-    lv_obj_set_y(ui_lblPnlGrup1Sicaklik1, 29);
+    lv_obj_set_x(ui_lblPnlGrup1Sicaklik1, -140);
+    lv_obj_set_y(ui_lblPnlGrup1Sicaklik1, 25);
     lv_obj_set_align(ui_lblPnlGrup1Sicaklik1, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_lblPnlGrup1Sicaklik1, "\nHumidity");
+    lv_label_set_text(ui_lblPnlGrup1Sicaklik1, "\nTemperature");
     lv_obj_add_flag(ui_lblPnlGrup1Sicaklik1, LV_OBJ_FLAG_CLICKABLE);     /// Flags
 
     ui_lblPnlGrup1Sicaklik2 = lv_label_create(ui_scrMain);
     lv_obj_set_width(ui_lblPnlGrup1Sicaklik2, 149);
     lv_obj_set_height(ui_lblPnlGrup1Sicaklik2, 45);
-    lv_obj_set_x(ui_lblPnlGrup1Sicaklik2, -134);
-    lv_obj_set_y(ui_lblPnlGrup1Sicaklik2, 75);
+    lv_obj_set_x(ui_lblPnlGrup1Sicaklik2, -129);
+    lv_obj_set_y(ui_lblPnlGrup1Sicaklik2, 74);
     lv_obj_set_align(ui_lblPnlGrup1Sicaklik2, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_lblPnlGrup1Sicaklik2, "\nTemperature");
+    lv_label_set_text(ui_lblPnlGrup1Sicaklik2, "\nHumidity");
     lv_obj_add_flag(ui_lblPnlGrup1Sicaklik2, LV_OBJ_FLAG_CLICKABLE);     /// Flags
 
     ui_lblPnlGrup1SicaklikDeger2 = lv_label_create(ui_scrMain);
@@ -373,12 +374,6 @@ void ui_scrMain_screen_init(void)
     lv_obj_set_style_bg_color(ui_pnlOutputs, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_pnlOutputs, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_width(ui_pnlOutputs, 1, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_color(ui_pnlOutputs, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_opa(ui_pnlOutputs, 50, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_width(ui_pnlOutputs, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_spread(ui_pnlOutputs, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_ofs_x(ui_pnlOutputs, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_ofs_y(ui_pnlOutputs, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_imgBluetoothConnected = lv_img_create(ui_scrMain);
     lv_img_set_src(ui_imgBluetoothConnected, &ui_img_btconnected_png);
@@ -458,12 +453,6 @@ void ui_scrMain_screen_init(void)
     lv_obj_set_style_radius(ui_pnlSensors, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_pnlSensors, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_pnlSensors, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_color(ui_pnlSensors, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_opa(ui_pnlSensors, 50, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_width(ui_pnlSensors, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_spread(ui_pnlSensors, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_ofs_x(ui_pnlSensors, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_ofs_y(ui_pnlSensors, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_lblWeather = lv_label_create(ui_scrMain);
     lv_obj_set_width(ui_lblWeather, LV_SIZE_CONTENT);   /// 1

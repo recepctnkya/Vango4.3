@@ -43,7 +43,8 @@ void ui_event_btnDims(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_scrPanelSettings, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_scrPanelSettings_screen_init);
+        _ui_screen_change(&ui_scrDimsandSensorsandWaters, LV_SCR_LOAD_ANIM_NONE, 0, 0,
+                          &ui_scrDimsandSensorsandWaters_screen_init);
         btnDimsCallbackFunc(e);
     }
 }

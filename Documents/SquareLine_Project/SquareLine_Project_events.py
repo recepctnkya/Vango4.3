@@ -134,3 +134,7 @@ def motorMoveForwardReleased(event_struct):
 def selectLanguagecallback(event_struct):
     return
 
+
+def btnMenuCallback(event_struct):
+    return
+
