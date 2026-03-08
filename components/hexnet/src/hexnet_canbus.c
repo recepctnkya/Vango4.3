@@ -16,8 +16,10 @@
 
 /* --------------------- Definitions and static variables ------------------ */
 //Example Configuration
-#define TX_GPIO_NUM             15
-#define RX_GPIO_NUM             16
+#define TX_GPIO_NUM             20
+#define RX_GPIO_NUM             19
+// #define TX_GPIO_NUM             15
+// #define RX_GPIO_NUM             16
 #define EXAMPLE_TAG             "TWAI Master"
 
 static bool driver_installed = false;
@@ -173,7 +175,7 @@ void can_watchdog_task(void *pvParameter) {
             twai_status_info_t status;
             twai_get_status_info(&status);
             
-            ESP_LOGI(TAG, "CAN Status check");
+            //ESP_LOGI(TAG, "CAN Status check");
             
             // Check for problematic states
             if (status.state == TWAI_STATE_BUS_OFF) {
@@ -299,7 +301,7 @@ void twai_task(void *pvParameter)
             }
 
             if (alerts_triggered & TWAI_ALERT_RX_QUEUE_FULL) {
-                ESP_LOGW(TAG,"RX queue full, clearing");
+                //ESP_LOGW(TAG,"RX queue full, clearing");
                 
                 // Clear the queue aggressively to prevent further issues
                 int cleared_count = 0;
@@ -329,7 +331,7 @@ void twai_task(void *pvParameter)
         twai_status_info_t status;
         twai_get_status_info(&status);
         if (status.msgs_to_rx > 3) { // If more than 3 messages queued
-            ESP_LOGW(TAG, "RX queue full, clearing");
+            //ESP_LOGW(TAG, "RX queue full, clearing");
             int cleared_count = 0;
             while (twai_receive(&message, 0) == ESP_OK && cleared_count < 5) { // Clear up to 5 messages
                 cleared_count++;

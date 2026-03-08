@@ -3,7 +3,6 @@ Android uygulama da motor yazilimi eklenecek
 RGB buton pop up seklinde acilsin ve toggle button ile aktif pasif yapsin
 Panel ayarlarinda iconlarin degistilebildigini gosteren oklar
 ayarlar sayfasindaki ufak toggle butonlarin rengi degistirilecek
-saat ve hava datasi 5 sn de bir gelmiyor
 Dil secenegi
 
 
@@ -12,11 +11,9 @@ Sadece Tablet ve IO modulu yapisi eklenecek
 
 
 IO MOdulu
--sicaklik nem sensoru. 
 Sicaklik senosuru donanumini calistiricaksin
-inputlara bagli outputlar ayarlanacak.
+Yeni IO modulu.
+Yeni io modulu kutusu ve yeni sicaklik sensoru kutusu.
 
 
 
-7 Inc ekran 1024x600 yazilimi toparlanacak
-5 yaizlimi guncellenecek
