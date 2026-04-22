@@ -184,3 +184,13 @@ void btnMenuCallback(lv_event_t * e)
 {
 	// Your code here
 }
+
+void btnHidroforClickedFunc(lv_event_t * e)
+{
+	// Your code here
+}
+
+void btnlambaClickedFunc(lv_event_t * e)
+{
+	// Your code here
+}

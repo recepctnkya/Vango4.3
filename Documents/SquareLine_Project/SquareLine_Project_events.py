@@ -138,3 +138,11 @@ def selectLanguagecallback(event_struct):
 def btnMenuCallback(event_struct):
     return
 
+
+def btnHidroforClickedFunc(event_struct):
+    return
+
+
+def btnlambaClickedFunc(event_struct):
+    return
+

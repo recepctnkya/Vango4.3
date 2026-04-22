@@ -38,7 +38,7 @@ extern lv_anim_t * commScreen_Animation(lv_obj_t * TargetObject, int delay);
 extern lv_obj_t * ui____initial_actions0;
 
 // IMAGES AND IMAGE SETS
-LV_IMG_DECLARE(ui_img_logo3_png);    // assets/logo3.png
+LV_IMG_DECLARE(ui_img_dvn_png);    // assets/dvn.png
 LV_IMG_DECLARE(ui_img_1542361832);    // assets/New Project (1).png
 LV_IMG_DECLARE(ui_img_btconnected_png);    // assets/btconnected.png
 LV_IMG_DECLARE(ui_img_sconnected_png);    // assets/sconnected.png
@@ -48,7 +48,7 @@ LV_IMG_DECLARE(ui_img_weatherforecast2_png);    // assets/weatherforecast2.png
 LV_IMG_DECLARE(ui_img_button_up_png);    // assets/button up.png
 LV_IMG_DECLARE(ui_img_button_down_png);    // assets/button down.png
 LV_IMG_DECLARE(ui_img_wallpaperlogo_png);    // assets/wallpaperLogo.png
-LV_IMG_DECLARE(ui_img_caravan_logo_png);    // assets/caravan logo.png
+LV_IMG_DECLARE(ui_img_dvnbackground_png);    // assets/dvnbackground.png
 LV_IMG_DECLARE(ui_img_ac_png);    // assets/AC.png
 LV_IMG_DECLARE(ui_img_heater_png);    // assets/heater.png
 LV_IMG_DECLARE(ui_img_lamp_png);    // assets/lamp.png
@@ -60,9 +60,11 @@ LV_IMG_DECLARE(ui_img_toilet_png);    // assets/toilet.png
 LV_IMG_DECLARE(ui_img_tv_png);    // assets/tv.png
 LV_IMG_DECLARE(ui_img_usb_png);    // assets/usb.png
 LV_IMG_DECLARE(ui_img_water_png);    // assets/water.png
-LV_IMG_DECLARE(ui_img_1096609443);    // assets/connstatusıcons.png
-LV_IMG_DECLARE(ui_img_arcdesign2_png);    // assets/arcdesign2.png
+LV_IMG_DECLARE(ui_img_waterpump_png);    // assets/waterpump.png
+LV_IMG_DECLARE(ui_img_lampbig_png);    // assets/lampbig.png
+LV_IMG_DECLARE(ui_img_solarpanel_png);    // assets/solarpanel.png
 LV_IMG_DECLARE(ui_img_arcdesign_png);    // assets/arcdesign.png
+LV_IMG_DECLARE(ui_img_arcdesign2_png);    // assets/arcdesign2.png
 LV_IMG_DECLARE(ui_img_tempicon_png);    // assets/tempicon.png
 LV_IMG_DECLARE(ui_img_outcontrols_png);    // assets/outcontrols.png
 LV_IMG_DECLARE(ui_img_theme_png);    // assets/theme.png

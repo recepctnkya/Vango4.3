@@ -15,12 +15,27 @@ extern void ui_scrCalibration_screen_init(void);
 extern void ui_scrCalibration_screen_destroy(void);
 extern lv_obj_t * ui_scrCalibration;
 extern lv_obj_t * ui_Panel6;
-extern void ui_event_Button13(lv_event_t * e);
-extern lv_obj_t * ui_Button13;
-extern lv_obj_t * ui_lblLock7;
 extern lv_obj_t * ui_Image1;
-extern lv_obj_t * ui_Panel9;
+extern lv_obj_t * ui_lblHexnetTechnology7;
+extern void ui_event_Panel11(lv_event_t * e);
+extern lv_obj_t * ui_Panel11;
+extern lv_obj_t * ui_lblHexnetTechnology1;
+extern lv_obj_t * ui_Image6;
+extern void ui_event_Panel12(lv_event_t * e);
+extern lv_obj_t * ui_Panel12;
+extern lv_obj_t * ui_lblHexnetTechnology8;
+extern lv_obj_t * ui_Image7;
+extern lv_obj_t * ui_Panel13;
+extern lv_obj_t * ui_batteryChargeBar;
+extern lv_obj_t * ui_Image8;
 extern lv_obj_t * ui_Panel1;
+extern lv_obj_t * ui_Panel9;
+extern lv_obj_t * ui_Panel8;
+extern lv_obj_t * ui_lblHexnetTechnology3;
+extern lv_obj_t * ui_Panel10;
+extern lv_obj_t * ui_lblHexnetTechnology9;
+extern lv_obj_t * ui_arcWater4;
+extern lv_obj_t * ui_lblHexnetTechnology10;
 // CUSTOM VARIABLES
 
 #ifdef __cplusplus

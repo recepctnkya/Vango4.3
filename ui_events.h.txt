@@ -31,6 +31,8 @@ void sendCanFrameRGB_R(lv_event_t * e);
 void sendCanFrameRGB_G(lv_event_t * e);
 void sendCanFrameRGB_B(lv_event_t * e);
 void btnMenuCallback(lv_event_t * e);
+void btnHidroforClickedFunc(lv_event_t * e);
+void btnlambaClickedFunc(lv_event_t * e);
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif

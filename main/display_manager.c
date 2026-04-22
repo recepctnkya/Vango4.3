@@ -136,6 +136,7 @@ extern lv_obj_t* ui_pnlOutputs;
 extern lv_obj_t* ui_pnlConnectionLost;
 extern lv_obj_t * ui_Panel9;
 extern lv_obj_t * ui_Panel1;
+extern lv_obj_t * ui_batteryChargeBar;
 
 extern lv_obj_t *ui_imgWForecast;
 extern lv_obj_t *ui_lblDateAndTime;
@@ -351,18 +352,47 @@ static void commScreen_RepetitiveAnimation(lv_obj_t * TargetObject) {
 }
 
 // Custom repetitive animation function for Bluetooth connection
-static void btScreen_RepetitiveAnimation(lv_obj_t * TargetObject) {
-    // Create a simple repetitive animation that moves the object back and forth
-    lv_anim_t anim;
-    lv_anim_init(&anim);
-    lv_anim_set_var(&anim, TargetObject);
-    lv_anim_set_time(&anim, 1000);  // 1 second duration
-    lv_anim_set_repeat_count(&anim, LV_ANIM_REPEAT_INFINITE);  // Repeat infinitely
-    lv_anim_set_playback_time(&anim, 1000);  // 1 second playback
-    lv_anim_set_values(&anim, 160, 60);  // Move from 160px to 60px (100px range)
-    lv_anim_set_exec_cb(&anim, (lv_anim_exec_xcb_t) lv_obj_set_x);
-    lv_anim_set_path_cb(&anim, lv_anim_path_ease_in_out);
-    lv_anim_start(&anim);
+static void set_bar_value_anim(void * bar, int32_t val) {
+    lv_bar_set_value((lv_obj_t *)bar, val, LV_ANIM_OFF);
+}
+
+static void solar_charging_animation(lv_obj_t * TargetObject) {
+    // Move ball -43 → -81 in 1 s (one direction, like charge flowing along wire)
+    lv_anim_t move;
+    lv_anim_init(&move);
+    lv_anim_set_var(&move, TargetObject);
+    lv_anim_set_values(&move, -43, -81);
+    lv_anim_set_time(&move, 1000);
+    lv_anim_set_repeat_count(&move, LV_ANIM_REPEAT_INFINITE);
+    lv_anim_set_playback_time(&move, 0);   // no bounce — jump back to start instantly
+    lv_anim_set_exec_cb(&move, (lv_anim_exec_xcb_t) lv_obj_set_x);
+    lv_anim_set_path_cb(&move, lv_anim_path_ease_in);
+    lv_anim_start(&move);
+
+    // Fade out over last 300 ms of each cycle, then reset to fully visible
+    lv_anim_t fade;
+    lv_anim_init(&fade);
+    lv_anim_set_var(&fade, TargetObject);
+    lv_anim_set_values(&fade, LV_OPA_COVER, LV_OPA_TRANSP);
+    lv_anim_set_delay(&fade, 700);         // stay visible for first 700 ms
+    lv_anim_set_time(&fade, 300);          // fade out in final 300 ms
+    lv_anim_set_repeat_count(&fade, LV_ANIM_REPEAT_INFINITE);
+    lv_anim_set_playback_time(&fade, 0);   // jump back to opaque instantly
+    lv_anim_set_exec_cb(&fade, (lv_anim_exec_xcb_t) lv_obj_set_style_opa);
+    lv_anim_set_path_cb(&fade, lv_anim_path_ease_in);
+    lv_anim_start(&fade);
+
+    // Bar fills 0→100 over same 1 s cycle, then jumps back to 0 (charging loop)
+    lv_anim_t bar;
+    lv_anim_init(&bar);
+    lv_anim_set_var(&bar, ui_batteryChargeBar);
+    lv_anim_set_values(&bar, 0, 100);
+    lv_anim_set_time(&bar, 1000);
+    lv_anim_set_repeat_count(&bar, LV_ANIM_REPEAT_INFINITE);
+    lv_anim_set_playback_time(&bar, 0);
+    lv_anim_set_exec_cb(&bar, set_bar_value_anim);
+    lv_anim_set_path_cb(&bar, lv_anim_path_ease_in);
+    lv_anim_start(&bar);
 }
 
 // we use two semaphores to sync the VSYNC event and the LVGL task, to avoid potential tearing effect
@@ -991,7 +1021,7 @@ static void timer_updateTimer_callback(lv_timer_t * timer) {
         if (scrMode == 1) {
             // Check if ui_scrMain is valid before loading it
             if (ui_scrMain != NULL) {
-                lv_scr_load(ui_scrMain);
+                lv_scr_load(ui_scrCalibration);
             }
             scrMode = 0;
         }
@@ -1028,7 +1058,8 @@ static void comm_animation_timer_callback(lv_timer_t * timer) {
     static bool bt_animation_started = false;
     
     bool Deviceconnected = get_canbus_connection_status();
-    bool btConnected = get_connection_status();
+    //bool btConnected = get_connection_status();
+    bool btConnected = true;
     
     // Handle device connection animation (ui_Panel9)
     if (Deviceconnected && !comm_animation_started) {
@@ -1053,7 +1084,7 @@ static void comm_animation_timer_callback(lv_timer_t * timer) {
     // Handle Bluetooth connection animation (ui_Panel1)
     if (btConnected && !bt_animation_started) {
         // Start the repetitive animation when Bluetooth connects
-        btScreen_RepetitiveAnimation(ui_Panel1);
+        solar_charging_animation(ui_Panel1);
         bt_animation_started = true;
         // Set color to green when connected
         lv_obj_set_style_bg_color(ui_Panel1, lv_color_hex(0x00FF00), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -1062,11 +1093,11 @@ static void comm_animation_timer_callback(lv_timer_t * timer) {
         lv_anim_del(ui_Panel1, NULL);  // Stop all animations on this object
         bt_animation_started = false;
         // Set position to 110px and color to red when disconnected
-        lv_obj_set_x(ui_Panel1, 110);
+        lv_obj_set_x(ui_Panel1, -44);
         lv_obj_set_style_bg_color(ui_Panel1, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT);
     } else if (!btConnected && !bt_animation_started) {
         // Ensure position and color are set correctly when disconnected
-        lv_obj_set_x(ui_Panel1, 110);
+        lv_obj_set_x(ui_Panel1, -44);
         lv_obj_set_style_bg_color(ui_Panel1, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT);
     }
 }
@@ -1146,8 +1177,8 @@ void update_display_with_data(const uint8_t *data, int length) {
     // Update the display labels with the fetched data
     lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger1, "%d°C", (uint16_t)get_sensorTemp());
     lv_label_set_text_fmt(ui_lblPnlGrup1SicaklikDeger2, "%d%%", (uint16_t)get_sensorHum());
-    lv_label_set_text_fmt(ui_lblGrup1Oran1, "%d%%", analog_input_1);
-    lv_label_set_text_fmt(ui_lblGrup1Oran2, "%d%%", analog_input_2);
+    lv_label_set_text_fmt(ui_lblHexnetTechnology9, "%d%%", analog_input_1);
+    lv_label_set_text_fmt(ui_lblHexnetTechnology9, "%d%%", analog_input_2);
     
     // Update temperature widgets with analog input values
     lv_arc_set_value(ui_arcTemperature1, get_sensorTemp());
@@ -1156,8 +1187,8 @@ void update_display_with_data(const uint8_t *data, int length) {
     lv_label_set_text_fmt(ui_lblTemperature2, "%d%%", get_sensorHum());
     
     // Update water widgets with analog input values
-    lv_arc_set_value(ui_arcWater1, analog_input_1);
-    lv_arc_set_value(ui_arcWater2, analog_input_2);
+    lv_arc_set_value(ui_arcWater4, analog_input_1);
+    lv_arc_set_value(ui_arcWater4, analog_input_2);
     lv_label_set_text_fmt(ui_lblWater1, "%d%%", analog_input_1);
     lv_label_set_text_fmt(ui_lblWater2, "%d%%", analog_input_2);
 
@@ -1213,9 +1244,15 @@ void update_display_with_data(const uint8_t *data, int length) {
         ui_initialized = 3;
     }
     if (ui_initialized > 3 && Deviceconnected) {
+        uint16_t outputs = get_outputs();
         for (int i = 0; i < numOfOutputs; i++) {
-            set_button_color(btnIO[i], (get_outputs() >> i)&0x01, Deviceconnected);
+            set_button_color(btnIO[i], (outputs >> i)&0x01, Deviceconnected);
         }
+        // Mirror output[0] → Panel12 (lamba), output[1] → Panel11 (hidrofor)
+        if (ui_Panel12 != NULL)
+            lv_obj_set_style_bg_color(ui_Panel12, ((outputs >> 0) & 0x01) ? lv_color_hex(0x00EA64) : lv_color_hex(0x19271F), LV_PART_MAIN | LV_STATE_DEFAULT);
+        if (ui_Panel11 != NULL)
+            lv_obj_set_style_bg_color(ui_Panel11, ((outputs >> 1) & 0x01) ? lv_color_hex(0x00EA64) : lv_color_hex(0x19271F), LV_PART_MAIN | LV_STATE_DEFAULT);
         for (int i = 0; i < numOfDims; i++) {
             lv_bar_set_value(sldDims[i], get_dimmable_output(i), LV_ANIM_OFF);
         }
@@ -2260,10 +2297,7 @@ void apply_language_settings()
         lv_label_set_text(ui_lblLock5, "Back");
         lv_label_set_text(ui_Label2, "Apply");
         lv_label_set_text(ui_lblLock2, "Back");
-        lv_label_set_text(ui_lblLock4, "Back");
-        lv_label_set_text(ui_lblLock8, "Back");
         lv_label_set_text(ui_lblLock3, "Back");
-        lv_label_set_text(ui_lblSettings2, "Save");
         lv_label_set_text(ui_lblLock3, "Save");
         lv_label_set_text(ui_lblSelectTheme, "Select Theme: ");
         lv_label_set_text(ui_lblWallpaper, "Wallpaper: ");
@@ -2304,10 +2338,7 @@ void apply_language_settings()
         lv_label_set_text(ui_lblLock5, "Geri");
         lv_label_set_text(ui_Label2, "Uygula");
         lv_label_set_text(ui_lblLock2, "Geri");
-        lv_label_set_text(ui_lblLock4, "Geri");
-        lv_label_set_text(ui_lblLock8, "Geri");
         lv_label_set_text(ui_lblLock3, "Geri");
-        lv_label_set_text(ui_lblSettings2, "Kaydet");
         lv_label_set_text(ui_lblLock3, "Kaydet");
         lv_label_set_text(ui_lblSelectTheme, "Tema Sec: ");
         lv_label_set_text(ui_lblWallpaper, "Duvar Kagidi: ");

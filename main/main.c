@@ -52,6 +52,6 @@ void app_main()
     ESP_ERROR_CHECK(ret);
 
     display_manager_init(); // Display manager'ı başlat
-    ble_init();
+    //ble_init();
     //wifi_ini();
 }

@@ -26,8 +26,10 @@ def update_cmakelists(new_file=None, remove_file=None):
         return  # Skip if the file is not a .c file
     
     cmake_file = os.path.join(path3, "CMakeLists.txt")
-    cmake_entry = f'    "../components/ui_files/{new_file.replace("\\", "/")}"\n' if new_file else None
-    cmake_remove_entry = f'"../components/ui_files/{remove_file.replace("\\", "/")}"\n' if remove_file else None
+    new_file_fwd = new_file.replace("\\", "/") if new_file else None
+    remove_file_fwd = remove_file.replace("\\", "/") if remove_file else None
+    cmake_entry = f'    "../components/ui_files/{new_file_fwd}"\n' if new_file_fwd else None
+    cmake_remove_entry = f'"../components/ui_files/{remove_file_fwd}"\n' if remove_file_fwd else None
 
     # Read current content of CMakeLists.txt
     with open(cmake_file, "r") as f:

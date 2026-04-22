@@ -168,7 +168,7 @@ void ui_scrMain_screen_init(void)
     lv_obj_set_style_bg_opa(ui_scrMain, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Image2 = lv_img_create(ui_scrMain);
-    lv_img_set_src(ui_Image2, &ui_img_logo3_png);
+    lv_img_set_src(ui_Image2, &ui_img_dvn_png);
     lv_obj_set_width(ui_Image2, 40);
     lv_obj_set_height(ui_Image2, 40);
     lv_obj_set_x(ui_Image2, -373);
@@ -270,7 +270,7 @@ void ui_scrMain_screen_init(void)
     lv_obj_set_x(ui_lblHexnetTechnology, 13);
     lv_obj_set_y(ui_lblHexnetTechnology, 0);
     lv_obj_set_align(ui_lblHexnetTechnology, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_lblHexnetTechnology, "HEXNET TECHNOLOGY");
+    lv_label_set_text(ui_lblHexnetTechnology, "DEVINIM KARAVAN");
     lv_obj_set_style_text_color(ui_lblHexnetTechnology, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_lblHexnetTechnology, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_lblHexnetTechnology, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);

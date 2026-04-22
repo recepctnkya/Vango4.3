@@ -12,7 +12,7 @@ SET(SOURCES ui_scrMain.c
     ui_comp_hook.c
     ui_helpers.c
     ui_events.c
-    ui_img_logo3_png.c
+    ui_img_dvn_png.c
     ui_img_1542361832.c
     ui_img_btconnected_png.c
     ui_img_sconnected_png.c
@@ -22,7 +22,7 @@ SET(SOURCES ui_scrMain.c
     ui_img_button_up_png.c
     ui_img_button_down_png.c
     ui_img_wallpaperlogo_png.c
-    ui_img_caravan_logo_png.c
+    ui_img_dvnbackground_png.c
     ui_img_ac_png.c
     ui_img_heater_png.c
     ui_img_lamp_png.c
@@ -34,9 +34,11 @@ SET(SOURCES ui_scrMain.c
     ui_img_tv_png.c
     ui_img_usb_png.c
     ui_img_water_png.c
-    ui_img_1096609443.c
-    ui_img_arcdesign2_png.c
+    ui_img_waterpump_png.c
+    ui_img_lampbig_png.c
+    ui_img_solarpanel_png.c
     ui_img_arcdesign_png.c
+    ui_img_arcdesign2_png.c
     ui_img_tempicon_png.c
     ui_img_outcontrols_png.c
     ui_img_theme_png.c

@@ -14,11 +14,6 @@ extern "C" {
 extern void ui_scrDimsandSensorsandWaters_screen_init(void);
 extern void ui_scrDimsandSensorsandWaters_screen_destroy(void);
 extern lv_obj_t * ui_scrDimsandSensorsandWaters;
-extern lv_obj_t * ui_Panel8;
-extern lv_obj_t * ui_lblHexnetTechnology3;
-extern void ui_event_Button21(lv_event_t * e);
-extern lv_obj_t * ui_Button21;
-extern lv_obj_t * ui_lblLock8;
 extern void ui_event_slDim1(lv_event_t * e);
 extern lv_obj_t * ui_slDim1;
 extern void ui_event_slDim2(lv_event_t * e);

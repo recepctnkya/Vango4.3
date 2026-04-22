@@ -16,8 +16,8 @@
 
 /* --------------------- Definitions and static variables ------------------ */
 //Example Configuration
-#define TX_GPIO_NUM             20
-#define RX_GPIO_NUM             19
+#define TX_GPIO_NUM             15
+#define RX_GPIO_NUM             16
 // #define TX_GPIO_NUM             15
 // #define RX_GPIO_NUM             16
 #define EXAMPLE_TAG             "TWAI Master"

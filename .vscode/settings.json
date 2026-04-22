@@ -3,7 +3,7 @@
         "interface/ftdi/esp32_devkitj_v1.cfg",
         "target/esp32s3.cfg"
     ],
-    "idf.portWin": "COM4",
+    "idf.portWin": "COM14",
     "idf.flashType": "UART",
     "files.associations": {
         "waveshare_rgb_lcd_port.h": "c",
@@ -93,5 +93,6 @@
         "hexnet_wifi.h": "c",
         "ui_helpers.h": "c",
         "hexnet_bluetooth.h": "c"
-    }
+    },
+    "idf.currentSetup": "C:\\Users\\nakau\\esp\\v5.3\\esp-idf"
 }

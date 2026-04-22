@@ -15,6 +15,10 @@ extern int rgbCalibration;
 extern int panelWallpaperEnableCounter;
 extern int panelLanguageType;
 
+#include "hexnet_canbus.h"
+extern lv_obj_t* btnIO[];
+extern void set_button_color(lv_obj_t *btn, uint16_t value, int connected);
+
 
 void slMutfakValueChanged(lv_event_t * e)
 {
@@ -355,6 +359,46 @@ void btnMenuCallback(lv_event_t * e)
 	panelWallpaperEnableCounter	 = 0;
 }
 
+
+void btnlambaClickedFunc(lv_event_t * e)
+{
+	uint8_t can_data[8] = {0};
+	int btn_index = 0;
+	int16_t outpts = (int16_t)get_outputs();
+	int8_t val = ((outpts >> btn_index) & 0x01) ? 0 : 1;
+
+	can_data[0] = (uint8_t)btn_index;
+	can_data[1] = (uint8_t)val;
+	send_can_frame(0x720, can_data);
+
+	lv_obj_t *panel = lv_event_get_target(e);
+	lv_obj_set_style_bg_color(panel, val ? lv_color_hex(0x00EA64) : lv_color_hex(0x19271F), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+	if (btnIO[btn_index] != NULL)
+		set_button_color(btnIO[btn_index], val, 1);
+
+	panelWallpaperEnableCounter = 0;
+}
+
+void btnHidroforClickedFunc(lv_event_t * e)
+{
+	uint8_t can_data[8] = {0};
+	int btn_index = 1;
+	int16_t outpts = (int16_t)get_outputs();
+	int8_t val = ((outpts >> btn_index) & 0x01) ? 0 : 1;
+
+	can_data[0] = (uint8_t)btn_index;
+	can_data[1] = (uint8_t)val;
+	send_can_frame(0x720, can_data);
+
+	lv_obj_t *panel = lv_event_get_target(e);
+	lv_obj_set_style_bg_color(panel, val ? lv_color_hex(0x00EA64) : lv_color_hex(0x19271F), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+	if (btnIO[btn_index] != NULL)
+		set_button_color(btnIO[btn_index], val, 1);
+
+	panelWallpaperEnableCounter = 0;
+}
 
 
 
