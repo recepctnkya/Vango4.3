@@ -2049,6 +2049,46 @@ void check_sensors_and_update_buffer() {
     // ESP_LOGI("SWITCH_CHECK", "Total number of checked switches: %d", numOfSensors);
 }
 
+void send_panel_configuration_to_canbus(int totalOutps, int buffer1[16], int totalSensors, int buffer2[5], int totalDims, int buffer3[4]) {
+    uint8_t can_data[8] = {0}; // CAN verisi için buffer
+
+    //but first need to send total number of outputs, sensors and dims to CAN bus
+    can_data[0] = (uint8_t)totalOutps; // Total number of outputs
+    can_data[1] = (uint8_t)totalSensors; // Total number of sensors
+    can_data[2] = (uint8_t)totalDims; // Total number of dims
+    send_can_frame(0x799, can_data); // Send the totals to a specific CAN ID (0x799) for configuration summary
+    printf("Sent totalOutps: %d, totalSensors: %d, totalDims: %d to CAN bus\n", totalOutps, totalSensors, totalDims);
+    vTaskDelay(pdMS_TO_TICKS(100)); // Add a small delay after sending
+
+
+    // Send outputs configuration to CAN bus
+    for (int i = 0; i < totalOutps; i++) {
+        can_data[0] = (uint8_t)(i + 1); // Output number (1-16)
+        can_data[1] = (uint8_t)buffer1[i]; // Output value
+        send_can_frame(0x800, can_data); // 
+        ESP_LOGI("CANBUS", "Sent Output %d with value %d to CAN bus", i + 1, buffer1[i]);
+        vTaskDelay(pdMS_TO_TICKS(50)); // Add a small delay between CAN frames to avoid bus congestion
+    }
+
+    // Send sensors configuration to CAN bus
+    for (int i = 0; i < totalSensors; i++) {
+        can_data[0] = (uint8_t)(i + 1); // Sensor number (1-5)
+        can_data[1] = (uint8_t)buffer2[i]; // Sensor value
+        send_can_frame(0x801, can_data); // 
+        ESP_LOGI("CANBUS", "Sent Sensor %d with value %d to CAN bus", i + 1, buffer2[i]);
+        vTaskDelay(pdMS_TO_TICKS(50)); // Add a small delay between CAN frames to avoid bus congestion      
+    }
+
+    // Send dims configuration to CAN bus
+    for (int i = 0; i < totalDims; i++) {
+        can_data[0] = (uint8_t)(i + 1); // Dim number (1-4)
+        can_data[1] = (uint8_t)buffer3[i]; // Dim value
+        send_can_frame(0x802, can_data); 
+        ESP_LOGI("CANBUS", "Sent Dim %d with value %d to CAN bus", i + 1, buffer3[i]);
+        vTaskDelay(pdMS_TO_TICKS(50)); // Add a small delay between CAN frames to avoid bus congestion
+    }
+}
+
 int SaveConfigsCounter = 0; // Counter for save configs bar
 lv_obj_t* current_progress_bar = NULL; // Global reference to the current progress bar
 static void save_configsbar_timer(lv_timer_t * timer)
@@ -2069,6 +2109,8 @@ static void save_configsbar_timer(lv_timer_t * timer)
         } else {
             ESP_LOGI(TAG, "##### Saving Panel Settings from UI Configuration #####");
             save_panel_configuration_to_nvs(numOfOutputs, outputsBuffer, numOfSensors, sensorsBuffer, numOfDims, dimsBuffer);
+            //send configurations to CANBUS
+            send_panel_configuration_to_canbus(numOfOutputs, outputsBuffer, numOfSensors, sensorsBuffer, numOfDims, dimsBuffer);
         }
         ESP_LOGI(TAG, "##### Panel Settings Saved Successfully! #####");
         esp_restart();
@@ -2143,6 +2185,8 @@ void save_panel_settings()
     // Create timer with the new progress bar
     lv_timer_t * initTim = lv_timer_create(save_configsbar_timer, 100, NULL);
     ESP_LOGI("SAVE_PANEL", "Restart panel overlay created and visible");
+
+
 }
 
 void save_theme_settings()
