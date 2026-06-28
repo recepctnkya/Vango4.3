@@ -2056,7 +2056,7 @@ void send_panel_configuration_to_canbus(int totalOutps, int buffer1[16], int tot
     can_data[0] = (uint8_t)totalOutps; // Total number of outputs
     can_data[1] = (uint8_t)totalSensors; // Total number of sensors
     can_data[2] = (uint8_t)totalDims; // Total number of dims
-    send_can_frame(0x799, can_data); // Send the totals to a specific CAN ID (0x799) for configuration summary
+    send_can_frame(0x400, can_data); // Send the totals to a specific CAN ID (0x200) for configuration summary
     printf("Sent totalOutps: %d, totalSensors: %d, totalDims: %d to CAN bus\n", totalOutps, totalSensors, totalDims);
     vTaskDelay(pdMS_TO_TICKS(100)); // Add a small delay after sending
 
@@ -2065,8 +2065,8 @@ void send_panel_configuration_to_canbus(int totalOutps, int buffer1[16], int tot
     for (int i = 0; i < totalOutps; i++) {
         can_data[0] = (uint8_t)(i + 1); // Output number (1-16)
         can_data[1] = (uint8_t)buffer1[i]; // Output value
-        send_can_frame(0x800, can_data); // 
-        ESP_LOGI("CANBUS", "Sent Output %d with value %d to CAN bus", i + 1, buffer1[i]);
+        send_can_frame(0x401, can_data);
+        printf("Sent Output %d with value %d to CAN bus\n", i + 1, buffer1[i]);
         vTaskDelay(pdMS_TO_TICKS(50)); // Add a small delay between CAN frames to avoid bus congestion
     }
 
@@ -2074,7 +2074,7 @@ void send_panel_configuration_to_canbus(int totalOutps, int buffer1[16], int tot
     for (int i = 0; i < totalSensors; i++) {
         can_data[0] = (uint8_t)(i + 1); // Sensor number (1-5)
         can_data[1] = (uint8_t)buffer2[i]; // Sensor value
-        send_can_frame(0x801, can_data); // 
+        send_can_frame(0x402, can_data);
         ESP_LOGI("CANBUS", "Sent Sensor %d with value %d to CAN bus", i + 1, buffer2[i]);
         vTaskDelay(pdMS_TO_TICKS(50)); // Add a small delay between CAN frames to avoid bus congestion      
     }
@@ -2083,7 +2083,7 @@ void send_panel_configuration_to_canbus(int totalOutps, int buffer1[16], int tot
     for (int i = 0; i < totalDims; i++) {
         can_data[0] = (uint8_t)(i + 1); // Dim number (1-4)
         can_data[1] = (uint8_t)buffer3[i]; // Dim value
-        send_can_frame(0x802, can_data); 
+        send_can_frame(0x403, can_data);
         ESP_LOGI("CANBUS", "Sent Dim %d with value %d to CAN bus", i + 1, buffer3[i]);
         vTaskDelay(pdMS_TO_TICKS(50)); // Add a small delay between CAN frames to avoid bus congestion
     }
@@ -2401,7 +2401,8 @@ void apply_language_settings()
     }
 
         /* Conflict detected → restore defaults */
-        lv_dropdown_set_selected(ui_cbRSelect, selected_R);
+        lv_dropdown_set_selected(
+            , selected_R);
         lv_dropdown_set_selected(ui_cbGSelect, selected_G);
         lv_dropdown_set_selected(ui_cbBSelect, selected_B);
 }

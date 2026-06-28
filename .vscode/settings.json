@@ -93,5 +93,6 @@
         "hexnet_wifi.h": "c",
         "ui_helpers.h": "c",
         "hexnet_bluetooth.h": "c"
-    }
+    },
+    "idf.currentSetup": "C:\\Users\\nakau\\esp\\v5.3\\esp-idf"
 }
